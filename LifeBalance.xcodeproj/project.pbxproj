@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB6F9274278E300A59F43 /* LifeBalanceApp.swift */; };
-		5F8AB6FC274278E300A59F43 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB6FB274278E300A59F43 /* ContentView.swift */; };
+		5F8AB6FC274278E300A59F43 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB6FB274278E300A59F43 /* HomeView.swift */; };
 		5F8AB6FE274278E600A59F43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F8AB6FD274278E600A59F43 /* Assets.xcassets */; };
 		5F8AB701274278E600A59F43 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F8AB700274278E600A59F43 /* Preview Assets.xcassets */; };
 		5F8AB70B274278E600A59F43 /* LifeBalanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB70A274278E600A59F43 /* LifeBalanceTests.swift */; };
 		5F8AB715274278E600A59F43 /* LifeBalanceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB714274278E600A59F43 /* LifeBalanceUITests.swift */; };
 		5F8AB717274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB716274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift */; };
+		5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB7242745477900A59F43 /* DiaryView.swift */; };
+		5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB72727454A2900A59F43 /* ProgressBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +38,7 @@
 /* Begin PBXFileReference section */
 		5F8AB6F6274278E300A59F43 /* LifeBalance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeBalance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F8AB6F9274278E300A59F43 /* LifeBalanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeBalanceApp.swift; sourceTree = "<group>"; };
-		5F8AB6FB274278E300A59F43 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5F8AB6FB274278E300A59F43 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5F8AB6FD274278E600A59F43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F8AB700274278E600A59F43 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5F8AB706274278E600A59F43 /* LifeBalanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeBalanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +46,8 @@
 		5F8AB710274278E600A59F43 /* LifeBalanceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeBalanceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F8AB714274278E600A59F43 /* LifeBalanceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeBalanceUITests.swift; sourceTree = "<group>"; };
 		5F8AB716274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeBalanceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5F8AB7242745477900A59F43 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		5F8AB72727454A2900A59F43 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +98,10 @@
 		5F8AB6F8274278E300A59F43 /* LifeBalance */ = {
 			isa = PBXGroup;
 			children = (
+				5F8AB72627454A1A00A59F43 /* Components */,
+				5F8AB7232745476C00A59F43 /* Views */,
 				5F8AB6F9274278E300A59F43 /* LifeBalanceApp.swift */,
-				5F8AB6FB274278E300A59F43 /* ContentView.swift */,
+				5F8AB6FB274278E300A59F43 /* HomeView.swift */,
 				5F8AB6FD274278E600A59F43 /* Assets.xcassets */,
 				5F8AB6FF274278E600A59F43 /* Preview Content */,
 			);
@@ -125,6 +131,22 @@
 				5F8AB716274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift */,
 			);
 			path = LifeBalanceUITests;
+			sourceTree = "<group>";
+		};
+		5F8AB7232745476C00A59F43 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5F8AB7242745477900A59F43 /* DiaryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5F8AB72627454A1A00A59F43 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				5F8AB72727454A2900A59F43 /* ProgressBar.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F8AB6FC274278E300A59F43 /* ContentView.swift in Sources */,
+				5F8AB6FC274278E300A59F43 /* HomeView.swift in Sources */,
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
+				5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */,
+				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

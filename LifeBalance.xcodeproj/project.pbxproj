@@ -16,6 +16,9 @@
 		5F8AB717274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB716274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift */; };
 		5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB7242745477900A59F43 /* DiaryView.swift */; };
 		5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8AB72727454A2900A59F43 /* ProgressBar.swift */; };
+		8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77A2747C68500710D57 /* GoalsCard.swift */; };
+		8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */; };
+		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		5F8AB716274278E600A59F43 /* LifeBalanceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeBalanceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5F8AB7242745477900A59F43 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		5F8AB72727454A2900A59F43 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		8218A77A2747C68500710D57 /* GoalsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsCard.swift; sourceTree = "<group>"; };
+		8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
+		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +104,11 @@
 		5F8AB6F8274278E300A59F43 /* LifeBalance */ = {
 			isa = PBXGroup;
 			children = (
+				8218A77E2747CCF100710D57 /* Styles */,
+				82A574FB2747AA9C0029B68E /* Cards */,
 				5F8AB72627454A1A00A59F43 /* Components */,
 				5F8AB7232745476C00A59F43 /* Views */,
 				5F8AB6F9274278E300A59F43 /* LifeBalanceApp.swift */,
-				5F8AB6FB274278E300A59F43 /* HomeView.swift */,
 				5F8AB6FD274278E600A59F43 /* Assets.xcassets */,
 				5F8AB6FF274278E600A59F43 /* Preview Content */,
 			);
@@ -136,6 +143,7 @@
 		5F8AB7232745476C00A59F43 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5F8AB6FB274278E300A59F43 /* HomeView.swift */,
 				5F8AB7242745477900A59F43 /* DiaryView.swift */,
 			);
 			path = Views;
@@ -147,6 +155,23 @@
 				5F8AB72727454A2900A59F43 /* ProgressBar.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		8218A77E2747CCF100710D57 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		82A574FB2747AA9C0029B68E /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				82A574FC2747AABC0029B68E /* TrendCard.swift */,
+				8218A77A2747C68500710D57 /* GoalsCard.swift */,
+			);
+			path = Cards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +306,10 @@
 			files = (
 				5F8AB6FC274278E300A59F43 /* HomeView.swift in Sources */,
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
+				82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */,
 				5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */,
+				8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */,
+				8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */,
 				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

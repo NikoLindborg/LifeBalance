@@ -22,10 +22,11 @@ struct AddMealView: View {
     @State var addedFoods = [Food(name: "Banana", amount: "100 g"), Food(name: "Apple", amount: "200 g")]
     
     var body: some View {
-        
-        VStack(spacing: 0) {
-            Section(){
-                NavigationView {
+        NavigationView {
+            VStack(
+                alignment: .leading,
+                spacing: 10) {
+                Section(){
                     Form{
                         Section{
                             Picker(selection: $selectedMealIndex, label: Text("")) {
@@ -36,25 +37,25 @@ struct AddMealView: View {
                         }
                     }
                     .navigationTitle("")
-                }
-            }
-            Section() {
-                VStack(){
-                    Form{
-                        List(addedFoods) {
+                }.frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Section() {
+                    VStack(){
+                        Form{
+                            List(addedFoods) {
                                 Text($0.name)
                                 Text($0.amount)
-                        }
-                        Button(action: {showTabBar.toggle()}) {
-                            Text("Add more  >")
-                                .font(.body)
+                            }
+                            Button(action: {showTabBar.toggle()}) {
+                                Text("Add more  >")
+                                    .font(.body)
+                            }
                         }
                     }
                 }
-            }
-            Section(){
-                if(showTabBar){
-                    tabBar()
+                Section(){
+                    if(showTabBar){
+                        tabBar()
+                    }
                 }
             }
         }
@@ -78,9 +79,9 @@ struct tabBar: View {
             case 0:
                 addNew()
             case 1:
-                Text("hei")
+                Text("My foods")
             case 2:
-                Text("hui")
+                Text("Recent foods")
             default:
                 Text("hai")
                 

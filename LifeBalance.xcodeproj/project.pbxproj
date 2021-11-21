@@ -20,6 +20,8 @@
 		8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77A2747C68500710D57 /* GoalsCard.swift */; };
 		8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */; };
 		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
+		9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */; };
+		9675E1C6274A6A080013D6FB /* NutritionDatalistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		8218A77A2747C68500710D57 /* GoalsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsCard.swift; sourceTree = "<group>"; };
 		8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
 		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
+		9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalDatalistView.swift; sourceTree = "<group>"; };
+		9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatalistItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,7 @@
 				5F8AB6FB274278E300A59F43 /* HomeView.swift */,
 				5F8AB7242745477900A59F43 /* DiaryView.swift */,
 				6A2972AA274A3FD60084B408 /* SettingsView.swift */,
+				9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				5F8AB72727454A2900A59F43 /* ProgressBar.swift */,
+				9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -315,6 +321,8 @@
 				8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */,
 				8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */,
 				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,
+				9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */,
+				9675E1C6274A6A080013D6FB /* NutritionDatalistItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

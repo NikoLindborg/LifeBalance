@@ -16,8 +16,7 @@ struct ProgressBar: View {
             Circle()
                 .stroke(lineWidth: 10.0)
                 .opacity(0.3)
-                .foregroundStyle(self.color)
-            
+                .foregroundColor(self.color)
             Circle()
                 .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
                 .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))

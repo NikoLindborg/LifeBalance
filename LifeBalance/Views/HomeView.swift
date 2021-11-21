@@ -21,19 +21,7 @@ struct HomeView: View {
                 }
                 .padding(.leading, 28)
                 VStack(alignment: .leading){
-                    HStack{
-                        ZStack {
-                            VStack {
-                                ProgressBar(progress: self.$progressValue, color: self.$color)
-                                    .frame(width: 50.0, height: 50.0)
-                                    .padding(40)
-                                ProgressBar(progress: self.$progressValue, color: self.$color)
-                                    .frame(width: 50.0, height: 50.0)
-                                    .padding(40)
-                                Spacer()
-                            }
-                        }
-                    }
+                    DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color, color3: $color, color4: $color)
                     .frame(width: 350, height: 250, alignment: .leading)
                     .background(Color.purple)
                     .cornerRadius(20)

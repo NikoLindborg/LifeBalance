@@ -14,47 +14,30 @@ struct DiaryView: View {
     @State var color3 = Color.orange
     @State var color4 = Color.red
     var body: some View {
-        List{
+        ScrollView{
             VStack{
-                Text("Daily Progress")
-                    .font(.title)
-                VStack(alignment: .leading){
-                    HStack{
-                        Spacer()
-                        ZStack {
-                            VStack {
-                                ProgressBar(progress: self.$progressValue, color: self.$color)
-                                    .frame(width: 50.0, height: 50.0)
-                                    .padding(20)
-                                Text("Protein 50 / 200")
-                                Spacer()
-                                ProgressBar(progress: self.$progressValue, color: self.$color2)
-                                    .frame(width: 50.0, height: 50.0)
-                                    .padding(20)
-                                Text("Carbs 50 / 200")
-                                Spacer()
-                            }
-                        }
-                        Spacer()
-                        Spacer()
-                        Spacer()
-                        VStack {
-                            ProgressBar(progress: self.$progressValue, color: self.$color3)
-                                .frame(width: 50.0, height: 50.0)
-                                .padding(20)
-                            Text("Fats 50 / 200")
-                            Spacer()
-                            ProgressBar(progress: self.$progressValue, color: self.$color4)
-                                .frame(width: 50.0, height: 50.0)
-                                .padding(20)
-                            Text("Protein 50 / 200")
-                            Spacer()
-                        }
-                        Spacer()
-                    }
+                HStack{
+                    Text("Daily Progress")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
                 }
+                .padding(.leading, 28)
+                DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
+                    .frame(width: 350, height: 250, alignment: .leading)
+                    .cornerRadius(20.0)
+                HStack{
+                    Text("My Meals")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
+                }
+                .padding(.leading, 28)
+                MealCard(meal: "Breakfast", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
+                MealCard(meal: "Lunch", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.green)
+                MealCard(meal: "Dinner", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
+                MealCard(meal: "Snacks", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.green)
             }
-            .background(Color(red:0.45, green: 0.32, blue:0.59))
         }
     }
 }

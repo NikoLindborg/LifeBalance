@@ -98,6 +98,7 @@
 		5F8AB6F8274278E300A59F43 /* LifeBalance */ = {
 			isa = PBXGroup;
 			children = (
+				5F8AB729274576E600A59F43 /* Cards */,
 				5F8AB72627454A1A00A59F43 /* Components */,
 				5F8AB7232745476C00A59F43 /* Views */,
 				5F8AB6F9274278E300A59F43 /* LifeBalanceApp.swift */,
@@ -147,6 +148,13 @@
 				5F8AB72727454A2900A59F43 /* ProgressBar.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		5F8AB729274576E600A59F43 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

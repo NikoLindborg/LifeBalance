@@ -28,7 +28,7 @@ struct MealCard: View {
                     MealItems(food: food[1], amount: amount[1])
                 }
             }
-            .padding(10)
+            .padding(20)
         }
         .frame(width: 350, height: 125, alignment: .leading)
     }

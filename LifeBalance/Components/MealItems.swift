@@ -16,10 +16,6 @@ struct MealItems: View {
                 .foregroundColor(.white)
             Spacer()
             Text("\(self.amount)")
-            Spacer()
-            Button("Edit"){
-                
-            }
         }
     }
 }

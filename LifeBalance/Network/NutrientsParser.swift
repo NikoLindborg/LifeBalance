@@ -1,4 +1,12 @@
 //
+//  Nutrients.swift
+//  LifeBalance
+//
+//  Created by Niko Lindborg on 22.11.2021.
+//
+
+import Foundation
+//
 //  FoodParser.swift
 //  LifeBalance
 //
@@ -7,7 +15,7 @@
 
 import Foundation
 
-class FoodParser: ObservableObject {
+class NutrientsParser: ObservableObject {
     let constants = Constants()
     @Published var queryList: [Hints] = []
     

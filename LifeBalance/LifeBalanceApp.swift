@@ -9,30 +9,11 @@ import SwiftUI
 
 @main
 struct LifeBalanceApp: App {
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            TabView {
-                HomeView()
-                    .tabItem() {
-                        Image(systemName: "heart.fill")
-                        Text("Home")
-                    }
-                DiaryView()
-                    .tabItem() {
-                        Image(systemName: "book.fill")
-                        Text("Diary")
-                    }
-                AddMealView()
-                    .tabItem() {
-                        Image(systemName: "plus.circle.fill")
-                        Text("Add meal")
-                    }
-                SettingsView()
-                    .tabItem() {
-                        Image(systemName: "slider.vertical.3")
-                        Text("Settings")
-                    }
-            }
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

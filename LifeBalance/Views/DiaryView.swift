@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct DiaryView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(entity: Day.entity(), sortDescriptors: [], predicate: NSPredicate(format: "date != %@", Date() as CVarArg))
+
+    var days: FetchedResults<Day>
+    
     @State var progressValue: Float = 0.25
     @State var color = Color.green
     @State var color2 = Color.blue
@@ -33,10 +39,10 @@ struct DiaryView: View {
                     Spacer()
                 }
                 .padding(.leading, 28)
-                MealCard(meal: "Breakfast", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
-                MealCard(meal: "Lunch", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.green)
-                MealCard(meal: "Dinner", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
-                MealCard(meal: "Snacks", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.green)
+               
+                ForEach(days) { day in
+                    MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
+                }
             }
         }
     }

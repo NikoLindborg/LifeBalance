@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  LifeBalance
 //
 //  Created by Niko Lindborg on 15.11.2021.
@@ -59,7 +59,7 @@ struct HomeView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }

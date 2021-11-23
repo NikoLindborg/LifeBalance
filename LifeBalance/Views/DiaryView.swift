@@ -22,6 +22,7 @@ struct DiaryView: View {
     @State var color4 = Color.red
     
     var body: some View {
+        NavigationView {
         ScrollView{
             VStack{
                 HStack{
@@ -30,25 +31,34 @@ struct DiaryView: View {
                         .bold()
                     Spacer()
                 }
+                .offset(y: -60)
                 .padding(.leading, 28)
-                DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
-                    .frame(width: 350, height: 250, alignment: .leading)
-                    .cornerRadius(20.0)
+                NavigationLink(destination: NutritionalDatalistView(), label: {
+                    DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
+                        .frame(width: 350, height: 250, alignment: .leading)
+                        .cornerRadius(20.0)
+                })
+                    .offset(y: -60)
                 HStack{
                     Text("My Meals")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
                 }
+                .offset(y: -60)
                 .padding(.leading, 28)
                 ForEach(days) { day in
                     if (itemFormatter.string(from: day.date) == itemFormatter.string(from: Date())) {
-                    MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: day.meal == "Breakfast" ? Color.gray : Color.green)
+                        NavigationLink(destination: AddMealView(), label: {
+                            MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: day.meal == "Breakfast" ? Color.gray : Color.green)
+                        })
                     }
                 }
+                .offset(y: -60)
             }
         }
     }
+}
 }
 
 struct DiaryView_Previews: PreviewProvider {

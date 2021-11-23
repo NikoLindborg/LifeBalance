@@ -23,11 +23,13 @@ struct DailyProgressCard: View {
                             .frame(width: 50.0, height: 50.0)
                             .padding(20)
                         Text("Protein 50 / 200")
+                            .foregroundColor(Color.black)
                         Spacer()
                         ProgressBar(progress: self.$progressValue, color: self.$color2)
                             .frame(width: 50.0, height: 50.0)
                             .padding(20)
                         Text("Carbs 50 / 200")
+                            .foregroundColor(Color.black)
                         Spacer()
                     }
                 }
@@ -39,11 +41,13 @@ struct DailyProgressCard: View {
                         .frame(width: 50.0, height: 50.0)
                         .padding(20)
                     Text("Fats 50 / 200")
+                        .foregroundColor(Color.black)
                     Spacer()
                     ProgressBar(progress: self.$progressValue, color: self.$color4)
                         .frame(width: 50.0, height: 50.0)
                         .padding(20)
                     Text("Protein 50 / 200")
+                        .foregroundColor(Color.black)
                     Spacer()
                 }
                 Spacer()

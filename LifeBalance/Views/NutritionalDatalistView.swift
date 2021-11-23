@@ -10,9 +10,6 @@ import SwiftUI
 struct NutritionalDatalistView: View {
     var body: some View {
         VStack {
-            Text("Nutrition details")
-                .font(.title)
-                .bold()
             List {
                 NutritionDatalistItem(nutritionName: "Iron", dailyConsumptionProgress: 10.0, dailyConsumptionTarget: 50.0, unit: "g")
                 NutritionDatalistItem(nutritionName: "Magnesium", dailyConsumptionProgress: 100, dailyConsumptionTarget: 400, unit: "mg")
@@ -20,6 +17,7 @@ struct NutritionalDatalistView: View {
                 NutritionDatalistItem(nutritionName: "Protein", dailyConsumptionProgress: 200, dailyConsumptionTarget: 200, unit: "g")
             }
             .listStyle(.inset)
+            .navigationTitle("Nutrition details")
         }
     }
 }

@@ -18,8 +18,7 @@ struct SearchView: View {
         VStack() {
             TextField("Search for food", text: $query).disableAutocorrection(true)
             Button(action: {
-                //parser.parseFood(query)
-                print("hei, ", parser.queryList[0].food)
+                parser.parseFood(query)
             }) {
                 Text("Search")
                     .font(.body)

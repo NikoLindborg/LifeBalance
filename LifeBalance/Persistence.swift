@@ -48,4 +48,38 @@ struct PersistenceController {
             }
         })
     }
+    
+    func loadUserSettings() -> [UserSettings] {
+        let fetchRequest: NSFetchRequest<UserSettings> = UserSettings.fetchRequest()
+        
+        do{
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func saveUserSettings(gender: String, height: String, weight: String, theme: Bool, activityLevel: String, target: String) {
+        let userSettings = UserSettings(context: container.viewContext)
+        userSettings.gender = gender
+        userSettings.height = height
+        userSettings.weight = weight
+        userSettings.theme = theme
+        userSettings.target = target
+        userSettings.activityLevel = activityLevel
+        do{
+            try container.viewContext.save()
+        } catch
+        {
+            return print("Failed to save gender \(error)")
+        }
+    }
+    
+    func updateUserSettings() {
+        do {
+            try container.viewContext.save()
+        } catch {
+            container.viewContext.rollback()
+        }
+    }
 }

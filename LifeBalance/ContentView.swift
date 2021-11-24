@@ -33,7 +33,7 @@ struct ContentView: View {
                     Image(systemName: "plus.circle.fill")
                     Text("Add meal")
                 }
-            SettingsView()
+            SettingsView(persistenceController: PersistenceController())
                 .tabItem() {
                     Image(systemName: "slider.vertical.3")
                     Text("Settings")

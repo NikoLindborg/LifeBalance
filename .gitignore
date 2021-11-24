@@ -64,5 +64,5 @@ DerivedData/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
-
+.LifeBalance/Network/Constants.swift
 # End of https://www.toptal.com/developers/gitignore/api/xcode,macos

@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct GoalsCard: View {
     @State var cardCaption: String
     @State var cardText: String
+    @State var activeCalories: String
     @State var color: Color
     
     var body: some View {
@@ -29,9 +31,17 @@ struct GoalsCard: View {
                         .foregroundColor(.white)
                     Spacer()
                 }
+                HStack {
+                    Text(activeCalories)
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+                
             }
             .padding(10)
         }
         .frame(width: 350, height: 125, alignment: .leading)
     }
+
 }
+

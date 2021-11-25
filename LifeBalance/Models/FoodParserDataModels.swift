@@ -25,8 +25,8 @@ struct Food: Decodable{
 }
 
 struct parseNutrients: Decodable {
-    var ENERC_KCAL: Int
-    var PROCNT: Double
-    var FAT: Double
-    var CHOCDF: Double
+    var ENERC_KCAL: Float
+    var PROCNT: Float
+    var FAT: Float
+    var CHOCDF: Float
 }

@@ -6,6 +6,7 @@
     </entity>
     <entity name="UserSettings" representedClassName=".UserSettings" syncable="YES" codeGenerationType="class">
         <attribute name="activityLevel" optional="YES" attributeType="String"/>
+        <attribute name="age" optional="YES" attributeType="String"/>
         <attribute name="gender" optional="YES" attributeType="String"/>
         <attribute name="height" optional="YES" attributeType="String"/>
         <attribute name="target" optional="YES" attributeType="String"/>
@@ -14,6 +15,6 @@
     </entity>
     <elements>
         <element name="Day" positionX="-63" positionY="-18" width="128" height="59"/>
-        <element name="UserSettings" positionX="-63" positionY="0" width="128" height="119"/>
+        <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
     </elements>
 </model>

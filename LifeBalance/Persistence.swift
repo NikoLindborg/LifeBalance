@@ -59,7 +59,7 @@ struct PersistenceController {
         }
     }
     
-    func saveUserSettings(gender: String, height: String, weight: String, theme: Bool, activityLevel: String, target: String) {
+    func saveUserSettings(gender: String, height: String, weight: String, theme: Bool, activityLevel: String, target: String, age: String) {
         let userSettings = UserSettings(context: container.viewContext)
         userSettings.gender = gender
         userSettings.height = height
@@ -67,6 +67,7 @@ struct PersistenceController {
         userSettings.theme = theme
         userSettings.target = target
         userSettings.activityLevel = activityLevel
+        userSettings.age = age
         do{
             try container.viewContext.save()
         } catch

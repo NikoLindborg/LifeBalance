@@ -11,9 +11,9 @@ struct AddMealView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @State var selectedTab: Int = 0
+    @EnvironmentObject var nutrientsParser: NutrientsParser
     private var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
     @State private var selectedMealIndex = 0
-    
     struct Food: Identifiable {
         let name: String
         let amount: String
@@ -91,6 +91,7 @@ struct AddMealView_Previews: PreviewProvider {
     static var previews: some View {
         AddMealView()
             .environmentObject(FoodParser())
+            .environmentObject(NutrientsParser())
     }
 }
 

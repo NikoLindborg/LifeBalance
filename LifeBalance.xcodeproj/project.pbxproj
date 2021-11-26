@@ -33,10 +33,12 @@
 		821F910F274CD116007E4643 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F910E274CD116007E4643 /* ContentView.swift */; };
 		821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 821F912F274CD8F8007E4643 /* lifebalance.xcdatamodeld */; };
 		821F9133274CD922007E4643 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F9132274CD922007E4643 /* Persistence.swift */; };
+		82722D63274E7F7400909335 /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82722D62274E7F7400909335 /* HealthKit.swift */; };
 		829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */; };
 		829DEF6C274CE1DD006F9423 /* Day+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */; };
 		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
 		82D93AEB274BAF4D00530651 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AEA274BAF4D00530651 /* AddMealView.swift */; };
+		82F432BF274E38AA005CD4BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F432BE274E38AA005CD4BB /* HealthKit.framework */; };
 		9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */; };
 		9675E1C6274A6A080013D6FB /* NutritionDatalistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */; };
 /* End PBXBuildFile section */
@@ -83,15 +85,19 @@
 		5FF12837274AAFA900ACC671 /* MealItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealItems.swift; sourceTree = "<group>"; };
 		6A2972AA274A3FD60084B408 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6A61DA4D2750F9D60083BB46 /* ReferenceValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceValues.swift; sourceTree = "<group>"; };
+		820232B1274E5024007F386D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8218A77A2747C68500710D57 /* GoalsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsCard.swift; sourceTree = "<group>"; };
 		8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
 		821F910E274CD116007E4643 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		821F9130274CD8F8007E4643 /* lifebalance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lifebalance.xcdatamodel; sourceTree = "<group>"; };
 		821F9132274CD922007E4643 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		82722D62274E7F7400909335 /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
 		829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataClass.swift"; sourceTree = "<group>"; };
 		829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
 		82D93AEA274BAF4D00530651 /* AddMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
+		82F432BC274E38AA005CD4BB /* LifeBalance.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeBalance.entitlements; sourceTree = "<group>"; };
+		82F432BE274E38AA005CD4BB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalDatalistView.swift; sourceTree = "<group>"; };
 		9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatalistItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82F432BF274E38AA005CD4BB /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +147,7 @@
 				5F8AB709274278E600A59F43 /* LifeBalanceTests */,
 				5F8AB713274278E600A59F43 /* LifeBalanceUITests */,
 				5F8AB6F7274278E300A59F43 /* Products */,
+				82F432BD274E38AA005CD4BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,6 +164,8 @@
 		5F8AB6F8274278E300A59F43 /* LifeBalance */ = {
 			isa = PBXGroup;
 			children = (
+				820232B1274E5024007F386D /* Info.plist */,
+				82F432BC274E38AA005CD4BB /* LifeBalance.entitlements */,
 				5FEAEC58274C151E002DE8E2 /* Models */,
 				5F89B233274C0F1A001CB079 /* Network */,
 				8218A77E2747CCF100710D57 /* Styles */,
@@ -169,6 +179,7 @@
 				821F912F274CD8F8007E4643 /* lifebalance.xcdatamodeld */,
 				821F9132274CD922007E4643 /* Persistence.swift */,
 				6A61DA4D2750F9D60083BB46 /* ReferenceValues.swift */,
+				82722D62274E7F7400909335 /* HealthKit.swift */,
 			);
 			path = LifeBalance;
 			sourceTree = "<group>";
@@ -248,6 +259,14 @@
 				5FF12835274AABE900ACC671 /* MealCard.swift */,
 			);
 			path = Cards;
+			sourceTree = "<group>";
+		};
+		82F432BD274E38AA005CD4BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82F432BE274E38AA005CD4BB /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +412,7 @@
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
 				5F89B235274C0F56001CB079 /* FoodParser.swift in Sources */,
 				5F2C6BC7274D6FC3007250F0 /* NutrientsParserDataModels.swift in Sources */,
+				82722D63274E7F7400909335 /* HealthKit.swift in Sources */,
 				5F89B237274C0F5F001CB079 /* NutrientsParser.swift in Sources */,
 				829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */,
 				82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */,
@@ -564,11 +584,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeBalance/LifeBalance.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LifeBalance/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LifeBalance/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -594,11 +616,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeBalance/LifeBalance.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LifeBalance/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LifeBalance/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

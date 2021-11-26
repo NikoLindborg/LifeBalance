@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>I want to access your data</string>
+	<string>LifeBalance needs permission to access your Health Data in order to bring you accurate information about your health</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>I want to access your data</string>
+	<string>LifeBalance needs permission to access your Health Data in order to bring you accurate information about your health</string>
 </dict>
 </plist>

@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var progressValue: Float = 0.25
     @State var color = Color.green
-    @ObservedObject var healthKit: HealthKit = HealthKit()
+    @EnvironmentObject var healthKit: HealthKit
     
     var body: some View {
         NavigationView {
@@ -65,6 +65,7 @@ struct HomeView: View {
                     .padding(.leading, 28)
                     if (healthKit.healthData) {
                         GoalsCard(cardCaption: "Weight", cardText: "Your weight was -0.5kg compared to last week", activeCalories: "Your last workout burned \(healthKit.burntCalories) calories", color: Color.green)
+                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
                     } else {
                         GoalsCard(cardCaption: "Weight", cardText: "Your weight was -0.5kg compared to last week", activeCalories: "No Health Data available", color: Color.green)
                     }
@@ -79,5 +80,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(HealthKit())
     }
 }

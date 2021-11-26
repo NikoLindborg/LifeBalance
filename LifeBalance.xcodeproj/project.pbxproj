@@ -28,10 +28,10 @@
 		5FF12838274AAFA900ACC671 /* MealItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF12837274AAFA900ACC671 /* MealItems.swift */; };
 		6A2972AB274A3FD60084B408 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2972AA274A3FD60084B408 /* SettingsView.swift */; };
 		8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77A2747C68500710D57 /* GoalsCard.swift */; };
-		8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */; };
 		821F910F274CD116007E4643 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F910E274CD116007E4643 /* ContentView.swift */; };
 		821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 821F912F274CD8F8007E4643 /* lifebalance.xcdatamodeld */; };
 		821F9133274CD922007E4643 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F9132274CD922007E4643 /* Persistence.swift */; };
+		8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */; };
 		82722D63274E7F7400909335 /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82722D62274E7F7400909335 /* HealthKit.swift */; };
 		829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */; };
 		829DEF6C274CE1DD006F9423 /* Day+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */; };
@@ -85,10 +85,10 @@
 		6A2972AA274A3FD60084B408 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		820232B1274E5024007F386D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8218A77A2747C68500710D57 /* GoalsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsCard.swift; sourceTree = "<group>"; };
-		8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
 		821F910E274CD116007E4643 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		821F9130274CD8F8007E4643 /* lifebalance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lifebalance.xcdatamodel; sourceTree = "<group>"; };
 		821F9132274CD922007E4643 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCaloriesCard.swift; sourceTree = "<group>"; };
 		82722D62274E7F7400909335 /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
 		829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataClass.swift"; sourceTree = "<group>"; };
 		829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -166,7 +166,6 @@
 				82F432BC274E38AA005CD4BB /* LifeBalance.entitlements */,
 				5FEAEC58274C151E002DE8E2 /* Models */,
 				5F89B233274C0F1A001CB079 /* Network */,
-				8218A77E2747CCF100710D57 /* Styles */,
 				82A574FB2747AA9C0029B68E /* Cards */,
 				5F8AB72627454A1A00A59F43 /* Components */,
 				5F8AB7232745476C00A59F43 /* Views */,
@@ -239,14 +238,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8218A77E2747CCF100710D57 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				8218A77F2747CCFF00710D57 /* RoundedButtonStyle.swift */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
 		82A574FB2747AA9C0029B68E /* Cards */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +245,7 @@
 				8218A77A2747C68500710D57 /* GoalsCard.swift */,
 				5FF12833274AA86400ACC671 /* DailyProgressCard.swift */,
 				5FF12835274AABE900ACC671 /* MealCard.swift */,
+				8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -282,6 +274,8 @@
 			dependencies = (
 			);
 			name = LifeBalance;
+			packageProductDependencies = (
+			);
 			productName = LifeBalance;
 			productReference = 5F8AB6F6274278E300A59F43 /* LifeBalance.app */;
 			productType = "com.apple.product-type.application";
@@ -354,6 +348,8 @@
 				Base,
 			);
 			mainGroup = 5F8AB6ED274278E300A59F43;
+			packageReferences = (
+			);
 			productRefGroup = 5F8AB6F7274278E300A59F43 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -413,12 +409,12 @@
 				829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */,
 				82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */,
 				821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */,
+				8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */,
 				5FA8B172274D0CE00029A1F9 /* SearchView.swift in Sources */,
 				5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */,
 				5FF12838274AAFA900ACC671 /* MealItems.swift in Sources */,
 				8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */,
 				5FF12834274AA86400ACC671 /* DailyProgressCard.swift in Sources */,
-				8218A7802747CCFF00710D57 /* RoundedButtonStyle.swift in Sources */,
 				821F910F274CD116007E4643 /* ContentView.swift in Sources */,
 				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,
 				9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */,

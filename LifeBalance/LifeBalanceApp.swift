@@ -11,6 +11,7 @@ import SwiftUI
 struct LifeBalanceApp: App {
     var parser = FoodParser()
     var nutrientsParser = NutrientsParser()
+    var healthKit = HealthKit()
     
     let persistenceController = PersistenceController.shared
     var body: some Scene {
@@ -19,6 +20,7 @@ struct LifeBalanceApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(parser)
                 .environmentObject(nutrientsParser)
+                .environmentObject(healthKit)
         }
     }
 }

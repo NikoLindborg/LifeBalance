@@ -36,7 +36,6 @@ struct GoalsCard: View {
                         .foregroundColor(.white)
                     Spacer()
                 }
-                
             }
             .padding(10)
         }

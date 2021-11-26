@@ -17,15 +17,34 @@ import Foundation
 
 class NutrientsParser: ObservableObject {
     let constants = Constants()
-    @Published var queryList: [Hints] = []
+    @Published var nutrientsList: [totalNutrients] = []
     
-    func parseFood(_ query: String) {
-        guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/parser?app_id=\(constants.app_id)&app_key=\(constants.app_key)&ingr=\(query)&nutrition-type=cooking") else{
+    func parseNutrients(_ foodId: String, _ quantity: Int, _ measureURI: String ) {
+        
+        let body: Dictionary<String, Any> = ["ingredients": [[
+            "quantity": quantity,
+            "measureURI": measureURI,
+            "foodId": foodId
+            ]]
+        ]
+    
+        if (!JSONSerialization.isValidJSONObject(body)) {
+                print("is not a valid json object")
+                return
+            }
+
+        let jsonData = try? JSONSerialization.data(withJSONObject: body)
+        guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/nutrients?app_id=\(constants.app_id)&app_key=\(constants.app_key)") else{
             fatalError("Missing URL")
         }
         
-        let urlRequest = URLRequest(url: url)
-        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = jsonData
+        urlRequest.allHTTPHeaderFields = [
+            "Content-Type": "application/json"
+        ]
+
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 print("Request error: ", error)
@@ -33,13 +52,13 @@ class NutrientsParser: ObservableObject {
             }
             
             guard let response = response as? HTTPURLResponse else {return}
-            
             if response.statusCode == 200 {
                 guard let data = data else {return}
                 DispatchQueue.main.async {
                     do {
-                        let decodeQuery = try JSONDecoder().decode(ParsedModel.self, from: data)
-                        self.queryList = decodeQuery.hints
+                        let decodeQuery = try JSONDecoder().decode(NutrientsModel.self, from: data)
+                        self.nutrientsList = [decodeQuery.totalNutrients]
+                        print(self.nutrientsList)
                     } catch let error {
                         print("Error decoding: ", error)
                     }

@@ -22,7 +22,7 @@ struct AddMealTabBar: View {
             
             switch(selectedTab) {
             case 0:
-                SearchView()
+                Text("SearchView()")
             case 1:
                 Text("My foods")
             case 2:

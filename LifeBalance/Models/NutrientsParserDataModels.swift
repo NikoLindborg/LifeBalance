@@ -13,6 +13,13 @@ struct NutrientsModel: Decodable {
     var totalNutrients: totalNutrients
 }
 
+struct FoodModel: Identifiable {
+    var id: String
+    var label: String
+    var quantity: Int
+    var totalNutrients: [totalNutrients]
+}
+
 struct totalNutrients: Decodable {
     var ENERC_KCAL: ENERC_KCAL
     var FAT: FAT

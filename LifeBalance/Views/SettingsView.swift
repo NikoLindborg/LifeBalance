@@ -12,9 +12,7 @@ struct SettingsView: View {
     let persistenceController: PersistenceController
      
     @State private var uSettings: [UserSettings] = [UserSettings]()
-    
-    @State private var needsRefresh: Bool = false
-    
+        
     @State private var isSaved = false
     
     let referenceValues = ReferenceValues()
@@ -34,6 +32,7 @@ struct SettingsView: View {
     @State private var selectedFrameworkIndexAge = ""
     
     @State private var lightMode = true
+    @Binding var themeColor: ColorScheme
         
     func updateSettings() {
         if(!isSaved){
@@ -60,12 +59,12 @@ struct SettingsView: View {
             }
             uSettings[0].theme = lightMode
             persistenceController.updateUserSettings()
-            needsRefresh.toggle()
         }
         loadSettings()
     }
     
     func loadSettings() {
+        
         uSettings = persistenceController.loadUserSettings()
         if(!uSettings.isEmpty){
             isSaved = true
@@ -91,6 +90,8 @@ struct SettingsView: View {
             lightMode = uSettings[0].theme
             
             referenceValues.getReferenceValues(height: uSettings[0].height ?? "", weight: uSettings[0].weight ?? "", age: uSettings[0].age ?? "", gender: uSettings[0].gender ?? "", activity: uSettings[0].activityLevel ?? "")
+        }else {
+            lightMode = themeColor == .light ? true : false
         }
     }
     
@@ -99,6 +100,7 @@ struct SettingsView: View {
             Form{
                 Section(header: Text("Display")){
                     Toggle("Lightmode", isOn: $lightMode).onChange(of: lightMode){value in
+                        themeColor = value ? .light : .dark // This gets the theme changed, BUT after changing theme you can't change it again or edit any other settings.
                         updateSettings()
                     }
                 }
@@ -145,8 +147,7 @@ struct SettingsView: View {
                             updateSettings()
                         }
                     }
-                }/*accentcolor used only to "activate" needsRefresh*/
-                .accentColor(needsRefresh ? .blue: .blue)
+                }
                 
                 Text("Required calories intake: \(referenceValues.calories, specifier: "%.2f") kcal")
                 Text("Required iron intake: \(referenceValues.iron, specifier: "%.2f") mg")
@@ -156,13 +157,13 @@ struct SettingsView: View {
             .onAppear(perform: {
                 loadSettings()
             })
-            
         }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(persistenceController: PersistenceController())
+        
+        SettingsView(persistenceController: PersistenceController(), themeColor: .constant(.dark))
     }
 }

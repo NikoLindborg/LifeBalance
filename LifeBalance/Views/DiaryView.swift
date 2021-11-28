@@ -11,9 +11,9 @@ struct DiaryView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(entity: Day.entity(), sortDescriptors: [], predicate: NSPredicate(format: "date != %@", Date() as CVarArg))
-
-    var days: FetchedResults<Day>
+//    @FetchRequest(entity: Day.entity(), sortDescriptors: [], predicate: NSPredicate(format: "date != %@", Date() as CVarArg))
+//
+//    var days: FetchedResults<Day>
     
     @State var progressValue: Float = 0.25
     @State var color = Color.green
@@ -47,14 +47,14 @@ struct DiaryView: View {
                 }
                 .offset(y: -60)
                 .padding(.leading, 28)
-                ForEach(days) { day in
-                    if (itemFormatter.string(from: day.date) == itemFormatter.string(from: Date())) {
-                        NavigationLink(destination: AddMealView(), label: {
-                            MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: day.meal == "Breakfast" ? Color.gray : Color.green)
-                        })
-                    }
-                }
-                .offset(y: -60)
+//                ForEach(days) { day in
+//                    if (itemFormatter.string(from: day.date) == itemFormatter.string(from: Date())) {
+//                        NavigationLink(destination: AddMealView(), label: {
+//                            MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: day.meal == "Breakfast" ? Color.gray : Color.green)
+//                        })
+//                    }
+//                }
+//                .offset(y: -60)
             }
         }
     }
@@ -64,7 +64,6 @@ struct DiaryView: View {
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
         DiaryView()
-            .preferredColorScheme(.dark)
     }
 }
 

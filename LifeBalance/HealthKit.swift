@@ -25,8 +25,8 @@ class HealthKit: ObservableObject {
         healthStore.requestAuthorization(toShare: share, read: read) { success, error in
             if (success) {
                 print("permission granted")
-                self.getActiveCalories()
                 self.getActiveCaloriesForLastWeek()
+                self.getActiveCalories()
             }
         }
     }
@@ -49,7 +49,6 @@ class HealthKit: ObservableObject {
                 let data = result![0] as! HKQuantitySample
                 DispatchQueue.main.async {
                     self.burntCalories = String(data.quantity.doubleValue(for: unit))
-                    print("burned in healthkit class \(self.burntCalories)")
                     self.healthData = true
                   }
             }
@@ -81,10 +80,12 @@ class HealthKit: ObservableObject {
             DispatchQueue.main.async {
                 results?.enumerateStatistics(from: startDate,
                                              to: Date(), with: { (result, stop) in
-                    print("Time: \(result.startDate), \(result.sumQuantity()?.doubleValue(for: unit) ?? 0)")
                     self.dataArray.append(DataArrayItem(data: result.sumQuantity()?.doubleValue(for: unit) ?? 0))
                     self.arrayForMax.append(result.sumQuantity()?.doubleValue(for: unit) ?? 0)
                     self.max = self.arrayForMax.max() ?? 0.0
+                    if (self.max > 0.0) {
+                        self.healthData = true
+                    }
                 })
             }
         }

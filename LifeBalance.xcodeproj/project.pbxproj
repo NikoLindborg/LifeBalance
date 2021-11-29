@@ -34,6 +34,8 @@
 		821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 821F912F274CD8F8007E4643 /* lifebalance.xcdatamodeld */; };
 		821F9133274CD922007E4643 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F9132274CD922007E4643 /* Persistence.swift */; };
 		8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */; };
+		8234CDA42754D10800A0E0D7 /* Meals+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8234CDA22754D10800A0E0D7 /* Meals+CoreDataClass.swift */; };
+		8234CDA52754D10800A0E0D7 /* Meals+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8234CDA32754D10800A0E0D7 /* Meals+CoreDataProperties.swift */; };
 		82722D63274E7F7400909335 /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82722D62274E7F7400909335 /* HealthKit.swift */; };
 		829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */; };
 		829DEF6C274CE1DD006F9423 /* Day+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */; };
@@ -93,6 +95,8 @@
 		821F9130274CD8F8007E4643 /* lifebalance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lifebalance.xcdatamodel; sourceTree = "<group>"; };
 		821F9132274CD922007E4643 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCaloriesCard.swift; sourceTree = "<group>"; };
+		8234CDA22754D10800A0E0D7 /* Meals+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meals+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8234CDA32754D10800A0E0D7 /* Meals+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meals+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		82722D62274E7F7400909335 /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
 		829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataClass.swift"; sourceTree = "<group>"; };
 		829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 		5F8AB6ED274278E300A59F43 = {
 			isa = PBXGroup;
 			children = (
+				8234CDA22754D10800A0E0D7 /* Meals+CoreDataClass.swift */,
+				8234CDA32754D10800A0E0D7 /* Meals+CoreDataProperties.swift */,
 				829DEF69274CE1DD006F9423 /* Day+CoreDataClass.swift */,
 				829DEF6A274CE1DD006F9423 /* Day+CoreDataProperties.swift */,
 				5F8AB6F8274278E300A59F43 /* LifeBalance */,
@@ -412,6 +418,7 @@
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
 				5F89B235274C0F56001CB079 /* FoodParser.swift in Sources */,
 				5F2C6BC7274D6FC3007250F0 /* NutrientsParserDataModels.swift in Sources */,
+				8234CDA52754D10800A0E0D7 /* Meals+CoreDataProperties.swift in Sources */,
 				82722D63274E7F7400909335 /* HealthKit.swift in Sources */,
 				5F89B237274C0F5F001CB079 /* NutrientsParser.swift in Sources */,
 				829DEF6B274CE1DD006F9423 /* Day+CoreDataClass.swift in Sources */,
@@ -422,6 +429,7 @@
 				5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */,
 				5FF12838274AAFA900ACC671 /* MealItems.swift in Sources */,
 				8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */,
+				8234CDA42754D10800A0E0D7 /* Meals+CoreDataClass.swift in Sources */,
 				5FF12834274AA86400ACC671 /* DailyProgressCard.swift in Sources */,
 				821F910F274CD116007E4643 /* ContentView.swift in Sources */,
 				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,

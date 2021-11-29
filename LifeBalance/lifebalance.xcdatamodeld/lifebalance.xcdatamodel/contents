@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Day" representedClassName="Day" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="meal" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meals" inverseName="relationship" inverseEntity="Meals"/>
+    </entity>
+    <entity name="Meals" representedClassName="Meals" syncable="YES">
+        <attribute name="mealType" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="relationship" inverseEntity="Day"/>
     </entity>
     <entity name="UserSettings" representedClassName=".UserSettings" syncable="YES" codeGenerationType="class">
         <attribute name="activityLevel" optional="YES" attributeType="String"/>
@@ -15,6 +19,7 @@
     </entity>
     <elements>
         <element name="Day" positionX="-63" positionY="-18" width="128" height="59"/>
+        <element name="Meals" positionX="-63" positionY="45" width="128" height="59"/>
         <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
     </elements>
 </model>

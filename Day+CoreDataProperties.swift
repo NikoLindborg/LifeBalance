@@ -16,26 +16,9 @@ extension Day {
         return NSFetchRequest<Day>(entityName: "Day")
     }
 
-    @NSManaged public var date: Date
-    @NSManaged public var meal: String
-    
-    var mealName: Meals {
-            set {
-                meal = newValue.rawValue
-            }
-            get {
-                Meals(rawValue: meal) ?? .breakfast
-            }
-        }
+    @NSManaged public var date: String
 }
 
 extension Day : Identifiable {
 
-}
-
-enum Meals: String {
-    case breakfast = "Breakfast"
-    case lunch = "Lunch"
-    case dinner = "Dinner"
-    case snack = "Snack"
 }

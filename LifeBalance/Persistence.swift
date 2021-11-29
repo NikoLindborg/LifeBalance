@@ -68,11 +68,19 @@ struct PersistenceController {
         userSettings.target = target
         userSettings.activityLevel = activityLevel
         userSettings.age = age
-        do{
+        do {
             try container.viewContext.save()
-        } catch
-        {
+        } catch {
             return print("Failed to save gender \(error)")
+        }
+    }
+    
+    func loadDayEntities() -> [Day] {
+        let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
         }
     }
     
@@ -82,5 +90,35 @@ struct PersistenceController {
         } catch {
             container.viewContext.rollback()
         }
+    }
+    
+    func addMeal() {
+        let dateToCheck = itemFormatter.string(from: Date())
+        if (checkDayIfExists(days: dateToCheck)) {
+            let days = Day(context: container.viewContext)
+            days.date = dateToCheck
+            do {
+                try container.viewContext.save()
+                return print("Success")
+            } catch {
+                return print("Failed to save meal \(error)")
+            }
+        } else {
+            return print("Failed to save meal")
+        }
+    }
+    
+    func checkDayIfExists(days: String) -> Bool {
+        var test = true
+        let allDays = loadDayEntities()
+        print("All days \(allDays)")
+        if (allDays.count > 0 ){
+            allDays.forEach{day in
+                if (String(day.date) == days) {
+                    test = false
+                }
+            }
+        }
+        return test
     }
 }

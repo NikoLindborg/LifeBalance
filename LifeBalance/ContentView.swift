@@ -25,12 +25,12 @@ struct ContentView: View {
                     Image(systemName: "heart.fill")
                     Text("Home")
                 }
-            DiaryView()
+            DiaryView(persistenceController: PersistenceController())
                 .tabItem() {
                     Image(systemName: "book.fill")
                     Text("Diary")
                 }
-            AddMealView()
+            AddMealView(persistenceController: PersistenceController())
                 .tabItem() {
                     Image(systemName: "plus.circle.fill")
                     Text("Add meal")

@@ -29,13 +29,19 @@ struct AddMealView: View {
                             }
                         }
                         Button(action: {
-                            persistenceController.addMeal()
+                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue])
                         }) {
                             Text("Add breakfast")
                                 .font(.body)
                         }
                     }.frame(minWidth: 0/*@END_MENU_TOKEN@*/, idealWidth: 100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center)
                         
+                    Button(action: {
+                       print("addedFoods \(addedFoods)")
+                    }) {
+                        Text("Add breakfast")
+                            .font(.body)
+                    }
                     Section {
                         VStack(){
                             Form{

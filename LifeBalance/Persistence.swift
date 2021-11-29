@@ -84,6 +84,19 @@ struct PersistenceController {
         }
     }
     
+    func loadMealEntities(_ day: Day?) -> [Meals] {
+        let fetchRequest: NSFetchRequest<Meals> = Meals.fetchRequest()
+        do {
+            var mealList = try container.viewContext.fetch(fetchRequest)
+            if (day != nil) {
+                mealList = mealList.filter {$0.day?.date == day?.date}
+            }
+            return mealList
+        } catch {
+            return []
+        }
+    }
+    
     func updateUserSettings() {
         do {
             try container.viewContext.save()
@@ -92,33 +105,72 @@ struct PersistenceController {
         }
     }
     
-    func addMeal() {
+    func addMeal(_ mealName: String) {
+        print(mealName)
         let dateToCheck = itemFormatter.string(from: Date())
-        if (checkDayIfExists(days: dateToCheck)) {
-            let days = Day(context: container.viewContext)
-            days.date = dateToCheck
-            do {
-                try container.viewContext.save()
-                return print("Success")
-            } catch {
-                return print("Failed to save meal \(error)")
+        if (checkIfExists(argument: dateToCheck, nil)) {
+            let days: Day? = Day(context: container.viewContext)
+            days?.date = dateToCheck
+            if (checkIfExists(argument: mealName, days)) {
+                let meal = Meals(context: container.viewContext)
+                meal.mealType = mealName
+                meal.day = days
+                do {
+                    try container.viewContext.save()
+                    return print("Success")
+                } catch {
+                    return print("Failed to save date \(error)")
+                }
             }
         } else {
-            return print("Failed to save meal")
-        }
-    }
-    
-    func checkDayIfExists(days: String) -> Bool {
-        var test = true
-        let allDays = loadDayEntities()
-        print("All days \(allDays)")
-        if (allDays.count > 0 ){
-            allDays.forEach{day in
-                if (String(day.date) == days) {
-                    test = false
+            let dayEntities = loadDayEntities()
+            let dayEntity = dayEntities.filter {$0.date == dateToCheck}
+            print("Day entity \(dayEntity)")
+            if (checkIfExists(argument: mealName, dayEntity[0])) {
+                let meal = Meals(context: container.viewContext)
+                meal.mealType = mealName
+                do {
+                    print("DayEntity \(dayEntity[0])")
+                    meal.day = dayEntity[0]
+                    try container.viewContext.save()
+                    return print("Ihan muu success")
+                } catch {
+                    return print("Failed to save meal \(error)")
                 }
             }
         }
+    }
+
+    func checkIfExists(argument: String, _ day: Day?) -> Bool {
+        print("Argumentti \(argument)")
+        var test = true
+        if (day == nil) {
+            let allDays = loadDayEntities()
+            print("Moemoe")
+            if (allDays.count > 0 ){
+                allDays.forEach{day in
+                    print("Day \(argument)")
+                    if (day.date == argument) {
+                        print("Last if")
+                        test = false
+                    }
+                }
+            }
+        } else {
+            print("Moe")
+            let allMeals = loadMealEntities(day)
+            print("All meals \(allMeals)")
+            if (allMeals.count > 0 ){
+                allMeals.forEach{meal in
+                    if (meal.mealType == argument) {
+                        test = false
+                    }
+                }
+            }
+            
+        }
+        
         return test
     }
+    
 }

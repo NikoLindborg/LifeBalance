@@ -17,7 +17,7 @@ extension Meals {
     }
 
     @NSManaged public var mealType: String?
-    @NSManaged public var relationship: Day?
+    @NSManaged public var day: Day?
 
 }
 

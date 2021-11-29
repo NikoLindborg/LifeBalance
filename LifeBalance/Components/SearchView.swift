@@ -29,8 +29,9 @@ struct SearchView: View {
             }
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)
             Button(action: {
-                nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g")
-                addedFoods.append(FoodModel(id: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
+                nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
+                    addedFoods.append(FoodModel(id: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
+                }
             }) {
                 Text("Add")
                     .font(.body)

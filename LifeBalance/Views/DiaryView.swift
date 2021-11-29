@@ -25,8 +25,14 @@ struct DiaryView: View {
     
     func loadDays() {
         let dayEntities = persistenceController.loadDayEntities()
+        let mealEntities = persistenceController.loadMealEntities(nil)
+
         dayEntities.forEach{day in
-            print(day.date)
+            print(day.date ?? "No date")
+        }
+        
+        mealEntities.forEach {meal in
+            print(meal.mealType ?? "No meals")
         }
     }
     

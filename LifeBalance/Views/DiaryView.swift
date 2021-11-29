@@ -25,7 +25,9 @@ struct DiaryView: View {
     
     func loadDays() {
         let dayEntities = persistenceController.loadDayEntities()
-        print("Diary View \(dayEntities[1].date)")
+        dayEntities.forEach{day in
+            print(day.date)
+        }
     }
     
     var body: some View {

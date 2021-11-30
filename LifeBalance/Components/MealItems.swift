@@ -15,7 +15,8 @@ struct MealItems: View {
             Text("   •  \(self.food)")
                 .foregroundColor(.white)
             Spacer()
-            Text("\(self.amount)")
+            Text("\(self.amount)g")
+                .foregroundColor(.white)
         }
     }
 }

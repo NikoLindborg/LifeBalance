@@ -2,7 +2,7 @@
 //  Meals+CoreDataProperties.swift
 //  LifeBalance
 //
-//  Created by Aleksi Kosonen on 29.11.2021.
+//  Created by Aleksi Kosonen on 30.11.2021.
 //
 //
 
@@ -18,6 +18,24 @@ extension Meals {
 
     @NSManaged public var mealType: String?
     @NSManaged public var day: Day?
+    @NSManaged public var ingredients: NSSet?
+
+}
+
+// MARK: Generated accessors for ingredients
+extension Meals {
+
+    @objc(addIngredientsObject:)
+    @NSManaged public func addToIngredients(_ value: Ingredient)
+
+    @objc(removeIngredientsObject:)
+    @NSManaged public func removeFromIngredients(_ value: Ingredient)
+
+    @objc(addIngredients:)
+    @NSManaged public func addToIngredients(_ values: NSSet)
+
+    @objc(removeIngredients:)
+    @NSManaged public func removeFromIngredients(_ values: NSSet)
 
 }
 

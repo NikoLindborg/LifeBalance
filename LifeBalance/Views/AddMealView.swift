@@ -29,7 +29,8 @@ struct AddMealView: View {
                             }
                         }
                         Button(action: {
-                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue])
+                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
+                            
                         }) {
                             Text("Add breakfast")
                                 .font(.body)

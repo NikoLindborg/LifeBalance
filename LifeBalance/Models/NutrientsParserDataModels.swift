@@ -14,7 +14,8 @@ struct NutrientsModel: Decodable {
 }
 
 struct FoodModel: Identifiable {
-    var id: String
+    var foodId: String
+    var id: UUID = UUID()
     var label: String
     var quantity: Int
     var totalNutrients: [totalNutrients]

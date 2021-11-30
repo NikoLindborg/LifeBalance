@@ -9,12 +9,6 @@ import SwiftUI
 
 struct DiaryView: View {
     
-//    @Environment(\.managedObjectContext) private var viewContext
-
-//    @FetchRequest(entity: Day.entity(), sortDescriptors: [], predicate: NSPredicate(format: "date != %@", Date() as CVarArg))
-//
-//    var days: FetchedResults<Day>
-    
     let persistenceController: PersistenceController
     
     @State var progressValue: Float = 0.25
@@ -22,19 +16,6 @@ struct DiaryView: View {
     @State var color2 = Color.blue
     @State var color3 = Color.orange
     @State var color4 = Color.red
-    
-    func loadDays() {
-        let dayEntities = persistenceController.loadDayEntities()
-        let mealEntities = persistenceController.loadMealEntities(nil)
-
-        dayEntities.forEach{day in
-            print(day.date ?? "No date")
-        }
-        
-        mealEntities.forEach {meal in
-            print(meal.mealType ?? "No meals")
-        }
-    }
     
     var body: some View {
         NavigationView {
@@ -62,19 +43,15 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading, 28)
-               
-                    //                ForEach(days) { day in
-                    //                    if (itemFormatter.string(from: day.date) == itemFormatter.string(from: Date())) {
-                    //                        NavigationLink(destination: AddMealView(), label: {
-                    //                            MealCard(meal: day.meal, food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: day.meal == "Breakfast" ? Color.gray : Color.green)
-                    //                        })
-                    //                    }
-                    //                }
-                    //                .offset(y: -60)
+                    let meals = persistenceController.loadMealEntities(nil)
+                    ForEach(meals) {meal in
+                        let ingr = (meal.ingredients?.allObjects as! [Ingredient])
+                        MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                    }
+                    .offset(y: -60)
                 }
             }
         }
-        .onAppear(perform: loadDays)
     }
 }
 

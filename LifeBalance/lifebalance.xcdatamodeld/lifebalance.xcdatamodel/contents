@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Day" representedClassName="Day" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="meal" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Meals" inverseName="day" inverseEntity="Meals"/>
+    </entity>
+    <entity name="Ingredient" representedClassName="Ingredient" syncable="YES">
+        <attribute name="foodId" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meals" inverseName="ingredients" inverseEntity="Meals"/>
+        <relationship name="nutrients" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Nutrition" inverseName="ingredient" inverseEntity="Nutrition"/>
+    </entity>
+    <entity name="Meals" representedClassName="Meals" syncable="YES">
+        <attribute name="mealType" optional="YES" attributeType="String"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="meals" inverseEntity="Day"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="meal" inverseEntity="Ingredient"/>
+    </entity>
+    <entity name="Nutrition" representedClassName="Nutrition" syncable="YES">
+        <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="nutrients" inverseEntity="Ingredient"/>
     </entity>
     <entity name="UserSettings" representedClassName=".UserSettings" syncable="YES" codeGenerationType="class">
         <attribute name="activityLevel" optional="YES" attributeType="String"/>
@@ -15,6 +34,9 @@
     </entity>
     <elements>
         <element name="Day" positionX="-63" positionY="-18" width="128" height="59"/>
+        <element name="Ingredient" positionX="-54" positionY="45" width="128" height="119"/>
+        <element name="Meals" positionX="-63" positionY="45" width="128" height="74"/>
+        <element name="Nutrition" positionX="-45" positionY="54" width="128" height="89"/>
         <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
     </elements>
 </model>

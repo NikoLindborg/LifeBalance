@@ -68,11 +68,32 @@ struct PersistenceController {
         userSettings.target = target
         userSettings.activityLevel = activityLevel
         userSettings.age = age
-        do{
+        do {
             try container.viewContext.save()
-        } catch
-        {
+        } catch {
             return print("Failed to save gender \(error)")
+        }
+    }
+    
+    func loadDayEntities() -> [Day] {
+        let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func loadMealEntities(_ day: Day?) -> [Meals] {
+        let fetchRequest: NSFetchRequest<Meals> = Meals.fetchRequest()
+        do {
+            var mealList = try container.viewContext.fetch(fetchRequest)
+            if (day != nil) {
+                mealList = mealList.filter {$0.day?.date == day?.date}
+            }
+            return mealList
+        } catch {
+            return []
         }
     }
     
@@ -82,5 +103,158 @@ struct PersistenceController {
         } catch {
             container.viewContext.rollback()
         }
+    }
+    
+    func addMeal(_ mealName: String, finished: @escaping() -> Void ) {
+        let dateToCheck = itemFormatter.string(from: Date())
+        if (checkIfExists(argument: dateToCheck, nil)) {
+            let days: Day? = Day(context: container.viewContext)
+            days?.date = dateToCheck
+            if (checkIfExists(argument: mealName, days)) {
+                let meal = Meals(context: container.viewContext)
+                meal.mealType = mealName
+                meal.day = days
+                do {
+                    try container.viewContext.save()
+                    finished()
+                    return print("Save meal success")
+                } catch {
+                    finished()
+                    return print("Failed to save date \(error)")
+                }
+            }
+        } else {
+            let dayEntities = loadDayEntities()
+            let dayEntity = dayEntities.filter {$0.date == dateToCheck}
+            if (checkIfExists(argument: mealName, dayEntity[0])) {
+                let meal = Meals(context: container.viewContext)
+                meal.mealType = mealName
+                do {
+                    meal.day = dayEntity[0]
+                    try container.viewContext.save()
+                    finished()
+                    return print("Day entity meal success")
+                } catch {
+                    finished()
+                    return print("Failed to save meal \(error)")
+                }
+            }
+            finished()
+        }
+    }
+
+    func checkIfExists(argument: String, _ day: Day?) -> Bool {
+        var test = true
+        if (day == nil) {
+            let allDays = loadDayEntities()
+            if (allDays.count > 0 ){
+                allDays.forEach{day in
+                    if (day.date == argument) {
+                        test = false
+                    }
+                }
+            }
+        } else {
+            let allMeals = loadMealEntities(day)
+            if (allMeals.count > 0 ){
+                allMeals.forEach{meal in
+                    if (meal.mealType == argument) {
+                        test = false
+                    }
+                }
+            }
+            
+        }
+        
+        return test
+    }
+    
+    func addFood(_ addedFoodList: [FoodModel], _ mealName: String) {
+        let dateToCheck = itemFormatter.string(from: Date())
+        let allDays = loadDayEntities()
+        let dayEntity = allDays.filter {$0.date == dateToCheck}
+        
+        let mealEntities = loadMealEntities(dayEntity[0])
+        let mealEntity = mealEntities.filter {$0.mealType == mealName}
+        
+        addedFoodList.forEach {food in
+            let ingredient = Ingredient(context: container.viewContext)
+            ingredient.meal = mealEntity[0]
+            ingredient.foodId = food.foodId
+            ingredient.id = UUID()
+            ingredient.label = food.label
+            ingredient.quantity = Int16(food.quantity)
+            
+            for n in 1...9 {
+                let nutrient = Nutrition(context: container.viewContext)
+                if n == 1 {
+                    nutrient.label = "calories"
+                    nutrient.quantity = food.totalNutrients[0].ENERC_KCAL.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].ENERC_KCAL.unit
+                }
+                if n == 2 {
+                    nutrient.label = "fat"
+                    nutrient.quantity = food.totalNutrients[0].FAT.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].FAT.unit
+                }
+                if n == 3 {
+                    nutrient.label = "carbohydrates"
+                    nutrient.quantity = food.totalNutrients[0].CHOCDF.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].CHOCDF.unit
+                }
+                if n == 4 {
+                    nutrient.label = "protein"
+                    nutrient.quantity = food.totalNutrients[0].PROCNT.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].PROCNT.unit
+                }
+                if n == 5 {
+                    nutrient.label = "fiber"
+                    nutrient.quantity = food.totalNutrients[0].FIBTG.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].FIBTG.unit
+                }
+                if n == 6 {
+                    nutrient.label = "sugar"
+                    nutrient.quantity = food.totalNutrients[0].SUGAR.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].SUGAR.unit
+                }
+                if n == 7 {
+                    nutrient.label = "sodium"
+                    nutrient.quantity = food.totalNutrients[0].NA.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].NA.unit
+                }
+                if n == 8 {
+                    nutrient.label = "cholesterol"
+                    nutrient.quantity = food.totalNutrients[0].CHOLE.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].CHOLE.unit
+                }
+                if n == 9 {
+                    nutrient.label = "iron"
+                    nutrient.quantity = food.totalNutrients[0].FE.quantity
+                    nutrient.ingredient = ingredient
+                    nutrient.unit = food.totalNutrients[0].FE.unit
+                }
+            }
+        }
+        do {
+            try container.viewContext.save()
+            return print("Ingredient save success")
+        } catch {
+            return print("Failed to save ingredients \(error)")
+        }
+    }
+    
+    func getToday() -> Day {
+        let dateToCheck = itemFormatter.string(from: Date())
+        let allDays = loadDayEntities()
+        let dayEntity = allDays.filter {$0.date == dateToCheck}
+        return dayEntity[0]
     }
 }

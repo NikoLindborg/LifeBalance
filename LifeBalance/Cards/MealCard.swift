@@ -9,8 +9,7 @@ import SwiftUI
 
 struct MealCard: View {
     let meal: String
-    let food:Array<String>
-    let amount: Array<String>
+    let food:Array<Ingredient>
     let backgroundColor: Color
     var body: some View {
         ZStack {
@@ -24,18 +23,15 @@ struct MealCard: View {
                     Spacer()
                 }
                 VStack {
-                    MealItems(food: food[0], amount: amount[0])
-                    MealItems(food: food[1], amount: amount[1])
+                    ForEach(food) {ingredient in
+                        MealItems(food: ingredient.label ?? "", amount: String(ingredient.quantity))
+                    }
                 }
             }
             .padding(20)
         }
         .frame(width: 350, height: 125, alignment: .leading)
+        .onAppear(perform: {print("\(food.count)")})
     }
-}
 
-struct MealCard_Previews: PreviewProvider {
-    static var previews: some View {
-        MealCard(meal: "Breakfast", food: ["Oatmeal", "cottage-cheese"], amount: ["400g", "200g"], backgroundColor: Color.gray)
-    }
 }

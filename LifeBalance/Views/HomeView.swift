@@ -31,7 +31,7 @@ struct HomeView: View {
                                 .cornerRadius(20)
                         }
                     })
-                    NavigationLink(destination: AddMealView(), label: {
+                    NavigationLink(destination: AddMealView(persistenceController: PersistenceController()), label: {
                         Text("Add new meal")
                             .font(.largeTitle)
                             .bold()

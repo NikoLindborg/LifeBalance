@@ -2,7 +2,7 @@
 //  Day+CoreDataClass.swift
 //  LifeBalance
 //
-//  Created by Aleksi Kosonen on 23.11.2021.
+//  Created by Aleksi Kosonen on 30.11.2021.
 //
 //
 

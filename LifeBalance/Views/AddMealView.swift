@@ -9,13 +9,13 @@ import SwiftUI
 
 struct AddMealView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @State var selectedTab: Int = 0
     @EnvironmentObject var nutrientsParser: NutrientsParser
-    private var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
+    @State var selectedTab: Int = 0
     @State private var selectedMealIndex = 0
-    
     @State var addedFoods: [FoodModel] = []
+    
+    var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
+    let persistenceController: PersistenceController
     
     var body: some View {
         NavigationView{
@@ -23,13 +23,26 @@ struct AddMealView: View {
                 alignment: .leading,
                 spacing: 10) {
                     Section{
-                            Picker(selection: $selectedMealIndex, label: Text("")) {
-                                ForEach(0 ..< meals.count) {
-                                    Text(self.meals[$0])
-                                }
+                        Picker(selection: $selectedMealIndex, label: Text("")) {
+                            ForEach(0 ..< meals.count) {
+                                Text(self.meals[$0])
                             }
+                        }
+                        Button(action: {
+                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
+                            
+                        }) {
+                            Text("Add breakfast")
+                                .font(.body)
+                        }
                     }.frame(minWidth: 0/*@END_MENU_TOKEN@*/, idealWidth: 100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center)
                         
+                    Button(action: {
+                       print("addedFoods \(addedFoods)")
+                    }) {
+                        Text("Add breakfast")
+                            .font(.body)
+                    }
                     Section {
                         VStack(){
                             Form{
@@ -54,7 +67,7 @@ struct AddMealView: View {
 
 struct AddMealView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMealView()
+        AddMealView(persistenceController: PersistenceController())
             .environmentObject(FoodParser())
             .environmentObject(NutrientsParser())
     }

@@ -250,4 +250,11 @@ struct PersistenceController {
             return print("Failed to save ingredients \(error)")
         }
     }
+    
+    func getToday() -> Day {
+        let dateToCheck = itemFormatter.string(from: Date())
+        let allDays = loadDayEntities()
+        let dayEntity = allDays.filter {$0.date == dateToCheck}
+        return dayEntity[0]
+    }
 }

@@ -43,7 +43,7 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading, 28)
-                    let meals = persistenceController.loadMealEntities(nil)
+                    let meals = persistenceController.loadMealEntities(persistenceController.getToday())
                     ForEach(meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)

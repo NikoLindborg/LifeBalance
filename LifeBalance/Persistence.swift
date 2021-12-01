@@ -9,7 +9,6 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
@@ -23,9 +22,9 @@ struct PersistenceController {
         }
         return result
     }()
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "lifebalance")
         if inMemory {
@@ -35,15 +34,15 @@ struct PersistenceController {
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
+                
                 /*
-                Typical reasons for an error here include:
-                * The parent directory does not exist, cannot be created, or disallows writing.
-                * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                * The device is out of space.
-                * The store could not be migrated to the current model version.
-                Check the error message to determine what the actual problem was.
-                */
+                 Typical reasons for an error here include:
+                 * The parent directory does not exist, cannot be created, or disallows writing.
+                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                 * The device is out of space.
+                 * The store could not be migrated to the current model version.
+                 Check the error message to determine what the actual problem was.
+                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -80,6 +79,15 @@ struct PersistenceController {
         do {
             return  try container.viewContext.fetch(fetchRequest)
         } catch {
+            return []
+        }
+    }
+    
+    func loadIngredientEntities() -> [Ingredient] {
+        let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
+        do{
+            return try container.viewContext.fetch(fetchRequest)
+        }catch{
             return []
         }
     }
@@ -142,7 +150,7 @@ struct PersistenceController {
             finished()
         }
     }
-
+    
     func checkIfExists(argument: String, _ day: Day?) -> Bool {
         var test = true
         if (day == nil) {
@@ -333,5 +341,72 @@ struct PersistenceController {
             progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))
         }
         return progressArray
+    }
+  
+    func getSpecificMeal(mealType: String, meals: [Meals]) -> Meals{
+        return meals.filter{$0.mealType == mealType}[0]
+    }
+    
+    func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
+        ingred.quantity = Int16(quantity)
+        if (ingred.quantity <= 0){
+            container.viewContext.delete(ingred)
+        } else {
+            let nutrients = ingred.nutrients
+            let nutrientsArray = (nutrients?.allObjects as! [Nutrition])
+            nutrientsArray.forEach{ nutrient in
+                
+                if nutrient.label == "calories" {
+                    nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].ENERC_KCAL?.unit
+                }
+                
+                if nutrient.label == "fat" {
+                    nutrient.quantity = food.totalNutrients[0].FAT?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].FAT?.unit
+                }
+                
+                if nutrient.label == "carbohydrates" {
+                    nutrient.quantity = food.totalNutrients[0].CHOCDF?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].CHOCDF?.unit
+                }
+                
+                if nutrient.label == "protein" {
+                    nutrient.quantity = food.totalNutrients[0].PROCNT?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].PROCNT?.unit
+                }
+                
+                if nutrient.label == "fiber" {
+                    nutrient.quantity = food.totalNutrients[0].FIBTG?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].FIBTG?.unit
+                }
+                
+                if nutrient.label == "sugar" {
+                    nutrient.quantity = food.totalNutrients[0].SUGAR?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].SUGAR?.unit
+                }
+                
+                if nutrient.label == "sodium" {
+                    nutrient.quantity = food.totalNutrients[0].NA?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].NA?.unit
+                }
+                
+                if nutrient.label == "cholesterol" {
+                    nutrient.quantity = food.totalNutrients[0].CHOLE?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].CHOLE?.unit
+                }
+                
+                if nutrient.label == "iron"{
+                    nutrient.quantity = food.totalNutrients[0].FE?.quantity ?? 0
+                    nutrient.unit = food.totalNutrients[0].FE?.unit
+                }
+            }
+        }
+        do {
+            try container.viewContext.save()
+            return print("Ingredient save success")
+        } catch {
+            return print("Failed to save ingredients \(error)")
+        }
     }
 }

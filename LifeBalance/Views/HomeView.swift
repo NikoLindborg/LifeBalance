@@ -11,7 +11,8 @@ struct HomeView: View {
     @State var progressValue: Float = 0.25
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
-    
+    let persistenceController: PersistenceController
+        
     var body: some View {
         NavigationView {
             ScrollView {
@@ -74,12 +75,32 @@ struct HomeView: View {
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
+        .onAppear(perform: {print(persistenceController.createRefValuesEntity())})
+        .onAppear(perform: {print(getProgressValue())})
+
+    }
+    
+    func getRefValues() -> CDReferenceValues {
+        let refCaloriesFromCoreData = persistenceController.getRefValues()
+        return refCaloriesFromCoreData[0]
+    }
+    
+    func getConsumedCalories() -> Float {
+        let consumedCalories = persistenceController.getConsumedMealNutrients(nutritionLabel: "calories")
+        return consumedCalories
+    }
+    
+    func getProgressValue() -> Float {
+        let result = Float(getConsumedCalories()) / Float(getRefValues().ref_calories)
+        print(result)
+        progressValue = result
+        return result
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(persistenceController: PersistenceController())
             .environmentObject(HealthKit())
     }
 }

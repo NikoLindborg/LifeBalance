@@ -257,4 +257,58 @@ struct PersistenceController {
         let dayEntity = allDays.filter {$0.date == dateToCheck}
         return dayEntity.count > 0 ? dayEntity[0]: nil
     }
+    
+    func createRefValuesEntity() {
+        let refValuesEntity = getRefValues()
+        if (refValuesEntity.count > 0) {
+            print("RefValues already exists")
+        } else {
+            _ = CDReferenceValues(context: container.viewContext)
+            do {
+                try container.viewContext.save()
+                return print("Reference values created to CoreData")
+            } catch {
+                return print("Failed to create reference values to CoreData \(error)")
+            }
+        }
+    }
+    
+    func addRefValues(refCalories: Double, refIron: Double) {
+        let refValues = getRefValues()
+        refValues[0].ref_calories = refCalories
+        refValues[0].ref_iron = refIron
+        do {
+            try container.viewContext.save()
+            return print("Reference values \(refIron) & \(refCalories) stored to CoreData")
+        } catch {
+            return print("Failed to save reference values to CoreData \(error)")
+        }
+    }
+    
+    func getRefValues() -> Array<CDReferenceValues> {
+        let fetchRequest: NSFetchRequest<CDReferenceValues> = CDReferenceValues.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func getConsumedMealNutrients(nutritionLabel: String) -> Float {
+        let meals = loadMealEntities(getToday())
+        var value: Float = 0
+        meals.forEach {meal in
+            let ingr = (meal.ingredients?.allObjects as! [Ingredient])
+            ingr.forEach {ing in
+                let nutrition = ing.nutrients?.allObjects as! [Nutrition]
+                nutrition.forEach {nutr in
+                    if (nutr.label == nutritionLabel) {
+                        print("\(nutr.label ?? ""), \(nutr.quantity), \(nutr.unit ?? "")")
+                        value += nutr.quantity
+                    }
+                }
+            }
+        }
+        return value
+    }
 }

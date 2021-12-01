@@ -61,6 +61,8 @@ struct SettingsView: View {
             persistenceController.updateUserSettings()
         }
         loadSettings()
+        persistenceController.addRefValues(refCalories: referenceValues.calories, refIron: referenceValues.iron)
+        print("update ran")
     }
     
     func loadSettings() {

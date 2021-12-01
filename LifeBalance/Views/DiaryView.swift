@@ -10,8 +10,8 @@ import SwiftUI
 struct DiaryView: View {
     
     let persistenceController: PersistenceController
-    
-    @State var progressValue: Float = 0.25
+    @State var progressValues: Array<ProgressItem> = []
+
     @State var color = Color.green
     @State var color2 = Color.blue
     @State var color3 = Color.orange
@@ -30,9 +30,12 @@ struct DiaryView: View {
                     .offset(y: -60)
                     .padding(.leading, 28)
                     NavigationLink(destination: NutritionalDatalistView(), label: {
-                        /*DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
-                            .frame(width: 350, height: 250, alignment: .leading)
-                            .cornerRadius(20.0)*/
+                        VStack(alignment: .leading){
+                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
+                                .frame(width: 350, height: 250, alignment: .leading)
+                                .background(Color.purple)
+                                .cornerRadius(20)
+                        }
                     })
                         .offset(y: -60)
                     HStack{
@@ -52,6 +55,13 @@ struct DiaryView: View {
                 }
             }
         }
+        .onAppear(perform: {getProgressValue()})
+    }
+    
+    func getProgressValue() {
+        // A dummy list for future reference for controlling what is shown on Daily Progress View
+        let userSetNutritionalValues = ["calories", "iron"]
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues)
     }
 }
 

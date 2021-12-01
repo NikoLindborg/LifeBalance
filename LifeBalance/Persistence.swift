@@ -301,7 +301,7 @@ struct PersistenceController {
         return userReferenceValues
     }
     
-    func getConsumedMealNutrients(nutritionLabel: String) -> (value: Float, unit: String) {
+    func getConsumedMealNutrients(nutritionLabel: String) -> (value: Float?, unit: String?) {
         let meals = loadMealEntities(getToday())
         var value: Float = 0
         var unit: String = ""
@@ -319,5 +319,19 @@ struct PersistenceController {
             }
         }
         return (value, unit)
+    }
+    
+    func getProgressValues(userSetNutritionalValues: Array<String>) -> Array<ProgressItem> {
+        var progressArray: Array<ProgressItem> = []
+        
+        let userReferenceValues = getRefValuesDictionary()
+       
+        userSetNutritionalValues.forEach {userValue in
+            let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue)
+            let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
+            let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
+            progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))
+        }
+        return progressArray
     }
 }

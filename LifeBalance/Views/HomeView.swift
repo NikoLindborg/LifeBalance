@@ -79,31 +79,10 @@ struct HomeView: View {
         .onAppear(perform: {getProgressValue()})
     }
     
-    func getRefValues() -> CDReferenceValues {
-        let refValuesFromCoreData = persistenceController.getRefValues()
-        return refValuesFromCoreData[0]
-    }
-    
-    func getConsumedValue(consumed: String) -> (value: Float?, unit: String?) {
-        let consumedValues = persistenceController.getConsumedMealNutrients(nutritionLabel: consumed)
-        return consumedValues
-    }
-    
     func getProgressValue() {
+        // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
-        var progressArray: Array<ProgressItem> = []
-        
-        let userReferenceValues = persistenceController.getRefValuesDictionary()
-       
-        userSetNutritionalValues.forEach {userValue in
-            let consumedNutrient = getConsumedValue(consumed: userValue)
-            let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
-            let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
-            print(result ?? 0.0)
-            progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))
-        }
-        
-        progressValues = progressArray
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues)
     }
 }
 

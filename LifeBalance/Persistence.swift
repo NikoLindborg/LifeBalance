@@ -189,57 +189,57 @@ struct PersistenceController {
                 let nutrient = Nutrition(context: container.viewContext)
                 if n == 1 {
                     nutrient.label = "calories"
-                    nutrient.quantity = food.totalNutrients[0].ENERC_KCAL.quantity
+                    nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].ENERC_KCAL.unit
+                    nutrient.unit = food.totalNutrients[0].ENERC_KCAL?.unit
                 }
                 if n == 2 {
                     nutrient.label = "fat"
-                    nutrient.quantity = food.totalNutrients[0].FAT.quantity
+                    nutrient.quantity = food.totalNutrients[0].FAT?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].FAT.unit
+                    nutrient.unit = food.totalNutrients[0].FAT?.unit
                 }
                 if n == 3 {
                     nutrient.label = "carbohydrates"
-                    nutrient.quantity = food.totalNutrients[0].CHOCDF.quantity
+                    nutrient.quantity = food.totalNutrients[0].CHOCDF?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].CHOCDF.unit
+                    nutrient.unit = food.totalNutrients[0].CHOCDF?.unit
                 }
                 if n == 4 {
                     nutrient.label = "protein"
-                    nutrient.quantity = food.totalNutrients[0].PROCNT.quantity
+                    nutrient.quantity = food.totalNutrients[0].PROCNT?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].PROCNT.unit
+                    nutrient.unit = food.totalNutrients[0].PROCNT?.unit
                 }
                 if n == 5 {
                     nutrient.label = "fiber"
-                    nutrient.quantity = food.totalNutrients[0].FIBTG.quantity
+                    nutrient.quantity = food.totalNutrients[0].FIBTG?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].FIBTG.unit
+                    nutrient.unit = food.totalNutrients[0].FIBTG?.unit
                 }
                 if n == 6 {
                     nutrient.label = "sugar"
-                    nutrient.quantity = food.totalNutrients[0].SUGAR.quantity
+                    nutrient.quantity = food.totalNutrients[0].SUGAR?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].SUGAR.unit
+                    nutrient.unit = food.totalNutrients[0].SUGAR?.unit
                 }
                 if n == 7 {
                     nutrient.label = "sodium"
-                    nutrient.quantity = food.totalNutrients[0].NA.quantity
+                    nutrient.quantity = food.totalNutrients[0].NA?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].NA.unit
+                    nutrient.unit = food.totalNutrients[0].NA?.unit
                 }
                 if n == 8 {
                     nutrient.label = "cholesterol"
-                    nutrient.quantity = food.totalNutrients[0].CHOLE.quantity
+                    nutrient.quantity = food.totalNutrients[0].CHOLE?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].CHOLE.unit
+                    nutrient.unit = food.totalNutrients[0].CHOLE?.unit
                 }
                 if n == 9 {
                     nutrient.label = "iron"
-                    nutrient.quantity = food.totalNutrients[0].FE.quantity
+                    nutrient.quantity = food.totalNutrients[0].FE?.quantity ?? 0
                     nutrient.ingredient = ingredient
-                    nutrient.unit = food.totalNutrients[0].FE.unit
+                    nutrient.unit = food.totalNutrients[0].FE?.unit
                 }
             }
         }
@@ -251,10 +251,10 @@ struct PersistenceController {
         }
     }
     
-    func getToday() -> Day {
+    func getToday() -> Day? {
         let dateToCheck = itemFormatter.string(from: Date())
         let allDays = loadDayEntities()
         let dayEntity = allDays.filter {$0.date == dateToCheck}
-        return dayEntity[0]
+        return dayEntity.count > 0 ? dayEntity[0]: nil
     }
 }

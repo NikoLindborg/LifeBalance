@@ -9,7 +9,9 @@ import Foundation
 
 class FoodParser: ObservableObject {
     let constants = Constants()
-    @Published var queryList: [Hints] = []
+    @Published var queryList: [Hints] =  []
+  
+
     
     func parseFood(_ query: String) {
         guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/parser?app_id=\(constants.app_id)&app_key=\(constants.app_key)&ingr=\(query)&nutrition-type=cooking") else{
@@ -31,7 +33,7 @@ class FoodParser: ObservableObject {
                 DispatchQueue.main.async {
                     do {
                         let decodeQuery = try JSONDecoder().decode(ParsedModel.self, from: data)
-                        self.queryList = decodeQuery.hints
+                        self.queryList = Array(Set(decodeQuery.hints))
                     } catch let error {
                         print("Error decoding: ", error)
                     }
@@ -39,5 +41,12 @@ class FoodParser: ObservableObject {
             }
         }
         dataTask.resume()
+    }
+}
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
     }
 }

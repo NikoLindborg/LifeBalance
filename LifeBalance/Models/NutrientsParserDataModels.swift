@@ -22,15 +22,15 @@ struct FoodModel: Identifiable {
 }
 
 struct totalNutrients: Decodable {
-    var ENERC_KCAL: ENERC_KCAL
-    var FAT: FAT
-    var CHOCDF: CHOCDF
-    var PROCNT: PROCNT
-    var FIBTG: FIBTG
-    var SUGAR: SUGAR
-    var NA: NA
-    var CHOLE: CHOLE
-    var FE: FE
+    var ENERC_KCAL: ENERC_KCAL?
+    var FAT: FAT?
+    var CHOCDF: CHOCDF?
+    var PROCNT: PROCNT?
+    var FIBTG: FIBTG?
+    var SUGAR: SUGAR?
+    var NA: NA?
+    var CHOLE: CHOLE?
+    var FE: FE?
 }
 
 struct ENERC_KCAL: Decodable {

@@ -30,9 +30,9 @@ struct DiaryView: View {
                     .offset(y: -60)
                     .padding(.leading, 28)
                     NavigationLink(destination: NutritionalDatalistView(), label: {
-                        DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
+                        /*DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color2, color3: $color3, color4: $color4)
                             .frame(width: 350, height: 250, alignment: .leading)
-                            .cornerRadius(20.0)
+                            .cornerRadius(20.0)*/
                     })
                         .offset(y: -60)
                     HStack{

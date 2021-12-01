@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var progressValue: Float = 0.25
+    @State var progressValues: Array<ProgressItem> = []
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
@@ -26,7 +26,7 @@ struct HomeView: View {
                     .padding(.leading, 28)
                     NavigationLink(destination: NutritionalDatalistView(), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
                                 .background(Color.purple)
                                 .cornerRadius(20)
@@ -75,26 +75,35 @@ struct HomeView: View {
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
-        .onAppear(perform: {print(persistenceController.createRefValuesEntity())})
-        .onAppear(perform: {print(getProgressValue())})
-
+        .onAppear(perform: persistenceController.createRefValuesEntity)
+        .onAppear(perform: {getProgressValue()})
     }
     
     func getRefValues() -> CDReferenceValues {
-        let refCaloriesFromCoreData = persistenceController.getRefValues()
-        return refCaloriesFromCoreData[0]
+        let refValuesFromCoreData = persistenceController.getRefValues()
+        return refValuesFromCoreData[0]
     }
     
-    func getConsumedCalories() -> Float {
-        let consumedCalories = persistenceController.getConsumedMealNutrients(nutritionLabel: "calories")
-        return consumedCalories
+    func getConsumedValue(consumed: String) -> (value: Float?, unit: String?) {
+        let consumedValues = persistenceController.getConsumedMealNutrients(nutritionLabel: consumed)
+        return consumedValues
     }
     
-    func getProgressValue() -> Float {
-        let result = Float(getConsumedCalories()) / Float(getRefValues().ref_calories)
-        print(result)
-        progressValue = result
-        return result
+    func getProgressValue() {
+        let userSetNutritionalValues = ["calories", "iron"]
+        var progressArray: Array<ProgressItem> = []
+        
+        let userReferenceValues = persistenceController.getRefValuesDictionary()
+       
+        userSetNutritionalValues.forEach {userValue in
+            let consumedNutrient = getConsumedValue(consumed: userValue)
+            let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
+            let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
+            print(result ?? 0.0)
+            progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))
+        }
+        
+        progressValues = progressArray
     }
 }
 

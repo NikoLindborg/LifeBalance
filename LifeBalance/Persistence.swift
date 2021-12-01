@@ -294,9 +294,17 @@ struct PersistenceController {
         }
     }
     
-    func getConsumedMealNutrients(nutritionLabel: String) -> Float {
+    func getRefValuesDictionary() -> Dictionary<String, Float> {
+        let userReferenceValues: Dictionary<String, Float> = [
+            "calories" : Float(getRefValues()[0].ref_calories),
+            "iron" : Float(getRefValues()[0].ref_iron)]
+        return userReferenceValues
+    }
+    
+    func getConsumedMealNutrients(nutritionLabel: String) -> (value: Float, unit: String) {
         let meals = loadMealEntities(getToday())
         var value: Float = 0
+        var unit: String = ""
         meals.forEach {meal in
             let ingr = (meal.ingredients?.allObjects as! [Ingredient])
             ingr.forEach {ing in
@@ -305,10 +313,11 @@ struct PersistenceController {
                     if (nutr.label == nutritionLabel) {
                         print("\(nutr.label ?? ""), \(nutr.quantity), \(nutr.unit ?? "")")
                         value += nutr.quantity
+                        unit = nutr.unit ?? ""
                     }
                 }
             }
         }
-        return value
+        return (value, unit)
     }
 }

@@ -13,9 +13,12 @@ struct AddMealView: View {
     @State var selectedTab: Int = 0
     @State private var selectedMealIndex = 0
     @State var addedFoods: [FoodModel] = []
+    @State var mealEntities: [Meals] = []
+
     
     var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
     let persistenceController: PersistenceController
+    
     
     var body: some View {
         NavigationView{
@@ -36,11 +39,18 @@ struct AddMealView: View {
                                 .font(.body)
                         }
                     }.frame(minWidth: 0/*@END_MENU_TOKEN@*/, idealWidth: 100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center)
-                        
+                    
                     Button(action: {
-                       print("addedFoods \(addedFoods)")
+                        var ingredients: [Ingredient] = []
+                        mealEntities.forEach {meal in
+                            ingredients.append(contentsOf: meal.ingredients?.allObjects as! [Ingredient])
+                        }
+                        
+                        nutrientsParser.parseNutrients(ingredients[0].foodId ?? "", 300, "g"){
+                            persistenceController.editFood(ingredients[0], 300, FoodModel(foodId: ingredients[0].foodId ?? "", label: ingredients[0].label ?? "", quantity: 300, totalNutrients: nutrientsParser.nutrientsList))
+                        }
                     }) {
-                        Text("Add breakfast")
+                        Text("Edit")
                             .font(.body)
                     }
                     Section {
@@ -55,7 +65,8 @@ struct AddMealView: View {
                             }
                         }
                     }
-                }
+                }.onAppear(perform: {
+                    mealEntities = persistenceController.loadMealEntities(persistenceController.getToday())})
         }
     }
 }

@@ -12,6 +12,7 @@ struct HomeView: View {
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
+    @EnvironmentObject private var tabController: TabController
         
     var body: some View {
         NavigationView {
@@ -32,7 +33,10 @@ struct HomeView: View {
                                 .cornerRadius(20)
                         }
                     })
-                    NavigationLink(destination: AddMealView(persistenceController: PersistenceController()), label: {
+                    Button(action: {
+                        tabController.open(.addMeal)
+                        
+                    }) {
                         Text("Add new meal")
                             .font(.largeTitle)
                             .bold()
@@ -41,7 +45,8 @@ struct HomeView: View {
                             .background(Color.green)
                             .foregroundColor(.white)
                             .cornerRadius(20)
-                    })
+                    }
+                    
                 }
                 .offset(y: -60)
                 VStack {

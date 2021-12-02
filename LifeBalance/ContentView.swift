@@ -17,30 +17,36 @@ struct ContentView: View {
 //        animation: .default)
 //    private var days: FetchedResults<Day>
     @State var themeColor: ColorScheme
+    @StateObject private var tabController = TabController()
 
     var body: some View {
-        TabView {
+        TabView(selection: $tabController.activeTab) {
             HomeView(persistenceController: PersistenceController())
+                .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
                 }
             DiaryView(persistenceController: PersistenceController())
+                .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")
                     Text("Diary")
                 }
             AddMealView(persistenceController: PersistenceController())
+                .tag(Tab.addMeal)
                 .tabItem() {
                     Image(systemName: "plus.circle.fill")
                     Text("Add meal")
                 }
             SettingsView(persistenceController: PersistenceController(), themeColor: $themeColor)
+                .tag(Tab.settings)
                 .tabItem() {
                     Image(systemName: "slider.vertical.3")
                     Text("Settings")
                 }
         }
+        .environmentObject(tabController)
         .onAppear(perform: {
             if(!PersistenceController().loadUserSettings().isEmpty){
                 themeColor = PersistenceController().loadUserSettings()[0].theme ? .light : .dark

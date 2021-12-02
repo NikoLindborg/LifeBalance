@@ -14,6 +14,7 @@ struct AddMealView: View {
     @State private var selectedMealIndex = 0
     @State var addedFoods: [FoodModel] = []
     @State var mealEntities: [Meals] = []
+    @EnvironmentObject private var tabController: TabController
 
     
     var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]

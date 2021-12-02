@@ -266,6 +266,83 @@ struct PersistenceController {
         return dayEntity.count > 0 ? dayEntity[0]: nil
     }
     
+    func createRefValuesEntity() {
+        let refValuesEntity = getRefValues()
+        if (refValuesEntity.count > 0) {
+            print("RefValues already exists")
+        } else {
+            _ = CDReferenceValues(context: container.viewContext)
+            do {
+                try container.viewContext.save()
+                return print("Reference values created to CoreData")
+            } catch {
+                return print("Failed to create reference values to CoreData \(error)")
+            }
+        }
+    }
+    
+    func addRefValues(refCalories: Double, refIron: Double) {
+        let refValues = getRefValues()
+        refValues[0].ref_calories = refCalories
+        refValues[0].ref_iron = refIron
+        do {
+            try container.viewContext.save()
+            return print("Reference values \(refIron) & \(refCalories) stored to CoreData")
+        } catch {
+            return print("Failed to save reference values to CoreData \(error)")
+        }
+    }
+    
+    func getRefValues() -> Array<CDReferenceValues> {
+        let fetchRequest: NSFetchRequest<CDReferenceValues> = CDReferenceValues.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func getRefValuesDictionary() -> Dictionary<String, Float> {
+        let userReferenceValues: Dictionary<String, Float> = [
+            "calories" : Float(getRefValues()[0].ref_calories),
+            "iron" : Float(getRefValues()[0].ref_iron)]
+        return userReferenceValues
+    }
+    
+    func getConsumedMealNutrients(nutritionLabel: String) -> (value: Float?, unit: String?) {
+        let meals = loadMealEntities(getToday())
+        var value: Float = 0
+        var unit: String = ""
+        meals.forEach {meal in
+            let ingr = (meal.ingredients?.allObjects as! [Ingredient])
+            ingr.forEach {ing in
+                let nutrition = ing.nutrients?.allObjects as! [Nutrition]
+                nutrition.forEach {nutr in
+                    if (nutr.label == nutritionLabel) {
+                        print("\(nutr.label ?? ""), \(nutr.quantity), \(nutr.unit ?? "")")
+                        value += nutr.quantity
+                        unit = nutr.unit ?? ""
+                    }
+                }
+            }
+        }
+        return (value, unit)
+    }
+    
+    func getProgressValues(userSetNutritionalValues: Array<String>) -> Array<ProgressItem> {
+        var progressArray: Array<ProgressItem> = []
+        
+        let userReferenceValues = getRefValuesDictionary()
+       
+        userSetNutritionalValues.forEach {userValue in
+            let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue)
+            let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
+            let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
+            progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))
+        }
+        return progressArray
+    }
+  
     func getSpecificMeal(mealType: String, meals: [Meals]) -> Meals{
         return meals.filter{$0.mealType == mealType}[0]
     }

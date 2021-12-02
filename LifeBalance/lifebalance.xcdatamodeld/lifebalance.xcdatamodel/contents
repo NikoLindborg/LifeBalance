@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDReferenceValues" representedClassName="CDReferenceValues" syncable="YES">
+        <attribute name="ref_calories" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="ref_iron" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Day" representedClassName="Day" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String"/>
         <relationship name="meals" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Meals" inverseName="day" inverseEntity="Meals"/>
@@ -38,5 +42,6 @@
         <element name="Meals" positionX="-63" positionY="45" width="128" height="74"/>
         <element name="Nutrition" positionX="-45" positionY="54" width="128" height="89"/>
         <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
+        <element name="CDReferenceValues" positionX="-45" positionY="72" width="128" height="59"/>
     </elements>
 </model>

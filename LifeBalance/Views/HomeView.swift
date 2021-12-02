@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var progressValue: Float = 0.25
+    @State var progressValues: Array<ProgressItem> = []
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
-    
+    let persistenceController: PersistenceController
+        
     var body: some View {
         NavigationView {
             ScrollView {
@@ -25,7 +26,7 @@ struct HomeView: View {
                     .padding(.leading, 28)
                     NavigationLink(destination: NutritionalDatalistView(), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressValue: $progressValue, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
                                 .background(Color.purple)
                                 .cornerRadius(20)
@@ -74,12 +75,20 @@ struct HomeView: View {
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
+        .onAppear(perform: persistenceController.createRefValuesEntity)
+        .onAppear(perform: {getProgressValue()})
+    }
+    
+    func getProgressValue() {
+        // A dummy list for future reference for controlling what is shown on Daily Progress View
+        let userSetNutritionalValues = ["calories", "iron"]
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues)
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(persistenceController: PersistenceController())
             .environmentObject(HealthKit())
     }
 }

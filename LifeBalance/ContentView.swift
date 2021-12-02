@@ -20,7 +20,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(persistenceController: PersistenceController())
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")

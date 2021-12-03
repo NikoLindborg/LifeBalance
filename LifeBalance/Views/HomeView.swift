@@ -94,7 +94,7 @@ struct HomeView: View {
         
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: anotherDateString)
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
     }
 }
 

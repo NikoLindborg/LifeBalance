@@ -13,6 +13,7 @@ struct HomeView: View {
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
+    let today = itemFormatter.string(from: Date())
         
     var body: some View {
         NavigationView {
@@ -81,13 +82,19 @@ struct HomeView: View {
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
-        .onAppear(perform: {getProgressValue()})
+        .onAppear(perform: {persistenceController.addDay(date: today)})
+        .onAppear(perform: getProgressValueToday)
     }
     
-    func getProgressValue() {
+    func getProgressValueToday() {
+        // anotherDate can be used to scope around different days by variating the "value: _"
+        // Insert anotherDateString to getProgressValues parameter instead of today to switch day
+        // let anotherDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        // let anotherDateString = itemFormatter.string(from: anotherDate)
+        
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues)
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: anotherDateString)
     }
 }
 

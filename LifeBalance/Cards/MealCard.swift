@@ -31,7 +31,6 @@ struct MealCard: View {
             .padding(20)
         }
         .frame(width: 350, height: 125, alignment: .leading)
-        .onAppear(perform: {print("\(food.count)")})
     }
 
 }

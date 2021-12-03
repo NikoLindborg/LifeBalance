@@ -15,10 +15,10 @@ struct AddMealView: View {
     @State var addedFoods: [FoodModel] = []
     @State var mealEntities: [Meals] = []
     @EnvironmentObject private var tabController: TabController
-
     
     var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
     let persistenceController: PersistenceController
+    let today = itemFormatter.string(from: Date())
     
     
     var body: some View {
@@ -67,7 +67,7 @@ struct AddMealView: View {
                         }
                     }
                 }.onAppear(perform: {
-                    mealEntities = persistenceController.loadMealEntities(persistenceController.getToday())})
+                    mealEntities = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))})
         }
     }
 }

@@ -17,6 +17,8 @@ struct DiaryView: View {
     @State var color3 = Color.orange
     @State var color4 = Color.red
     
+    let today = itemFormatter.string(from: Date())
+    
     var body: some View {
         NavigationView {
             ScrollView{
@@ -46,7 +48,7 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading, 28)
-                    let meals = persistenceController.loadMealEntities(persistenceController.getToday())
+                    let meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))
                     ForEach(meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
@@ -55,13 +57,13 @@ struct DiaryView: View {
                 }
             }
         }
-        .onAppear(perform: {getProgressValue()})
+        .onAppear(perform: getProgressValueToday)
     }
     
-    func getProgressValue() {
+    func getProgressValueToday() {
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues)
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
     }
 }
 

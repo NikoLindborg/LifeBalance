@@ -24,6 +24,7 @@ struct PersistenceController {
     }()
     
     let container: NSPersistentContainer
+    let today = itemFormatter.string(from: Date())
     
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "lifebalance")
@@ -99,6 +100,9 @@ struct PersistenceController {
             if (day != nil) {
                 mealList = mealList.filter {$0.day?.date == day?.date}
             }
+            if (day == nil) {
+                mealList = []
+            }
             return mealList
         } catch {
             return []
@@ -113,9 +117,22 @@ struct PersistenceController {
         }
     }
     
+    func addDay(date: String) {
+        if (checkIfExists(argument: date, nil)) {
+            let days: Day? = Day(context: container.viewContext)
+            days?.date = date
+            do {
+                try container.viewContext.save()
+                return print("Save today success")
+            } catch {
+                return print("Failed to save today \(error)")
+            }
+        }
+    }
+    
     func addMeal(_ mealName: String, finished: @escaping() -> Void ) {
         let dateToCheck = itemFormatter.string(from: Date())
-        if (checkIfExists(argument: dateToCheck, nil)) {
+        if (checkIfExists(argument: today, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = dateToCheck
             if (checkIfExists(argument: mealName, days)) {
@@ -259,8 +276,7 @@ struct PersistenceController {
         }
     }
     
-    func getToday() -> Day? {
-        let dateToCheck = itemFormatter.string(from: Date())
+    func getDay(dateToCheck: String) -> Day? {
         let allDays = loadDayEntities()
         let dayEntity = allDays.filter {$0.date == dateToCheck}
         return dayEntity.count > 0 ? dayEntity[0]: nil
@@ -309,8 +325,8 @@ struct PersistenceController {
         return userReferenceValues
     }
     
-    func getConsumedMealNutrients(nutritionLabel: String) -> (value: Float?, unit: String?) {
-        let meals = loadMealEntities(getToday())
+    func getConsumedMealNutrients(nutritionLabel: String, date: String) -> (value: Float?, unit: String?) {
+        let meals = loadMealEntities(getDay(dateToCheck: date))
         var value: Float = 0
         var unit: String = ""
         meals.forEach {meal in
@@ -329,13 +345,12 @@ struct PersistenceController {
         return (value, unit)
     }
     
-    func getProgressValues(userSetNutritionalValues: Array<String>) -> Array<ProgressItem> {
+    func getProgressValues(userSetNutritionalValues: Array<String>, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
-        
         let userReferenceValues = getRefValuesDictionary()
        
         userSetNutritionalValues.forEach {userValue in
-            let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue)
+            let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
             let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
             progressArray.append(ProgressItem(progress: result ?? 0.0, target: userReferenceForValue, consumed: consumedNutrient.value ?? 0.0, description: userValue, unit: consumedNutrient.unit ?? ""))

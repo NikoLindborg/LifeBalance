@@ -14,6 +14,8 @@ struct HomeView: View {
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
+    @State var realData: [[CGFloat]] = [[]]
+    @State var isLoaded = false
         
     var body: some View {
         NavigationView {
@@ -78,12 +80,19 @@ struct HomeView: View {
                     }
                 }
                 .offset(y: -60)
+                if (healthKit.healthData) {
+                    VStack {
+                        ChartCard(realData: $realData, isLoaded: $isLoaded, max: $healthKit.max)
+                    }
+                    .offset(y: -60) 
+                }
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
+        .onAppear(perform: getData)
     }
     
     func getProgressValueToday() {
@@ -95,6 +104,17 @@ struct HomeView: View {
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
         progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
+    }
+    
+    func getData() {
+        if (healthKit.healthData && !isLoaded) {
+            var firstArray: [CGFloat] = []
+            healthKit.dataArray.forEach {data in
+                firstArray.append(data.data)
+            }
+            realData.append(firstArray)
+            isLoaded = true
+        }
     }
 }
 

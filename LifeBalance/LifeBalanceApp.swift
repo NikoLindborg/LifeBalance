@@ -22,7 +22,7 @@ struct LifeBalanceApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(parser)
                 .environmentObject(nutrientsParser)
-                .environmentObject(healthKit)
+                .environmentObject(healthKit)   
         
         }
     }

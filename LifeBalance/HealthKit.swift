@@ -13,20 +13,23 @@ class HealthKit: ObservableObject {
     @Published var burntCalories: String = "0"
     @Published var healthData: Bool = false
     @Published var dataArray: Array<DataArrayItem> = []
+    @Published var realData: [[CGFloat]] = [[]]
     @Published var max: Double = 0.0
     var arrayForMax: Array<Double> = []
 
     let healthStore = HKHealthStore()
 
     func authorizeHealthStore() {
-        let read = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
-        let share = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
+        if (!healthData) {
+            let read = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
+            let share = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
 
-        healthStore.requestAuthorization(toShare: share, read: read) { success, error in
-            if (success) {
-                print("permission granted")
-                self.getActiveCaloriesForLastWeek()
-                self.getActiveCalories()
+            healthStore.requestAuthorization(toShare: share, read: read) { success, error in
+                if (success) {
+                    print("permission granted")
+                    self.getActiveCaloriesForLastWeek()
+                    self.getActiveCalories()
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDReferenceValues" representedClassName="CDReferenceValues" syncable="YES">
         <attribute name="ref_calories" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="ref_iron" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -27,6 +27,14 @@
         <attribute name="unit" optional="YES" attributeType="String"/>
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="nutrients" inverseEntity="Ingredient"/>
     </entity>
+    <entity name="TrendSettings" representedClassName="TrendSettings" syncable="YES">
+        <attribute name="trend_calories" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="trend_carbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="trend_iron" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="trend_protein" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="trend_salt" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="trend_sugar" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="UserSettings" representedClassName=".UserSettings" syncable="YES" codeGenerationType="class">
         <attribute name="activityLevel" optional="YES" attributeType="String"/>
         <attribute name="age" optional="YES" attributeType="String"/>
@@ -37,11 +45,12 @@
         <attribute name="weight" optional="YES" attributeType="String"/>
     </entity>
     <elements>
+        <element name="CDReferenceValues" positionX="-45" positionY="72" width="128" height="59"/>
         <element name="Day" positionX="-63" positionY="-18" width="128" height="59"/>
         <element name="Ingredient" positionX="-54" positionY="45" width="128" height="119"/>
         <element name="Meals" positionX="-63" positionY="45" width="128" height="74"/>
         <element name="Nutrition" positionX="-45" positionY="54" width="128" height="89"/>
+        <element name="TrendSettings" positionX="-54" positionY="63" width="128" height="119"/>
         <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
-        <element name="CDReferenceValues" positionX="-45" positionY="72" width="128" height="59"/>
     </elements>
 </model>

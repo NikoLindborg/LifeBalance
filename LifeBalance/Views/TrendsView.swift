@@ -9,9 +9,15 @@ import SwiftUI
 
 struct TrendsView: View {
     
+<<<<<<< Updated upstream
     // @State private var tSettings: [TrendSettings] = [TrendSettings]()
     // let persistenceController: PersistenceController
 
+=======
+    @Binding var tSettings: [TrendSettings]
+    let persistenceController: PersistenceController
+    
+>>>>>>> Stashed changes
     @State private var ironOn = true
     @State private var caloriesOn = true
     @State private var proteinOn = true
@@ -20,6 +26,7 @@ struct TrendsView: View {
     @State private var saltOn = true
 
     func updateSettings() {
+<<<<<<< Updated upstream
        
 //        tSettings[0].iron = ironOn
 //        tSettings[0].calories = caloriesOn
@@ -28,11 +35,15 @@ struct TrendsView: View {
 //        tSettings[0].sugar = sugarOn
 //        tSettings[0].salt = saltOn
 //        persistenceController.updateUserSettings()
+=======
+        persistenceController.modifyTrends(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: saltOn, iron: ironOn)
+>>>>>>> Stashed changes
         
         loadSettings()
     }
     
     func loadSettings() {
+<<<<<<< Updated upstream
         
 //        tSettings = persistenceController.loadTrendsSettings()
 //        ironOn = tSettings[0].iron
@@ -41,6 +52,15 @@ struct TrendsView: View {
 //        carbsOn = tSettings[0].carbs
 //        sugarOn = tSettings[0].sugar
 //        saltOn = tSettings[0].salt
+=======
+                tSettings = persistenceController.getTrendSettings()
+                ironOn = tSettings[0].trend_iron
+                caloriesOn = tSettings[0].trend_calories
+                proteinOn = tSettings[0].trend_protein
+                carbsOn = tSettings[0].trend_carbs
+                sugarOn = tSettings[0].trend_sugar
+                saltOn = tSettings[0].trend_salt
+>>>>>>> Stashed changes
     }
     
     var body: some View {
@@ -84,6 +104,10 @@ struct TrendsView: View {
 
 struct TrendsView_Previews: PreviewProvider {
     static var previews: some View {
+<<<<<<< Updated upstream
         TrendsView()
+=======
+        TrendsView(tSettings: .constant([TrendSettings]()), persistenceController: PersistenceController())
+>>>>>>> Stashed changes
     }
 }

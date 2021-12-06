@@ -68,7 +68,6 @@ struct SettingsView: View {
     func loadSettings() {
         
         uSettings = persistenceController.loadUserSettings()
-        print(uSettings)
         if(!uSettings.isEmpty){
             isSaved = true
             if(selectedFrameworkIndexWeight == "") {

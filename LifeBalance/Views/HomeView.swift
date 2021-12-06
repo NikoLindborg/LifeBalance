@@ -14,9 +14,15 @@ struct HomeView: View {
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
+<<<<<<< Updated upstream
 //  @State private var tSettings: [TrendSettings] = [TrendSettings]()
 
         
+=======
+    @State var tSettings: [TrendSettings] = [TrendSettings]()
+    
+    
+>>>>>>> Stashed changes
     var body: some View {
         NavigationView {
             ScrollView {
@@ -58,13 +64,18 @@ struct HomeView: View {
                             .font(.largeTitle)
                             .bold()
                         Spacer()
+<<<<<<< Updated upstream
                         NavigationLink(destination: TrendsView()){
+=======
+                        NavigationLink(destination: TrendsView(tSettings: $tSettings, persistenceController: persistenceController)){
+>>>>>>> Stashed changes
                             Text("Edit")
                                 .bold()
                                 .padding(.trailing, 28)
                         }
                     }
                     .padding(.leading, 28)
+<<<<<<< Updated upstream
                     if(true){
                         TrendCard(cardCaption: "No trend cards", cardText: "Go to edit to add what to see here", color: Color.gray)
 
@@ -87,6 +98,35 @@ struct HomeView: View {
 //                    if tSettings[0].salt {
 //                        TrendCard(cardCaption: "salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
 //                    }
+=======
+                    if(tSettings.isEmpty){
+                        Text("Trends settings empty, shouldn't do this...")
+                        
+                    }else {
+                        if(!tSettings[0].trend_iron && !tSettings[0].trend_calories && !tSettings[0].trend_protein && !tSettings[0].trend_carbs && !tSettings[0].trend_sugar && !tSettings[0].trend_salt){
+                            TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
+                        } else {
+                                        if tSettings[0].trend_iron {
+                                            TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron", color: Color.gray)
+                                        }
+                                        if tSettings[0].trend_calories {
+                                            TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal", color: Color.gray)
+                                        }
+                                        if tSettings[0].trend_protein {
+                                            TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal", color: Color.gray)
+                                        }
+                                        if tSettings[0].trend_carbs {
+                                            TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal", color: Color.gray)
+                                        }
+                                        if tSettings[0].trend_sugar {
+                                            TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal", color: Color.gray)
+                                        }
+                                        if tSettings[0].trend_salt {
+                                            TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
+                                        }
+                    }
+                    }
+>>>>>>> Stashed changes
                 }
                 .offset(y: -60)
                 VStack {
@@ -123,7 +163,6 @@ struct HomeView: View {
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
         progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
-        print(progressValues)
     }
 }
 

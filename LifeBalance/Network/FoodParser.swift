@@ -14,8 +14,9 @@ class FoodParser: ObservableObject {
 
     
     func parseFood(_ query: String) {
-        guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/parser?app_id=\(constants.app_id)&app_key=\(constants.app_key)&ingr=\(query)&nutrition-type=cooking") else{
-            fatalError("Missing URL")
+        let fixedQuery = query.replacingOccurrences(of: " ", with: "_")
+        guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/parser?app_id=\(constants.app_id)&app_key=\(constants.app_key)&ingr=\(fixedQuery)&nutrition-type=cooking") else{
+                fatalError("Missing URL")
         }
         
         let urlRequest = URLRequest(url: url)

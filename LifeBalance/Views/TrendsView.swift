@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TrendsView: View {
-    
-    @State private var tSettings: [TrendSettings] = []
+    @Binding var tSettings: [TrendSettings]
     let persistenceController: PersistenceController
     
     @State private var ironOn = true
@@ -18,22 +17,20 @@ struct TrendsView: View {
     @State private var carbsOn = true
     @State private var sugarOn = true
     @State private var saltOn = true
-    
+
     func updateSettings() {
-        //        persistenceController.updateUserSettings(ironOn, caloriesOn, proteinOn, carbsOn, sugarOn, saltOn)
-        
+        persistenceController.modifyTrends(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: saltOn, iron: ironOn)
         loadSettings()
     }
     
     func loadSettings() {
-        
                 tSettings = persistenceController.getTrendSettings()
-        //        ironOn = tSettings[0].trend_iron
-        //        caloriesOn = tSettings[0].trend_calories
-        //        proteinOn = tSettings[0].trend_protein
-        //        carbsOn = tSettings[0].trend_carbs
-        //        sugarOn = tSettings[0].trend_sugar
-        //        saltOn = tSettings[0].trend_salt
+                ironOn = tSettings[0].trend_iron
+                caloriesOn = tSettings[0].trend_calories
+                proteinOn = tSettings[0].trend_protein
+                carbsOn = tSettings[0].trend_carbs
+                sugarOn = tSettings[0].trend_sugar
+                saltOn = tSettings[0].trend_salt
     }
     
     var body: some View {
@@ -65,7 +62,7 @@ struct TrendsView: View {
                         updateSettings()
                     }
                 }
-                
+        
             }
             .navigationTitle("Trends")
             .onAppear(perform: {
@@ -77,6 +74,6 @@ struct TrendsView: View {
 
 struct TrendsView_Previews: PreviewProvider {
     static var previews: some View {
-        TrendsView(persistenceController: PersistenceController())
+        TrendsView(tSettings: .constant([TrendSettings]()), persistenceController: PersistenceController())
     }
 }

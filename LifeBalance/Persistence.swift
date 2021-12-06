@@ -424,4 +424,62 @@ struct PersistenceController {
             return print("Failed to save ingredients \(error)")
         }
     }
+    
+    func getTrendSettings () -> [TrendSettings] {
+        let fetchRequest: NSFetchRequest<TrendSettings> = TrendSettings.fetchRequest()
+        
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func initializeTrends() {
+        if(getTrendSettings().count != 0){
+            return
+        }
+        let trends = TrendSettings(context: container.viewContext)
+        trends.trend_calories = true
+        trends.trend_protein = true
+        trends.trend_carbs = true
+        trends.trend_sugar = false
+        trends.trend_salt = false
+        trends.trend_iron = false
+        do {
+            try container.viewContext.save()
+            return print("Initializing trends success")
+        } catch {
+            return print("Failed to initialize trends \(error)")
+        }
+    }
+    
+    func getTrendValuesDictionary() -> Dictionary<String, Bool> {
+        let userTrendValues: Dictionary<String, Bool> = [
+            "calories" : getTrendSettings()[0].trend_calories,
+            "carbs" : getTrendSettings()[0].trend_carbs,
+            "protein" : getTrendSettings()[0].trend_protein,
+            "sugar" : getTrendSettings()[0].trend_sugar,
+            "salt" : getTrendSettings()[0].trend_salt,
+            "iron" : getTrendSettings()[0].trend_iron
+        ]
+        return userTrendValues
+    }
+    
+    func modifyTrends (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool) {
+            let trends = getTrendSettings()[0]
+        trends.trend_calories = calories
+        trends.trend_carbs = carbs
+        trends.trend_protein = protein
+        trends.trend_sugar = sugar
+        trends.trend_salt = salt
+        trends.trend_iron = iron
+        
+        do {
+            try container.viewContext.save()
+            return print("Saving new trends success")
+        } catch {
+            return print("Failed to save new trends \(error)")
+        }
+    }
 }

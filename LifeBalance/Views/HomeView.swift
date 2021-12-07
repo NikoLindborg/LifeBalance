@@ -14,7 +14,7 @@ struct HomeView: View {
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
-    @ObservedObject var tSettings: ObservableTrends = ObservableTrends()
+    @ObservedObject var tSettings: ObservableTrends
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
 
@@ -69,7 +69,7 @@ struct HomeView: View {
                         
                     }
                     .padding(.leading, 28)
-                    if(!$tSettings.trends.isEmpty){
+                    if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
                             TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
                         } else {
@@ -126,9 +126,8 @@ struct HomeView: View {
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-        .onAppear(perform: {print("trendit \(tSettings)")})
-        .onAppear(perform: persistenceController.initializeTrends)
-        .onAppear(perform: tSettings.update)
+  
+       
     }
     
     func getProgressValueToday() {

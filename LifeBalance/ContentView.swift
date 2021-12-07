@@ -13,17 +13,20 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var systemTheme
     let persistenceController = PersistenceController()
     @State var themeColor: ColorScheme
+    @ObservedObject var tSettings = ObservableTrends()
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: persistenceController)
+            HomeView(persistenceController: persistenceController, tSettings: tSettings)
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
-                }
+                }      .onAppear(perform: persistenceController.initializeTrends)
+                .onAppear(perform: {print("trendit \(tSettings.trends) \(tSettings.trends.isEmpty)")})
+                .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update(); print("ajoin")}})
             DiaryView(persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.diary)
                 .tabItem() {
@@ -43,6 +46,7 @@ struct ContentView: View {
                     Text("Settings")
                 }
         }
+        
         .environmentObject(tabController)
         .onAppear(perform: {
             if(!PersistenceController().loadUserSettings().isEmpty){

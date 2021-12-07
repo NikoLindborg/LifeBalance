@@ -11,8 +11,6 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) private var systemTheme
-    let obMeals = ObservableActivity()
-    
     let persistenceController = PersistenceController()
     @State var themeColor: ColorScheme
     @StateObject private var tabController = TabController()

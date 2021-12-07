@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: persistenceController, tSettings: ObservableTrends())
+            HomeView(persistenceController: persistenceController)
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")

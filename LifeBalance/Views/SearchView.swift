@@ -17,16 +17,39 @@ struct SearchView: View {
     @State var label = ""
     @Binding var addedFoods: [FoodModel]
     
+    @State private var isRecording = false
+    private let speechRecognizer = SpeechRecognizer()
+    
     var body: some View {
         
-        VStack() {
-            TextField("Search for food", text: $query).disableAutocorrection(true)
-            Button(action: {
-                parser.parseFood(query)
-            }) {
-                Text("Search")
-                    .font(.body)
-            }
+        VStack {
+            HStack{
+                TextField("Search for food", text: $query).disableAutocorrection(true)
+                Button(action: {
+                    parser.parseFood(query)
+                }) {
+
+                    Image(systemName: "magnifyingglass")
+                        .font(.body)                }
+                Button(action: {
+                    if(isRecording == false){
+                        speechRecognizer.record(to: $query)
+                        isRecording = true
+                    } else{
+                        print($query)
+                        speechRecognizer.stopRecording()
+                        isRecording = false
+                    }
+                }){
+                    if(isRecording == false){
+                        Image(systemName: "mic")
+                    }else{
+                        Image(systemName: "mic.fill")
+                    }
+                    
+                }
+            }.padding(.bottom)
+            
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)
             Button(action: {
                 nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
@@ -36,6 +59,7 @@ struct SearchView: View {
                 Text("Add")
                     .font(.body)
             }
+            
             List(parser.queryList) { item in
                 Button(action: {
                     if(self.foodId == item.food.foodId){
@@ -55,9 +79,9 @@ struct SearchView: View {
 }
 
 /**struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView(addedFoods: [Food(name: "Banana", amount: "400g")])
-            .environmentObject(FoodParser())
-            .environmentObject(NutrientsParser())
-    }
-}**/
+ static var previews: some View {
+ SearchView(addedFoods: [Food(name: "Banana", amount: "400g")])
+ .environmentObject(FoodParser())
+ .environmentObject(NutrientsParser())
+ }
+ }**/

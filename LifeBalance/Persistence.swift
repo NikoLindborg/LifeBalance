@@ -348,7 +348,7 @@ struct PersistenceController {
     func getProgressValues(userSetNutritionalValues: Array<String>, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
         let userReferenceValues = getRefValuesDictionary()
-       
+        
         userSetNutritionalValues.forEach {userValue in
             let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
@@ -357,7 +357,7 @@ struct PersistenceController {
         }
         return progressArray
     }
-  
+    
     func getSpecificMeal(mealType: String, meals: [Meals]) -> Meals{
         return meals.filter{$0.mealType == mealType}[0]
     }
@@ -422,6 +422,141 @@ struct PersistenceController {
             return print("Ingredient save success")
         } catch {
             return print("Failed to save ingredients \(error)")
+        }
+    }
+    
+    func getTrendSettings () -> [TrendSettings] {
+        let fetchRequest: NSFetchRequest<TrendSettings> = TrendSettings.fetchRequest()
+        
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func initializeTrends() {
+        if(getTrendSettings().count != 0){
+            return
+        }
+        
+        let trends = TrendSettings(context: container.viewContext)
+        
+        trends.trend_calories = true
+        trends.trend_protein = true
+        trends.trend_carbs = true
+        trends.trend_sugar = false
+        trends.trend_salt = false
+        trends.trend_iron = false
+        do {
+            try container.viewContext.save()
+            return print("Initializing trends success")
+        } catch {
+            return print("Failed to initialize trends \(error)")
+        }
+    }
+    
+    func getTrendValuesDictionary() -> Dictionary<String, Bool> {
+        let userTrendValues: Dictionary<String, Bool> = [
+            "calories" : getTrendSettings()[0].trend_calories,
+            "carbs" : getTrendSettings()[0].trend_carbs,
+            "protein" : getTrendSettings()[0].trend_protein,
+            "sugar" : getTrendSettings()[0].trend_sugar,
+            "salt" : getTrendSettings()[0].trend_salt,
+            "iron" : getTrendSettings()[0].trend_iron
+        ]
+        return userTrendValues
+    }
+    
+    func modifyTrends (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool) {
+        let trends = getTrendSettings()[0]
+        
+        trends.trend_calories = calories
+        trends.trend_carbs = carbs
+        trends.trend_protein = protein
+        trends.trend_sugar = sugar
+        trends.trend_salt = salt
+        trends.trend_iron = iron
+        
+        do {
+            try container.viewContext.save()
+            return print("Saving new trends success")
+        } catch {
+            return print("Failed to save new trends \(error)")
+        }
+    }
+    
+    func getDailyProgressCoreData () -> [DailyProgressCoreData] {
+        let fetchRequest: NSFetchRequest<DailyProgressCoreData> = DailyProgressCoreData.fetchRequest()
+        
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func initializeDailyProgressCoreData() {
+        
+        if (getDailyProgressCoreData().count != 0){
+            return
+        }
+        
+        let dailyProgressSettings = DailyProgressCoreData(context: container.viewContext)
+        dailyProgressSettings.daily_calories = true
+        dailyProgressSettings.daily_fat = true
+        dailyProgressSettings.daily_iron = false
+        dailyProgressSettings.daily_carbs = true
+        dailyProgressSettings.daily_protein = true
+        dailyProgressSettings.daily_sodium = false
+        dailyProgressSettings.daily_sugar = false
+        
+        do {
+            try container.viewContext.save()
+            return print("Initializing daily progress settings success")
+        } catch {
+            return print("Failed to initialize daily progress settings \(error)")
+        }
+    }
+    
+    func modifyDailyProgress (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool, fat: Bool) {
+        let dailyProgressSettings = getDailyProgressCoreData()[0]
+        
+        dailyProgressSettings.daily_calories = calories
+        dailyProgressSettings.daily_carbs = carbs
+        dailyProgressSettings.daily_protein = protein
+        dailyProgressSettings.daily_sugar = sugar
+        dailyProgressSettings.daily_sodium = salt
+        dailyProgressSettings.daily_iron = iron
+        dailyProgressSettings.daily_fat = fat
+        
+        do {
+            try container.viewContext.save()
+            return print("Saving new trends success")
+        } catch {
+            return print("Failed to save new trends \(error)")
+        }
+    }
+    
+    func getAllSavedMeals() -> [Saved]{
+        let fetchRequest: NSFetchRequest<Saved> = Saved.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    func saveMeal (name: String, meal: Meals) {
+        let save = Saved(context: container.viewContext)
+        save.mealName = name
+        save.meal = meal
+        
+        do {
+            try container.viewContext.save()
+            return print("Saving meal \(name) succeed")
+        } catch {
+            return print("Saving meal \(name) failed: \(error)")
         }
     }
 }

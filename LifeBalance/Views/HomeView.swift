@@ -16,7 +16,8 @@ struct HomeView: View {
     let today = itemFormatter.string(from: Date())
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
-        
+    @ObservedObject var tSettings: ObservableTrends
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -58,10 +59,37 @@ struct HomeView: View {
                             .font(.largeTitle)
                             .bold()
                         Spacer()
+                        
+                        NavigationLink(destination: TrendsView(tSettings: $tSettings.trends, persistenceController: persistenceController)){
+                            Text("Edit")
+                                .bold()
+                                .padding(.trailing, 28)
+                        }
                     }
                     .padding(.leading, 28)
-                    TrendCard(cardCaption: "Iron", cardText: "Your iron levels are looking better than normal", color: Color.gray)
-                    TrendCard(cardCaption: "D-vitamin", cardText: "You seem not to get enough vitamin D", color: Color.yellow)
+
+                    if(!tSettings.trends.trend_iron && !tSettings.trends.trend_calories && !tSettings.trends.trend_protein && !tSettings.trends.trend_carbs && !tSettings.trends.trend_sugar && !tSettings.trends.trend_salt){
+                        TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
+                    } else {
+                        if tSettings.trends.trend_iron {
+                            TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron", color: Color.gray)
+                        }
+                        if tSettings.trends.trend_calories {
+                            TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal", color: Color.gray)
+                        }
+                        if tSettings.trends.trend_protein {
+                            TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal", color: Color.gray)
+                        }
+                        if tSettings.trends.trend_carbs {
+                            TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal", color: Color.gray)
+                        }
+                        if tSettings.trends.trend_sugar {
+                            TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal", color: Color.gray)
+                        }
+                        if tSettings.trends.trend_salt {
+                            TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
+                        }
+                    }
                 }
                 .offset(y: -60)
                 VStack {
@@ -93,6 +121,8 @@ struct HomeView: View {
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
+        .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
+        .onAppear(perform: {print("trendit \(tSettings)")})
     }
     
     func getProgressValueToday() {
@@ -106,10 +136,11 @@ struct HomeView: View {
         progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
     }
 }
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(persistenceController: PersistenceController())
-            .environmentObject(HealthKit())
-    }
-}
+/**
+ struct HomeView_Previews: PreviewProvider {
+ static var previews: some View {
+ HomeView(persistenceController: PersistenceController())
+ .environmentObject(HealthKit())
+ }
+ }
+ */

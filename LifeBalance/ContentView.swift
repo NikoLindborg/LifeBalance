@@ -13,34 +13,32 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var systemTheme
     let obMeals = ObservableActivity()
     
-//    @FetchRequest(
-//        sortDescriptors: [NSSortDescriptor(keyPath: \Day.date, ascending: true)],
-//        animation: .default)
-//    private var days: FetchedResults<Day>
+    let persistenceController = PersistenceController()
     @State var themeColor: ColorScheme
     @StateObject private var tabController = TabController()
-
+    let obMeals = ObservableMeals()
+    
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: PersistenceController())
+            HomeView(persistenceController: persistenceController, tSettings: ObservableTrends())
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
                 }
-            DiaryView(persistenceController: PersistenceController())
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")
                     Text("Diary")
                 }
-            AddMealView(persistenceController: PersistenceController())
+            AddMealView(persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.addMeal)
                 .tabItem() {
                     Image(systemName: "plus.circle.fill")
                     Text("Add meal")
                 }
-            SettingsView(persistenceController: PersistenceController(), themeColor: $themeColor)
+            SettingsView(persistenceController: persistenceController, themeColor: $themeColor)
                 .tag(Tab.settings)
                 .tabItem() {
                     Image(systemName: "slider.vertical.3")

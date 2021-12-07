@@ -11,6 +11,7 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) private var systemTheme
+    let obMeals = ObservableActivity()
     
 //    @FetchRequest(
 //        sortDescriptors: [NSSortDescriptor(keyPath: \Day.date, ascending: true)],

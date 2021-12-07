@@ -10,62 +10,54 @@ import HealthKit
 
 struct ChartCard: View {
     
-    @State var pickerSelection = 1
-    @State var dataPoints: [[CGFloat]] = [[50,100,140,13,75,125,180],
-                                          [20,150,120,153,121,51,52]]
-    @Binding var realData: [[CGFloat]]
-    @Binding var isLoaded: Bool
-    @Binding var max: Double
+    @State var pickerSelection = 0
+    @State var activityData: [[CGFloat]]
+    @State var stepData: [[CGFloat]]
+    @State var maxActivity: Double
+    @State var maxSteps: Double
+    @State var weekdays: Array<String>
     
     var body: some View {
-        if (isLoaded) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color.green)
-                VStack {
-                    Text("Goals")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .bold()
-                    Picker(selection: $pickerSelection, label: Text("")) {
-                        Text("Week").tag(1)
-                        Text("Month").tag(1)
+        
+        ZStack {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color.green)
+            VStack {
+                Picker(selection: $pickerSelection.animation(.default), label: Text("")) {
+                    Text("Active energy").tag(0)
+                    Text("Step count").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal, 20)
+                
+                // Could be done in a ForEach but apparently it enables the animation based on documentation
+                if (pickerSelection == 0) {
+                    HStack(spacing: 16) {
+                        BarView(value: activityData[0][0], max: Float(maxActivity), day: weekdays[0])
+                        BarView(value: activityData[0][1], max: Float(maxActivity), day: weekdays[1])
+                        BarView(value: activityData[0][2], max: Float(maxActivity), day: weekdays[2])
+                        BarView(value: activityData[0][3], max: Float(maxActivity), day: weekdays[3])
+                        BarView(value: activityData[0][4], max: Float(maxActivity), day: weekdays[4])
+                        BarView(value: activityData[0][5], max: Float(maxActivity), day: weekdays[5])
+                        BarView(value: activityData[0][6], max: Float(maxActivity), day: weekdays[6])
+                        AmountView(max: maxActivity)
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal, 20)
-             
-                        HStack(spacing: 16) {
-                            BarView(value: realData[pickerSelection][0], max: Float(max))
-                            BarView(value: realData[pickerSelection][1], max: Float(max))
-                            BarView(value: realData[pickerSelection][2], max: Float(max))
-                            BarView(value: realData[pickerSelection][3], max: Float(max))
-                            BarView(value: realData[pickerSelection][4], max: Float(max))
-                            BarView(value: realData[pickerSelection][5], max: Float(max))
-                            BarView(value: realData[pickerSelection][6], max: Float(max))
-                        }
-                        .animation(.default)
+                    .animation(.default)
+                } else {
+                    HStack(spacing: 16) {
+                        BarView(value: stepData[0][0], max: Float(maxSteps), day: weekdays[0])
+                        BarView(value: stepData[0][1], max: Float(maxSteps), day: weekdays[1])
+                        BarView(value: stepData[0][2], max: Float(maxSteps), day: weekdays[2])
+                        BarView(value: stepData[0][3], max: Float(maxSteps), day: weekdays[3])
+                        BarView(value: stepData[0][4], max: Float(maxSteps), day: weekdays[4])
+                        BarView(value: stepData[0][5], max: Float(maxSteps), day: weekdays[5])
+                        BarView(value: stepData[0][6], max: Float(maxSteps), day: weekdays[6])
+                        AmountView(max: maxSteps)
+                    }
+                    .animation(.default)
                 }
             }
-            .frame(width: 350, height: 350, alignment: .leading)
         }
-    }
-}
-
-struct BarView: View {
-    
-    var value: CGFloat
-    var max: Float
-    
-    var body: some View {
-        VStack {
-            ZStack(alignment: .bottom) {
-                Capsule().frame(width: 25, height: 200)
-                    .foregroundColor(Color.gray)
-                let percent = value / CGFloat(max)
-                Capsule().frame(width: 30, height: (percent * 200))
-                    .foregroundColor(Color.orange)
-            }
-            Text("D")
-        }
+        .frame(width: 350, height: 350, alignment: .leading)
     }
 }

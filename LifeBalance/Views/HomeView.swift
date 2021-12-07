@@ -73,26 +73,26 @@ struct HomeView: View {
                     }
                     .padding(.leading, 28)
                     if (healthKit.healthData) {
-                        GoalsCard(cardCaption: "Weight", cardText: "Your weight was -0.5kg compared to last week", activeCalories: "Your last workout burned \(healthKit.burntCalories) calories", color: Color.green)
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        VStack {
+                            ChartCard(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays)
+                        }
                     } else {
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        HStack{
+                            Spacer()
+                            Text("No Health Data available")
+                            Spacer()
+                        }
+                        
+                        .frame(width: 350, height: 100, alignment: .leading)
                     }
                 }
                 .offset(y: -60)
-                if (healthKit.healthData) {
-                    VStack {
-                        ChartCard(realData: $realData, isLoaded: $isLoaded, max: $healthKit.max)
-                    }
-                    .offset(y: -60) 
-                }
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
-        .onAppear(perform: getData)
     }
     
     func getProgressValueToday() {
@@ -104,17 +104,6 @@ struct HomeView: View {
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
         progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
-    }
-    
-    func getData() {
-        if (healthKit.healthData && !isLoaded) {
-            var firstArray: [CGFloat] = []
-            healthKit.dataArray.forEach {data in
-                firstArray.append(data.data)
-            }
-            realData.append(firstArray)
-            isLoaded = true
-        }
     }
 }
 

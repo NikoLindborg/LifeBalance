@@ -38,6 +38,9 @@
 		8245863C27577A4A001E1F59 /* CDReferenceValues+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245863A27577A4A001E1F59 /* CDReferenceValues+CoreDataProperties.swift */; };
 		8245863E2757AE06001E1F59 /* ProgressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245863D2757AE06001E1F59 /* ProgressItem.swift */; };
 		825D28E0275A460E0071444C /* ChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825D28DF275A460E0071444C /* ChartCard.swift */; };
+		8271031E275F40A9008C535F /* ObservableActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271031D275F40A9008C535F /* ObservableActivity.swift */; };
+		82710320275F8744008C535F /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271031F275F8744008C535F /* BarView.swift */; };
+		82710322275F8770008C535F /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82710321275F8770008C535F /* AmountView.swift */; };
 		82722D63274E7F7400909335 /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82722D62274E7F7400909335 /* HealthKit.swift */; };
 		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
 		82D93AEB274BAF4D00530651 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AEA274BAF4D00530651 /* AddMealView.swift */; };
@@ -108,6 +111,9 @@
 		8245863A27577A4A001E1F59 /* CDReferenceValues+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDReferenceValues+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8245863D2757AE06001E1F59 /* ProgressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressItem.swift; sourceTree = "<group>"; };
 		825D28DF275A460E0071444C /* ChartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCard.swift; sourceTree = "<group>"; };
+		8271031D275F40A9008C535F /* ObservableActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivity.swift; sourceTree = "<group>"; };
+		8271031F275F8744008C535F /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		82710321275F8770008C535F /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 		82722D62274E7F7400909335 /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
 		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
 		82D93AEA274BAF4D00530651 /* AddMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
@@ -253,6 +259,8 @@
 				5FF12837274AAFA900ACC671 /* MealItems.swift */,
 				5FA8B16F274D0B2C0029A1F9 /* AddMealTabBar.swift */,
 				5F0069B32753D777001F54FD /* FoodRow.swift */,
+				8271031F275F8744008C535F /* BarView.swift */,
+				82710321275F8770008C535F /* AmountView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -263,6 +271,7 @@
 				5FEAEC59274C153B002DE8E2 /* FoodParserDataModels.swift */,
 				5F2C6BC6274D6FC3007250F0 /* NutrientsParserDataModels.swift */,
 				8245863D2757AE06001E1F59 /* ProgressItem.swift */,
+				8271031D275F40A9008C535F /* ObservableActivity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -447,7 +456,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82710320275F8744008C535F /* BarView.swift in Sources */,
 				5F8AB6FC274278E300A59F43 /* HomeView.swift in Sources */,
+				82710322275F8770008C535F /* AmountView.swift in Sources */,
 				5F89B239274C0FBE001CB079 /* Constants.swift in Sources */,
 				8245863B27577A4A001E1F59 /* CDReferenceValues+CoreDataClass.swift in Sources */,
 				82F081F82756087700059481 /* Ingredient+CoreDataProperties.swift in Sources */,
@@ -466,6 +477,7 @@
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
 				5F89B235274C0F56001CB079 /* FoodParser.swift in Sources */,
 				82F081FA2756087700059481 /* Meals+CoreDataProperties.swift in Sources */,
+				8271031E275F40A9008C535F /* ObservableActivity.swift in Sources */,
 				8245863C27577A4A001E1F59 /* CDReferenceValues+CoreDataProperties.swift in Sources */,
 				5F2C6BC7274D6FC3007250F0 /* NutrientsParserDataModels.swift in Sources */,
 				82722D63274E7F7400909335 /* HealthKit.swift in Sources */,

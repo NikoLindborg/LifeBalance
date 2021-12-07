@@ -15,7 +15,9 @@ struct HomeView: View {
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
     @ObservedObject var tSettings: ObservableTrends = ObservableTrends()
-    
+    @State var realData: [[CGFloat]] = [[]]
+    @State var isLoaded = false
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -103,10 +105,17 @@ struct HomeView: View {
                     }
                     .padding(.leading, 28)
                     if (healthKit.healthData) {
-                        GoalsCard(cardCaption: "Weight", cardText: "Your weight was -0.5kg compared to last week", activeCalories: "Your last workout burned \(healthKit.burntCalories) calories", color: Color.green)
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        VStack {
+                            ChartCard(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays)
+                        }
                     } else {
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        HStack{
+                            Spacer()
+                            Text("No Health Data available")
+                            Spacer()
+                        }
+                        
+                        .frame(width: 350, height: 100, alignment: .leading)
                     }
                 }
                 .offset(y: -60)

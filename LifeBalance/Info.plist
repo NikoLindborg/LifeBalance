@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>LifeBalance needs permission to use your Microphone in order to activate Speech to Text</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>LifeBalance needs permission to use your Microphone in order to activate Speech to Text</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>LifeBalance needs permission to access your Health Data in order to bring you accurate information about your health</string>
 	<key>NSHealthUpdateUsageDescription</key>

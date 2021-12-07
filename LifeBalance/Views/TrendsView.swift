@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrendsView: View {
-    @Binding var tSettings: [TrendSettings]
+    @Binding var tSettings: TrendSettings
     let persistenceController: PersistenceController
     
     @State private var ironOn = true
@@ -21,16 +21,16 @@ struct TrendsView: View {
     func updateSettings() {
         persistenceController.modifyTrends(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: saltOn, iron: ironOn)
         loadSettings()
+        $tSettings.wrappedValue = persistenceController.getTrendSettings()[0]
     }
     
     func loadSettings() {
-                tSettings = persistenceController.getTrendSettings()
-                ironOn = tSettings[0].trend_iron
-                caloriesOn = tSettings[0].trend_calories
-                proteinOn = tSettings[0].trend_protein
-                carbsOn = tSettings[0].trend_carbs
-                sugarOn = tSettings[0].trend_sugar
-                saltOn = tSettings[0].trend_salt
+        ironOn = tSettings.trend_iron
+        caloriesOn = tSettings.trend_calories
+        proteinOn = tSettings.trend_protein
+        carbsOn = tSettings.trend_carbs
+        sugarOn = tSettings.trend_sugar
+        saltOn = tSettings.trend_salt
     }
     
     var body: some View {
@@ -71,9 +71,9 @@ struct TrendsView: View {
         }
     }
 }
-
+/**
 struct TrendsView_Previews: PreviewProvider {
     static var previews: some View {
         TrendsView(tSettings: .constant([TrendSettings]()), persistenceController: PersistenceController())
     }
-}
+}*/

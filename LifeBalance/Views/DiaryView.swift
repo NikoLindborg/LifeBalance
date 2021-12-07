@@ -11,12 +11,12 @@ struct DiaryView: View {
     
     let persistenceController: PersistenceController
     @State var progressValues: Array<ProgressItem> = []
-
+    @ObservedObject var obMeals: ObservableMeals
     @State var color = Color.green
     @State var color2 = Color.blue
     @State var color3 = Color.orange
     @State var color4 = Color.red
-    
+    @State var meals: [Meals] = []
     let today = itemFormatter.string(from: Date())
     
     var body: some View {
@@ -48,7 +48,6 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading, 28)
-                    let meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))
                     ForEach(meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
@@ -58,6 +57,7 @@ struct DiaryView: View {
             }
         }
         .onAppear(perform: getProgressValueToday)
+        .onAppear(perform:{ meals = obMeals.meals})
     }
     
     func getProgressValueToday() {
@@ -69,7 +69,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController())
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals())
     }
 }
 

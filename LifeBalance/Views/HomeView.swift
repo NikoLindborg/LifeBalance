@@ -14,9 +14,9 @@ struct HomeView: View {
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
+    @ObservedObject var tSettings: ObservableTrends = ObservableTrends()
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
-    @ObservedObject var tSettings: ObservableTrends
 
     var body: some View {
         NavigationView {
@@ -59,37 +59,41 @@ struct HomeView: View {
                             .font(.largeTitle)
                             .bold()
                         Spacer()
-                        
-                        NavigationLink(destination: TrendsView(tSettings: $tSettings.trends, persistenceController: persistenceController)){
-                            Text("Edit")
-                                .bold()
-                                .padding(.trailing, 28)
+                        if(!$tSettings.trends.isEmpty){
+                            NavigationLink(destination: TrendsView(tSettings: $tSettings.trends[0], persistenceController: persistenceController)){
+                                Text("Edit")
+                                    .bold()
+                                    .padding(.trailing, 28)
+                            }
                         }
+                        
                     }
                     .padding(.leading, 28)
-
-                    if(!tSettings.trends.trend_iron && !tSettings.trends.trend_calories && !tSettings.trends.trend_protein && !tSettings.trends.trend_carbs && !tSettings.trends.trend_sugar && !tSettings.trends.trend_salt){
-                        TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
-                    } else {
-                        if tSettings.trends.trend_iron {
-                            TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron", color: Color.gray)
-                        }
-                        if tSettings.trends.trend_calories {
-                            TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal", color: Color.gray)
-                        }
-                        if tSettings.trends.trend_protein {
-                            TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal", color: Color.gray)
-                        }
-                        if tSettings.trends.trend_carbs {
-                            TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal", color: Color.gray)
-                        }
-                        if tSettings.trends.trend_sugar {
-                            TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal", color: Color.gray)
-                        }
-                        if tSettings.trends.trend_salt {
-                            TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
+                    if(!$tSettings.trends.isEmpty){
+                        if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
+                            TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
+                        } else {
+                            if tSettings.trends[0].trend_iron {
+                                TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron", color: Color.gray)
+                            }
+                            if tSettings.trends[0].trend_calories {
+                                TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal", color: Color.gray)
+                            }
+                            if tSettings.trends[0].trend_protein {
+                                TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal", color: Color.gray)
+                            }
+                            if tSettings.trends[0].trend_carbs {
+                                TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal", color: Color.gray)
+                            }
+                            if tSettings.trends[0].trend_sugar {
+                                TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal", color: Color.gray)
+                            }
+                            if tSettings.trends[0].trend_salt {
+                                TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
+                            }
                         }
                     }
+                    
                 }
                 .offset(y: -60)
                 VStack {
@@ -123,6 +127,8 @@ struct HomeView: View {
         .onAppear(perform: getProgressValueToday)
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
         .onAppear(perform: {print("trendit \(tSettings)")})
+        .onAppear(perform: persistenceController.initializeTrends)
+        .onAppear(perform: tSettings.update)
     }
     
     func getProgressValueToday() {

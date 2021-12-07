@@ -23,7 +23,7 @@ struct LifeBalanceApp: App {
                 .environmentObject(parser)
                 .environmentObject(nutrientsParser)
                 .environmentObject(healthKit)   
-        
+
         }
     }
 }

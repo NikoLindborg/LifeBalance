@@ -8,11 +8,11 @@
 import Foundation
 
 class ObservableTrends: ObservableObject {
-    @Published var trends: TrendSettings
+    @Published var trends: [TrendSettings] = []
     let persistenceController = PersistenceController()
     
-    init(){
-        self.trends = persistenceController.getTrendSettings()[0]
+    func update(){
+        self.trends = persistenceController.getTrendSettings()
     }
     
 }

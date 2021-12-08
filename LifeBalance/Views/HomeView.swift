@@ -128,7 +128,7 @@ struct HomeView: View {
         .onAppear(perform: getProgressValueToday)
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
   
-       
+        
     }
     
     func getProgressValueToday() {

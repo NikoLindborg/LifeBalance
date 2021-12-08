@@ -10,8 +10,9 @@ import SwiftUI
 struct AddMealTabBar: View {
     @State var selectedTab: Int = 0
     @Binding var addedFoods: [FoodModel]
+    @State var query = ""
+    
     var body: some View {
-        
         VStack {
             Picker("", selection: $selectedTab) {
                 Text("Add new").tag(0)
@@ -21,14 +22,19 @@ struct AddMealTabBar: View {
             
             switch(selectedTab) {
             case 0:
-                SearchView(addedFoods: $addedFoods)
+                AddNewTab(query: $query, addedFoods: $addedFoods)
             case 1:
-                Text("My foods")
+                Text("My saved foods")
             default:
-                Text("hai")
+                Text("Default")
             }
             Spacer()
         }
     }
 }
 
+struct AddMealTabBar_Previews: PreviewProvider {
+    static var previews: some View {
+        AddMealView(persistenceController: PersistenceController(), obMeals: ObservableMeals())
+    }
+}

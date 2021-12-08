@@ -511,7 +511,6 @@
 				82F081FE2756087700059481 /* Day+CoreDataProperties.swift in Sources */,
 				5F8AB6FA274278E300A59F43 /* LifeBalanceApp.swift in Sources */,
 				5F89B235274C0F56001CB079 /* FoodParser.swift in Sources */,
-				82F081FA2756087700059481 /* Meals+CoreDataProperties.swift in Sources */,
 				8271031E275F40A9008C535F /* ObservableActivity.swift in Sources */,
 				8245863C27577A4A001E1F59 /* CDReferenceValues+CoreDataProperties.swift in Sources */,
 				5F2C6BC7274D6FC3007250F0 /* NutrientsParserDataModels.swift in Sources */,

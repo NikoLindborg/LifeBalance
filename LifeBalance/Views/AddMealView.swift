@@ -25,47 +25,44 @@ struct AddMealView: View {
     
     var body: some View {
         NavigationView{
-            VStack(
-                alignment: .leading,
-                spacing: 10) {
-             
-                        HStack{
-                            Spacer()
-                            VStack{
-                                Picker(selection: $selectedMealIndex, label: Text("")) {
-                                    ForEach(0 ..< meals.count) {
-                                        Text(self.meals[$0])
-                                    }
-                                }
-                                Button(action: {
-                                    persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
-                                    obMeals.update()
-                                    
-                                }) {
-                                    Text("Add breakfast")
-                                        .font(.body)
-                                }
+            VStack {
+                HStack{
+                    Spacer()
+                    Text("Add meal")
+                        .font(.subheadline)
+                        .bold()
+                    Spacer()
+                }
+                VStack(){
+                    AddMealTabBar(addedFoods: $addedFoods)
+                }
+                HStack{
+                    Spacer()
+                    VStack{
+                        Picker(selection: $selectedMealIndex, label: Text("")) {
+                            ForEach(0 ..< meals.count) {
+                                Text(self.meals[$0])
                             }
-                            
-                            Spacer()
                         }
-                        Spacer()
-
-                    Section {
-                        VStack(){
-                            AddMealTabBar(addedFoods: $addedFoods)
+                        Button(action: {
+                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
+                            obMeals.update()
+                            addedFoods.removeAll()
+                            
+                        }) {
+                            Text("Add breakfast")
+                                .font(.body)
                         }
                     }
-                }.onAppear(perform: {
-                    mealEntities = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))})
+                    
+                    Spacer()
+                }
+                Spacer()
+            }.onAppear(perform: {
+                mealEntities = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))})
         }
     }
 }
-
-
-
-
-
 
 struct AddMealView_Previews: PreviewProvider {
     static var previews: some View {

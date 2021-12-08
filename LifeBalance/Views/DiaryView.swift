@@ -45,10 +45,7 @@ struct DiaryView: View {
                         }.colorMultiply(.black)
                         .onChange(of: selectedDayIndex, perform:  { (value) in
                             updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
-                            
                         })
-                        
-                        
                     }
                     .padding(.bottom, 46)
                     HStack{
@@ -59,9 +56,6 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading, 28)
-                    
-                    
-                    
                     
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
@@ -82,7 +76,10 @@ struct DiaryView: View {
                     .padding(.leading, 28)
                     ForEach(obMeals.meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
-                        MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                        NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals), label: {
+                            MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                            }
+                        )
                     }
                     .offset(y: -60)
                 }

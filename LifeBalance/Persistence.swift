@@ -75,6 +75,35 @@ struct PersistenceController {
         }
     }
     
+    func updateUserSettings(userSettings: [UserSettings], gender: String, height: String, weight: String, target: String, activitylevel: String, age: String, theme: Bool) {
+        if(!userSettings.isEmpty ) {
+            if(!gender.isEmpty){
+                userSettings[0].gender = gender
+            }
+            if(!height.isEmpty){
+                userSettings[0].height = height
+            }
+            if(!weight.isEmpty) {
+                userSettings[0].weight = weight
+            }
+            if(!target.isEmpty) {
+                userSettings[0].target = target
+            }
+            if(!activitylevel.isEmpty) {
+                userSettings[0].activityLevel = activitylevel
+            }
+            if(!age.isEmpty) {
+                userSettings[0].age = age
+            }
+            userSettings[0].theme = theme
+        }
+        do {
+            try container.viewContext.save()
+        } catch {
+            container.viewContext.rollback()
+        }
+    }
+    
     func loadDayEntities() -> [Day] {
         let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
         do {
@@ -109,18 +138,11 @@ struct PersistenceController {
         }
     }
     
-    func updateUserSettings() {
-        do {
-            try container.viewContext.save()
-        } catch {
-            container.viewContext.rollback()
-        }
-    }
-    
     func addDay(date: String) {
         if (checkIfExists(argument: date, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = date
+            days?.id = UUID()
             do {
                 try container.viewContext.save()
                 return print("Save today success")
@@ -297,13 +319,19 @@ struct PersistenceController {
         }
     }
     
-    func addRefValues(refCalories: Double, refIron: Double) {
+    func addRefValues(refCalories: Double, refIron: Double, refFat: Double, refCarbohydrates: Double, refProtein: Double, refFiber: Double, refSugar: Double, refSodium: Double) {
         let refValues = getRefValues()
         refValues[0].ref_calories = refCalories
         refValues[0].ref_iron = refIron
+        refValues[0].ref_fat = refFat
+        refValues[0].ref_carbohydrates = refCarbohydrates
+        refValues[0].ref_protein = refProtein
+        refValues[0].ref_fiber = refFiber
+        refValues[0].ref_sugar = refSugar
+        refValues[0].ref_sodium = refSodium
         do {
             try container.viewContext.save()
-            return print("Reference values \(refIron) & \(refCalories) stored to CoreData")
+            return print("Reference values \(refIron) & \(refCalories) & prot \(refProtein) & carbs \(refCarbohydrates) & fat \(refFat) &  stored to CoreData")
         } catch {
             return print("Failed to save reference values to CoreData \(error)")
         }
@@ -321,7 +349,16 @@ struct PersistenceController {
     func getRefValuesDictionary() -> Dictionary<String, Float> {
         let userReferenceValues: Dictionary<String, Float> = [
             "calories" : Float(getRefValues()[0].ref_calories),
-            "iron" : Float(getRefValues()[0].ref_iron)]
+            "iron" : Float(getRefValues()[0].ref_iron),
+            "sodium" : Float(getRefValues()[0].ref_sodium),
+            "protein" : Float(getRefValues()[0].ref_protein),
+            "fiber" : Float(getRefValues()[0].ref_fiber),
+            "fat" : Float(getRefValues()[0].ref_fat),
+            "carbs" : Float(getRefValues()[0].ref_carbohydrates),
+            "sugar" : Float(getRefValues()[0].ref_sugar),
+            
+        ]
+            
         return userReferenceValues
     }
     
@@ -335,7 +372,6 @@ struct PersistenceController {
                 let nutrition = ing.nutrients?.allObjects as! [Nutrition]
                 nutrition.forEach {nutr in
                     if (nutr.label == nutritionLabel) {
-                        print("\(nutr.label ?? ""), \(nutr.quantity), \(nutr.unit ?? "")")
                         value += nutr.quantity
                         unit = nutr.unit ?? ""
                     }
@@ -345,11 +381,11 @@ struct PersistenceController {
         return (value, unit)
     }
     
-    func getProgressValues(userSetNutritionalValues: Array<String>, date: String) -> Array<ProgressItem> {
+    func getProgressValues(_ userSetNutritionalValues: Array<String>?, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
         let userReferenceValues = getRefValuesDictionary()
-        
-        userSetNutritionalValues.forEach {userValue in
+        let nutritionalValues = userSetNutritionalValues ?? ["calories", "carbs", "protein", "fat", "iron", "sugar", "sodium", "iron"]
+        nutritionalValues.forEach {userValue in
             let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
             let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue

@@ -2,7 +2,7 @@
 //  CDReferenceValues+CoreDataProperties.swift
 //  LifeBalance
 //
-//  Created by Aleksi Kosonen on 1.12.2021.
+//  Created by iosdev on 7.12.2021.
 //
 //
 
@@ -17,7 +17,13 @@ extension CDReferenceValues {
     }
 
     @NSManaged public var ref_calories: Double
+    @NSManaged public var ref_carbohydrates: Double
+    @NSManaged public var ref_fat: Double
+    @NSManaged public var ref_fiber: Double
     @NSManaged public var ref_iron: Double
+    @NSManaged public var ref_protein: Double
+    @NSManaged public var ref_sodium: Double
+    @NSManaged public var ref_sugar: Double
 
 }
 

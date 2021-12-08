@@ -10,9 +10,22 @@ import SwiftUI
 class ReferenceValues: ObservableObject {
     
     @Published var calories: Double = 0
+    //iron as mg
     @Published var iron: Double = 0
+    //fat as g
+    @Published var fat: Double = 0
+    //carbs as g
+    @Published var carbohydrates: Double = 0
+    //protein as g
+    @Published var protein: Double = 0
+    //fiber as g
+    @Published var fiber: Double = 0
+    //sugar as g
+    @Published var sugar: Double = 0
+    //sodium as g
+    @Published var sodium: Double = 0
     
-    func getReferenceValues(height: String, weight: String, age: String, gender: String, activity: String) {
+    func getReferenceValues(height: String, weight: String, age: String, gender: String, activity: String, target: String) {
         let userHeight = Double(height) ?? 0
         let userWeight = Double(weight) ?? 0
         let userAge = Double(age) ?? 0
@@ -38,13 +51,15 @@ class ReferenceValues: ObservableObject {
             }
             calories = amr
             
-            //iron as mg
             if(userAge > 13 && userAge < 19) {
                 iron = 11
+                fiber = 28
             }
             if(userAge > 18) {
                 iron = 8
+                fiber = 34
             }
+            sugar = 37.5
         }
         
         if(gender == "Female"){
@@ -71,7 +86,6 @@ class ReferenceValues: ObservableObject {
             }
             calories = amr
             
-            //iron as mg
             if(userAge > 13 && userAge < 19) {
                 iron = 15
             }
@@ -81,10 +95,27 @@ class ReferenceValues: ObservableObject {
             if(userAge > 50) {
                 iron = 8
             }
+
+            fiber = 28
+        
+            sugar = 25
         }
         
         if(gender == "Undefined") {
             calories = 0
         }
+        
+        if(target == "Muscle gain") {
+            calories += 500
+        }
+        if(target == "Weight loss") {
+            calories -= 500
+        }
+        
+        fat = ((calories * 0.30) / 9)
+        carbohydrates = ((calories * 0.50) / 4)
+        protein = ((calories * 0.20) / 4)
+        sodium = 1.5
+        
     }
 }

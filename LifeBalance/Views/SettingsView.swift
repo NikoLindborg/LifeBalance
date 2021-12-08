@@ -9,9 +9,11 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @State private var testCal: Double = 0
     let persistenceController: PersistenceController
      
     @State private var uSettings: [UserSettings] = [UserSettings]()
+    @State private var cdRefValues: [CDReferenceValues] = [CDReferenceValues]()
         
     @State private var isSaved = false
     
@@ -22,7 +24,7 @@ struct SettingsView: View {
     var height = (140...210).map{"\($0)"}
     var age = (15...80).map{"\($0)"}
     var activitylevel = ["Very active", "Active", "Moderately active", "Lightly active", "Sedentary"]
-    var target = ["Weight loss", "Muscle gain", "Healthy lifestyle", "Staying alive"]
+    var target = ["Weight loss", "Muscle gain", "Healthy lifestyle"]
     
     @State private var selectedFrameworkIndexGender = ""
     @State private var selectedFrameworkIndexWeight = ""
@@ -39,36 +41,19 @@ struct SettingsView: View {
             persistenceController.saveUserSettings(gender: selectedFrameworkIndexGender, height: selectedFrameworkIndexHeight, weight: selectedFrameworkIndexWeight, theme: lightMode,
                                                 activityLevel: selectedFrameworkIndexActivity, target: selectedFrameworkIndexTarget, age: selectedFrameworkIndexAge)
         } else {
-            if(!selectedFrameworkIndexGender.isEmpty){
-                uSettings[0].gender = selectedFrameworkIndexGender
-            }
-            if(!selectedFrameworkIndexHeight.isEmpty){
-                uSettings[0].height = selectedFrameworkIndexHeight
-            }
-            if(!selectedFrameworkIndexWeight.isEmpty) {
-                uSettings[0].weight = selectedFrameworkIndexWeight
-            }
-            if(!selectedFrameworkIndexTarget.isEmpty) {
-                uSettings[0].target = selectedFrameworkIndexTarget
-            }
-            if(!selectedFrameworkIndexActivity.isEmpty) {
-                uSettings[0].activityLevel = selectedFrameworkIndexActivity
-            }
-            if(!selectedFrameworkIndexAge.isEmpty) {
-                uSettings[0].age = selectedFrameworkIndexAge
-            }
-            uSettings[0].theme = lightMode
-            persistenceController.updateUserSettings()
+            persistenceController.updateUserSettings(userSettings: uSettings, gender: selectedFrameworkIndexGender, height: selectedFrameworkIndexHeight, weight: selectedFrameworkIndexWeight, target: selectedFrameworkIndexTarget, activitylevel: selectedFrameworkIndexActivity, age: selectedFrameworkIndexAge, theme: lightMode)
         }
         loadSettings()
-        persistenceController.addRefValues(refCalories: referenceValues.calories, refIron: referenceValues.iron)
-        print("update ran")
+        if(referenceValues.calories != 0){
+            persistenceController.addRefValues(refCalories: referenceValues.calories, refIron: referenceValues.iron, refFat: referenceValues.fat, refCarbohydrates: referenceValues.carbohydrates, refProtein: referenceValues.protein, refFiber: referenceValues.fiber, refSugar: referenceValues.sugar, refSodium: referenceValues.sodium)
+        }
     }
     
     func loadSettings() {
-        
         uSettings = persistenceController.loadUserSettings()
-        print(uSettings)
+        //can remove later
+        cdRefValues = persistenceController.getRefValues()
+        //
         if(!uSettings.isEmpty){
             isSaved = true
             if(selectedFrameworkIndexWeight == "") {
@@ -89,10 +74,15 @@ struct SettingsView: View {
             if(selectedFrameworkIndexAge == "") {
                 selectedFrameworkIndexAge = uSettings[0].age ?? ""
             }
-            
             lightMode = uSettings[0].theme
+            referenceValues.getReferenceValues(height: uSettings[0].height ?? "", weight: uSettings[0].weight ?? "", age: uSettings[0].age ?? "", gender: uSettings[0].gender ?? "", activity: uSettings[0].activityLevel ?? "",target: uSettings[0].target ?? "")
             
-            referenceValues.getReferenceValues(height: uSettings[0].height ?? "", weight: uSettings[0].weight ?? "", age: uSettings[0].age ?? "", gender: uSettings[0].gender ?? "", activity: uSettings[0].activityLevel ?? "")
+            //can remove later
+            if(!cdRefValues.isEmpty){
+                testCal = cdRefValues[0].ref_calories
+            }
+            //
+            
         }else {
             lightMode = themeColor == .light ? true : false
         }
@@ -152,8 +142,7 @@ struct SettingsView: View {
                     }
                 }
                 
-                Text("Required calories intake: \(referenceValues.calories, specifier: "%.2f") kcal")
-                Text("Required iron intake: \(referenceValues.iron, specifier: "%.2f") mg")
+                Text("Required calories intake: \(testCal, specifier: "%.2f") kcal")
             }
             
             .navigationTitle("Settings")

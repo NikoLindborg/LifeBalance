@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var progressValues: Array<ProgressItem> = []
+    @State var fullProgressValues: Array<ProgressItem> = []
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
@@ -29,7 +30,7 @@ struct HomeView: View {
                         Spacer()
                     }
                     .padding(.leading, 28)
-                    NavigationLink(destination: NutritionalDatalistView(), label: {
+                    NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
@@ -138,7 +139,8 @@ struct HomeView: View {
         
         // A dummy list for future reference for controlling what is shown on Daily Progress View
         let userSetNutritionalValues = ["calories", "iron"]
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: userSetNutritionalValues, date: today)
+        progressValues = persistenceController.getProgressValues(userSetNutritionalValues, date: today)
+        fullProgressValues = persistenceController.getProgressValues(nil, date: today)
     }
 }
 /**

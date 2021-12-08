@@ -38,27 +38,21 @@ struct TrendsView: View {
             Form{
                 Section(header: Text("Trends")){
                     Toggle("Iron", isOn: $ironOn).onChange(of: ironOn){value in
-                        print(value)
                         updateSettings()
                     }
                     Toggle("Calories", isOn: $caloriesOn).onChange(of: caloriesOn){value in
-                        print(value)
                         updateSettings()
                     }
                     Toggle("Protein", isOn: $proteinOn).onChange(of: proteinOn){value in
-                        print(value)
                         updateSettings()
                     }
                     Toggle("Carbs", isOn: $carbsOn).onChange(of: carbsOn){value in
-                        print(value)
                         updateSettings()
                     }
                     Toggle("Sugar", isOn: $sugarOn).onChange(of: sugarOn){value in
-                        print(value)
                         updateSettings()
                     }
                     Toggle("Salt", isOn: $saltOn).onChange(of: saltOn){value in
-                        print(value)
                         updateSettings()
                     }
                 }

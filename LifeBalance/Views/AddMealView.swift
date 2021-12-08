@@ -16,46 +16,57 @@ struct AddMealView: View {
     @State var mealEntities: [Meals] = []
     @EnvironmentObject private var tabController: TabController
     
-    
     var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
     let persistenceController: PersistenceController
     let today = itemFormatter.string(from: Date())
     @ObservedObject var obMeals: ObservableMeals
     
-    
     var body: some View {
         NavigationView{
-            VStack {
-                HStack{
+            ZStack {
+                Color(.systemGray6).ignoresSafeArea()
+                VStack {
+                    HStack(alignment: .top) {
+                        Spacer()
+                        Text("Add meal")
+                            .font(.subheadline)
+                            .bold()
+                        Spacer()
+                    }
                     Spacer()
-                    Text("Add meal")
-                        .font(.subheadline)
-                        .bold()
-                    Spacer()
-                }
-                VStack(){
-                    AddMealTabBar(addedFoods: $addedFoods)
-                }
-                HStack{
-                    Spacer()
+                    VStack(){
+                        AddMealTabBar(addedFoods: $addedFoods)
+                    }
                     VStack{
-                        Picker(selection: $selectedMealIndex, label: Text("")) {
-                            ForEach(0 ..< meals.count) {
-                                Text(self.meals[$0])
+                        Spacer()
+                        VStack{
+                            HStack {
+                                Text("Mealtype:")
+                                Spacer()
+                                Picker(selection: $selectedMealIndex, label: Text("")) {
+                                    ForEach(0 ..< meals.count) {
+                                        Text(self.meals[$0])
+                                    }
+                                }
+                                .colorMultiply(.black)
                             }
-                        }
-                        Button(action: {
-                            persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
-                            obMeals.update()
-                            addedFoods.removeAll()
-                            
-                        }) {
-                            Text("Add breakfast")
-                                .font(.body)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+                            .padding([.trailing, .leading], 20)
+                            Button(action: {
+                                persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
+                                obMeals.update()
+                                addedFoods.removeAll()
+                            }) {
+                                Text("Add \(meals[$selectedMealIndex.wrappedValue])")
+                                    .font(.body)
+                                    .bold()
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+                            .foregroundColor(.white)
+                            .background(addedFoods.count == 0 ? Color.gray : Color.blue)
+                            .disabled(addedFoods.count == 0)
                         }
                     }
-                    
-                    Spacer()
                 }
                 Spacer()
             }.onAppear(perform: {

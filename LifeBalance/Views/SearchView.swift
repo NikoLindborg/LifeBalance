@@ -10,16 +10,20 @@ import SwiftUI
 struct SearchView: View {
     @EnvironmentObject var parser: FoodParser
     @EnvironmentObject var nutrientsParser: NutrientsParser
+    @EnvironmentObject private var tabController: TabController
     @State var query: String
     @State var quantity = ""
     @State var foodId: String = ""
     @State var measureURI = "g"
     @State var label = ""
     @Binding var addedFoods: [FoodModel]
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack {
-            List(parser.queryList) { item in
+            Text("Results for \(query)")
+                .bold()
+                    List(parser.queryList) { item in
                 Button(action: {
                     if(self.foodId == item.food.foodId){
                         self.foodId = ""
@@ -34,17 +38,23 @@ struct SearchView: View {
                 }
             }
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50, maxHeight: 50)
+                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             Button(action: {
                 nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
                     addedFoods.append(FoodModel(foodId: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
+                    self.mode.wrappedValue.dismiss()
                 }
             }) {
-                Text("Add")
+                Text("Add \(label)")
                     .font(.body)
             }
-        }.padding(50)
-            .onAppear(perform: {parser.parseFood(query)})
-        
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+            .foregroundColor(.white)
+            .background($quantity.wrappedValue == "" ? Color.gray : Color.blue)
+            .disabled($quantity.wrappedValue == "")
+        }
+        .onAppear(perform: {parser.parseFood(query)})
     }
 }
 

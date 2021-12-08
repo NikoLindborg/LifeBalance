@@ -54,6 +54,7 @@
 		82710320275F8744008C535F /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271031F275F8744008C535F /* BarView.swift */; };
 		82710322275F8770008C535F /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82710321275F8770008C535F /* AmountView.swift */; };
 		82722D63274E7F7400909335 /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82722D62274E7F7400909335 /* HealthKit.swift */; };
+		829AAD472760F23700285B1D /* AddNewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829AAD462760F23700285B1D /* AddNewTab.swift */; };
 		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
 		82D93AEB274BAF4D00530651 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AEA274BAF4D00530651 /* AddMealView.swift */; };
 		82F081F72756087700059481 /* Ingredient+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081EF2756087700059481 /* Ingredient+CoreDataClass.swift */; };
@@ -137,6 +138,7 @@
 		8271031F275F8744008C535F /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		82710321275F8770008C535F /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 		82722D62274E7F7400909335 /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
+		829AAD462760F23700285B1D /* AddNewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTab.swift; sourceTree = "<group>"; };
 		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
 		82D93AEA274BAF4D00530651 /* AddMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
 		82F081EF2756087700059481 /* Ingredient+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ingredient+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */,
 				82D93AEA274BAF4D00530651 /* AddMealView.swift */,
 				6AF84FF0275B8B39009F8C5D /* TrendsView.swift */,
+				829AAD462760F23700285B1D /* AddNewTab.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */,
 				5F374DD1275D1B2600674E26 /* DailyProgressCoreData+CoreDataClass.swift in Sources */,
 				5FA8B172274D0CE00029A1F9 /* SearchView.swift in Sources */,
+				829AAD472760F23700285B1D /* AddNewTab.swift in Sources */,
 				82F081FC2756087700059481 /* Nutrition+CoreDataProperties.swift in Sources */,
 				5F374DD2275D1B2600674E26 /* DailyProgressCoreData+CoreDataProperties.swift in Sources */,
 				5F8AB72827454A2900A59F43 /* ProgressBar.swift in Sources */,

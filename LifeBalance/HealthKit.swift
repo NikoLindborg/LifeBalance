@@ -13,20 +13,29 @@ class HealthKit: ObservableObject {
     @Published var burntCalories: String = "0"
     @Published var healthData: Bool = false
     @Published var dataArray: Array<DataArrayItem> = []
-    @Published var max: Double = 0.0
+    @Published var stepArray: Array<DataArrayItem> = []
+    @Published var activityData: [[CGFloat]] = [[]]
+    @Published var stepData: [[CGFloat]] = [[]]
+    @Published var maxActivity: Double = 0.0
+    @Published var maxSteps: Double = 0.0
+    @Published var weekdays: Array<String> = []
     var arrayForMax: Array<Double> = []
+    var arrayForMaxSteps: Array<Double> = []
 
     let healthStore = HKHealthStore()
 
     func authorizeHealthStore() {
-        let read = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
-        let share = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
+        if (!healthData) {
+            let read = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!, HKObjectType.quantityType(forIdentifier: .stepCount)!])
+            let share = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
 
-        healthStore.requestAuthorization(toShare: share, read: read) { success, error in
-            if (success) {
-                print("permission granted")
-                self.getActiveCaloriesForLastWeek()
-                self.getActiveCalories()
+            healthStore.requestAuthorization(toShare: share, read: read) { success, error in
+                if (success) {
+                    print("permission granted")
+                    self.getActiveCaloriesForLastWeek()
+                    self.getStepCount()
+                    self.getActiveCalories()
+                }
             }
         }
     }
@@ -53,14 +62,25 @@ class HealthKit: ObservableObject {
                   }
             }
         }
+        
+        DispatchQueue.main.async {
+            let format = DateFormatter()
+            format.dateFormat = "EEE"
+            for n in 0...6 {
+                let today = Calendar.current.date(byAdding: .day, value: -n, to: Date())!
+                self.weekdays.append(format.string(from: today))
+            }
+            self.weekdays = self.weekdays.reversed()
+        }
+        
         healthStore.execute(query)
     }
     
     func getActiveCaloriesForLastWeek() {
-        guard let stepCountType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
+        guard let objectType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
             fatalError("Unable to fetch active energy")
         }
-        
+
         var interval = DateComponents()
         interval.hour = 24
         
@@ -70,7 +90,7 @@ class HealthKit: ObservableObject {
         let unit = HKUnit(from: "Cal")
         
         let query = HKStatisticsCollectionQuery
-            .init(quantityType: stepCountType,
+            .init(quantityType: objectType,
                   quantitySamplePredicate: nil,
                   options: .cumulativeSum,
                   anchorDate: anchorDate,
@@ -82,11 +102,58 @@ class HealthKit: ObservableObject {
                                              to: Date(), with: { (result, stop) in
                     self.dataArray.append(DataArrayItem(data: result.sumQuantity()?.doubleValue(for: unit) ?? 0))
                     self.arrayForMax.append(result.sumQuantity()?.doubleValue(for: unit) ?? 0)
-                    self.max = self.arrayForMax.max() ?? 0.0
-                    if (self.max > 0.0) {
+                    self.maxActivity = self.arrayForMax.max() ?? 0.0
+                    if (self.maxActivity > 0.0) {
                         self.healthData = true
                     }
                 })
+                var firstArray: [CGFloat] = []
+                self.dataArray.forEach {data in
+                    firstArray.append(data.data)
+                }
+                self.activityData.append(firstArray)
+                self.activityData.remove(at: 0)
+            }
+        }
+        healthStore.execute(query)
+    }
+    
+    func getStepCount() {
+        guard let objectType = HKObjectType.quantityType(forIdentifier: .stepCount) else {
+            fatalError("Unable to fetch stepcount")
+        }
+
+        var interval = DateComponents()
+        interval.hour = 24
+        
+        let calendar = Calendar.current
+        let anchorDate = calendar.date(bySettingHour: 2, minute: 0, second: 0, of: Date()) ?? Date()
+        let startDate = calendar.date(byAdding: .day, value: -6, to: Date()) ?? Date()
+        
+        let query = HKStatisticsCollectionQuery
+            .init(quantityType: objectType,
+                  quantitySamplePredicate: nil,
+                  options: .cumulativeSum,
+                  anchorDate: anchorDate,
+                  intervalComponents: interval)
+        
+        query.initialResultsHandler = {query, results, error in
+            DispatchQueue.main.async {
+                results?.enumerateStatistics(from: startDate,
+                                             to: Date(), with: { (result, stop) in
+                    self.stepArray.append(DataArrayItem(data: result.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0))
+                    self.arrayForMaxSteps.append(result.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0)
+                    self.maxSteps = self.arrayForMaxSteps.max() ?? 0.0
+                    if (self.maxSteps > 0.0) {
+                        self.healthData = true
+                    }
+                })
+                var firstArray: [CGFloat] = []
+                self.stepArray.forEach {data in
+                    firstArray.append(data.data)
+                }
+                self.stepData.append(firstArray)
+                self.stepData.remove(at: 0)
             }
         }
         healthStore.execute(query)

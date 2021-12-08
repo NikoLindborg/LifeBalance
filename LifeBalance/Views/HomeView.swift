@@ -14,8 +14,10 @@ struct HomeView: View {
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
     let today = itemFormatter.string(from: Date())
-    @ObservedObject var tSettings: ObservableTrends = ObservableTrends()
-    
+    @ObservedObject var tSettings: ObservableTrends
+    @State var realData: [[CGFloat]] = [[]]
+    @State var isLoaded = false
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -67,7 +69,7 @@ struct HomeView: View {
                         
                     }
                     .padding(.leading, 28)
-                    if(!$tSettings.trends.isEmpty){
+                    if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
                             TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
                         } else {
@@ -103,10 +105,17 @@ struct HomeView: View {
                     }
                     .padding(.leading, 28)
                     if (healthKit.healthData) {
-                        GoalsCard(cardCaption: "Weight", cardText: "Your weight was -0.5kg compared to last week", activeCalories: "Your last workout burned \(healthKit.burntCalories) calories", color: Color.green)
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        VStack {
+                            ChartCard(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays)
+                        }
                     } else {
-                        ActiveCaloriesCard(dataArray: healthKit.dataArray, max: healthKit.max)
+                        HStack{
+                            Spacer()
+                            Text("No Health Data available")
+                            Spacer()
+                        }
+                        
+                        .frame(width: 350, height: 100, alignment: .leading)
                     }
                 }
                 .offset(y: -60)
@@ -117,9 +126,8 @@ struct HomeView: View {
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-        .onAppear(perform: {print("trendit \(tSettings)")})
-        .onAppear(perform: persistenceController.initializeTrends)
-        .onAppear(perform: tSettings.update)
+  
+       
     }
     
     func getProgressValueToday() {

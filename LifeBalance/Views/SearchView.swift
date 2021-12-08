@@ -35,8 +35,7 @@ struct SearchView: View {
                     if(isRecording == false){
                         speechRecognizer.record(to: $query)
                         isRecording = true
-                    } else{
-                        print($query)
+                    } else {
                         speechRecognizer.stopRecording()
                         isRecording = false
                     }

@@ -75,6 +75,35 @@ struct PersistenceController {
         }
     }
     
+    func updateUserSettings(userSettings: [UserSettings], gender: String, height: String, weight: String, target: String, activitylevel: String, age: String, theme: Bool) {
+        if(!userSettings.isEmpty ) {
+            if(!gender.isEmpty){
+                userSettings[0].gender = gender
+            }
+            if(!height.isEmpty){
+                userSettings[0].height = height
+            }
+            if(!weight.isEmpty) {
+                userSettings[0].weight = weight
+            }
+            if(!target.isEmpty) {
+                userSettings[0].target = target
+            }
+            if(!activitylevel.isEmpty) {
+                userSettings[0].activityLevel = activitylevel
+            }
+            if(!age.isEmpty) {
+                userSettings[0].age = age
+            }
+            userSettings[0].theme = theme
+        }
+        do {
+            try container.viewContext.save()
+        } catch {
+            container.viewContext.rollback()
+        }
+    }
+    
     func loadDayEntities() -> [Day] {
         let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
         do {
@@ -106,14 +135,6 @@ struct PersistenceController {
             return mealList
         } catch {
             return []
-        }
-    }
-    
-    func updateUserSettings() {
-        do {
-            try container.viewContext.save()
-        } catch {
-            container.viewContext.rollback()
         }
     }
     
@@ -297,13 +318,19 @@ struct PersistenceController {
         }
     }
     
-    func addRefValues(refCalories: Double, refIron: Double) {
+    func addRefValues(refCalories: Double, refIron: Double, refFat: Double, refCarbohydrates: Double, refProtein: Double, refFiber: Double, refSugar: Double, refSodium: Double) {
         let refValues = getRefValues()
         refValues[0].ref_calories = refCalories
         refValues[0].ref_iron = refIron
+        refValues[0].ref_fat = refFat
+        refValues[0].ref_carbohydrates = refCarbohydrates
+        refValues[0].ref_protein = refProtein
+        refValues[0].ref_fiber = refFiber
+        refValues[0].ref_sugar = refSugar
+        refValues[0].ref_sodium = refSodium
         do {
             try container.viewContext.save()
-            return print("Reference values \(refIron) & \(refCalories) stored to CoreData")
+            return print("Reference values \(refIron) & \(refCalories) & prot \(refProtein) & carbs \(refCarbohydrates) & fat \(refFat) &  stored to CoreData")
         } catch {
             return print("Failed to save reference values to CoreData \(error)")
         }

@@ -2,7 +2,7 @@
 //  CDReferenceValues+CoreDataClass.swift
 //  LifeBalance
 //
-//  Created by Aleksi Kosonen on 1.12.2021.
+//  Created by iosdev on 7.12.2021.
 //
 //
 

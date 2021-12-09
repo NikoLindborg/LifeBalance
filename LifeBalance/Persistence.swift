@@ -142,6 +142,7 @@ struct PersistenceController {
         if (checkIfExists(argument: date, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = date
+            days?.id = UUID()
             do {
                 try container.viewContext.save()
                 return print("Save today success")
@@ -348,7 +349,16 @@ struct PersistenceController {
     func getRefValuesDictionary() -> Dictionary<String, Float> {
         let userReferenceValues: Dictionary<String, Float> = [
             "calories" : Float(getRefValues()[0].ref_calories),
-            "iron" : Float(getRefValues()[0].ref_iron)]
+            "iron" : Float(getRefValues()[0].ref_iron),
+            "sodium" : Float(getRefValues()[0].ref_sodium),
+            "protein" : Float(getRefValues()[0].ref_protein),
+            "fiber" : Float(getRefValues()[0].ref_fiber),
+            "fat" : Float(getRefValues()[0].ref_fat),
+            "carbs" : Float(getRefValues()[0].ref_carbohydrates),
+            "sugar" : Float(getRefValues()[0].ref_sugar),
+            
+        ]
+            
         return userReferenceValues
     }
     
@@ -362,7 +372,6 @@ struct PersistenceController {
                 let nutrition = ing.nutrients?.allObjects as! [Nutrition]
                 nutrition.forEach {nutr in
                     if (nutr.label == nutritionLabel) {
-                        print("\(nutr.label ?? ""), \(nutr.quantity), \(nutr.unit ?? "")")
                         value += nutr.quantity
                         unit = nutr.unit ?? ""
                     }
@@ -372,11 +381,11 @@ struct PersistenceController {
         return (value, unit)
     }
     
-    func getProgressValues(userSetNutritionalValues: Array<String>, date: String) -> Array<ProgressItem> {
+    func getProgressValues(_ userSetNutritionalValues: Array<String>?, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
         let userReferenceValues = getRefValuesDictionary()
-        
-        userSetNutritionalValues.forEach {userValue in
+        let nutritionalValues = userSetNutritionalValues ?? ["calories", "carbs", "protein", "fat", "iron", "sugar", "sodium", "iron"]
+        nutritionalValues.forEach {userValue in
             let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
             let result: Float? = (consumedNutrient.value ?? 0.0) / userReferenceForValue
@@ -390,14 +399,15 @@ struct PersistenceController {
     }
     
     func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
+        
         ingred.quantity = Int16(quantity)
         if (ingred.quantity <= 0){
             container.viewContext.delete(ingred)
         } else {
+            print(ingred.quantity)
             let nutrients = ingred.nutrients
             let nutrientsArray = (nutrients?.allObjects as! [Nutrition])
             nutrientsArray.forEach{ nutrient in
-                
                 if nutrient.label == "calories" {
                     nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0
                     nutrient.unit = food.totalNutrients[0].ENERC_KCAL?.unit

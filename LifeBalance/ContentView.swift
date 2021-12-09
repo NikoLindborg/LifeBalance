@@ -17,6 +17,8 @@ struct ContentView: View {
     @ObservedObject var dailyProgressSettings = ObservableDailyProgress()
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
+    let obAllDays = ObservableDays()
+    let observedUpdate = ObservableUpdate()
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
@@ -25,15 +27,16 @@ struct ContentView: View {
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
-                }      .onAppear(perform: persistenceController.initializeTrends)
+                }      
+                .onAppear(perform: persistenceController.initializeTrends)
                 .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
                 .onAppear(perform: {print("trendit \(tSettings.trends) \(tSettings.trends.isEmpty)")})
                 .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update(); print("ajoin")}})
                 .onAppear(perform: {if $dailyProgressSettings.dailyProgress.isEmpty {dailyProgressSettings.update();
                     print("ContentView - dailyProgressSettings updated")
                 }})
-                
-            DiaryView(persistenceController: persistenceController, obMeals: obMeals)
+
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, allDays: obAllDays.allDays, isUpdated: observedUpdate)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")

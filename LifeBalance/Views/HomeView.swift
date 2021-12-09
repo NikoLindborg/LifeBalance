@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var progressValues: Array<ProgressItem> = []
+    @State var fullProgressValues: Array<ProgressItem> = []
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
@@ -38,8 +39,7 @@ struct HomeView: View {
                         Spacer()
                     }
                     .padding(.leading, 28)
-                
-                    NavigationLink(destination: NutritionalDatalistView(), label: {
+                    NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $dailyProgressSettings.progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
@@ -134,8 +134,14 @@ struct HomeView: View {
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: dailyProgressSettings.update)
-        .onAppear(perform: dailyProgressSettings.fetchList)
+        .onAppear(perform: dailyProgressSettings.fetchList) 
     }
+    
+        // anotherDate can be used to scope around different days by variating the "value: _"
+        // Insert anotherDateString to getProgressValues parameter instead of today to switch day
+        // let anotherDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        // let anotherDateString = itemFormatter.string(from: anotherDate)
+
 }
 /**
  struct HomeView_Previews: PreviewProvider {

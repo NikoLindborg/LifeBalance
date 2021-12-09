@@ -10,57 +10,20 @@ import SwiftUI
 struct SearchView: View {
     @EnvironmentObject var parser: FoodParser
     @EnvironmentObject var nutrientsParser: NutrientsParser
-    @State var query: String = ""
+    @EnvironmentObject private var tabController: TabController
+    @State var query: String
     @State var quantity = ""
     @State var foodId: String = ""
     @State var measureURI = "g"
     @State var label = ""
     @Binding var addedFoods: [FoodModel]
-    
-    @State private var isRecording = false
-    private let speechRecognizer = SpeechRecognizer()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
-        
         VStack {
-            HStack{
-                TextField("Search for food", text: $query).disableAutocorrection(true)
-                Button(action: {
-                    parser.parseFood(query)
-                }) {
-
-                    Image(systemName: "magnifyingglass")
-                        .font(.body)                }
-                Button(action: {
-                    if(isRecording == false){
-                        speechRecognizer.record(to: $query)
-                        isRecording = true
-                    } else{
-                        print($query)
-                        speechRecognizer.stopRecording()
-                        isRecording = false
-                    }
-                }){
-                    if(isRecording == false){
-                        Image(systemName: "mic")
-                    }else{
-                        Image(systemName: "mic.fill")
-                    }
-                    
-                }
-            }.padding(.bottom)
-            
-            TextField("Choose amount", text: $quantity).disableAutocorrection(true)
-            Button(action: {
-                nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
-                    addedFoods.append(FoodModel(foodId: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
-                }
-            }) {
-                Text("Add")
-                    .font(.body)
-            }
-            
-            List(parser.queryList) { item in
+            Text("Results for \(query)")
+                .bold()
+                    List(parser.queryList) { item in
                 Button(action: {
                     if(self.foodId == item.food.foodId){
                         self.foodId = ""
@@ -74,7 +37,24 @@ struct SearchView: View {
                         .foregroundColor(self.foodId == item.food.foodId ? Color.green : Color.black)
                 }
             }
-        }.padding(50)
+            TextField("Choose amount", text: $quantity).disableAutocorrection(true)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50, maxHeight: 50)
+                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+            Button(action: {
+                nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
+                    addedFoods.append(FoodModel(foodId: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
+                    self.mode.wrappedValue.dismiss()
+                }
+            }) {
+                Text("Add \(label)")
+                    .font(.body)
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+            .foregroundColor(.white)
+            .background($quantity.wrappedValue == "" ? Color.gray : Color.blue)
+            .disabled($quantity.wrappedValue == "")
+        }
+        .onAppear(perform: {parser.parseFood(query)})
     }
 }
 

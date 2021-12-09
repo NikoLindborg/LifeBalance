@@ -16,6 +16,8 @@ struct ChartCard: View {
     @State var maxActivity: Double
     @State var maxSteps: Double
     @State var weekdays: Array<String>
+    @State var combinedArray: [[CGFloat]] = []
+    @State var isLoaded: Bool = false
     
     var body: some View {
         
@@ -23,41 +25,36 @@ struct ChartCard: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color.green)
             VStack {
-                Picker(selection: $pickerSelection.animation(.default), label: Text("")) {
+                Picker(selection: $pickerSelection, label: Text("")) {
                     Text("Active energy").tag(0)
                     Text("Step count").tag(1)
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal, 20)
                 
-                // Could be done in a ForEach but apparently it enables the animation based on documentation
-                if (pickerSelection == 0) {
+                if (isLoaded) {
                     HStack(spacing: 16) {
-                        BarView(value: activityData[0][0], max: Float(maxActivity), day: weekdays[0])
-                        BarView(value: activityData[0][1], max: Float(maxActivity), day: weekdays[1])
-                        BarView(value: activityData[0][2], max: Float(maxActivity), day: weekdays[2])
-                        BarView(value: activityData[0][3], max: Float(maxActivity), day: weekdays[3])
-                        BarView(value: activityData[0][4], max: Float(maxActivity), day: weekdays[4])
-                        BarView(value: activityData[0][5], max: Float(maxActivity), day: weekdays[5])
-                        BarView(value: activityData[0][6], max: Float(maxActivity), day: weekdays[6])
-                        AmountView(max: maxActivity)
-                    }
-                    .animation(.default)
-                } else {
-                    HStack(spacing: 16) {
-                        BarView(value: stepData[0][0], max: Float(maxSteps), day: weekdays[0])
-                        BarView(value: stepData[0][1], max: Float(maxSteps), day: weekdays[1])
-                        BarView(value: stepData[0][2], max: Float(maxSteps), day: weekdays[2])
-                        BarView(value: stepData[0][3], max: Float(maxSteps), day: weekdays[3])
-                        BarView(value: stepData[0][4], max: Float(maxSteps), day: weekdays[4])
-                        BarView(value: stepData[0][5], max: Float(maxSteps), day: weekdays[5])
-                        BarView(value: stepData[0][6], max: Float(maxSteps), day: weekdays[6])
-                        AmountView(max: maxSteps)
+                        BarView(value: combinedArray[pickerSelection][0], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[0])
+                        BarView(value: combinedArray[pickerSelection][1], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[1])
+                        BarView(value: combinedArray[pickerSelection][2], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[2])
+                        BarView(value: combinedArray[pickerSelection][3], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[3])
+                        BarView(value: combinedArray[pickerSelection][4], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[4])
+                        BarView(value: combinedArray[pickerSelection][5], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[5])
+                        BarView(value: combinedArray[pickerSelection][6], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[6])
+                        AmountView(max: pickerSelection == 0 ? maxActivity : maxSteps)
                     }
                     .animation(.default)
                 }
             }
         }
         .frame(width: 350, height: 350, alignment: .leading)
+        .onAppear(perform: {combineArrays(arrayOne: activityData, arrayTwo: stepData)})
     }
+    func combineArrays(arrayOne: [[CGFloat]], arrayTwo: [[CGFloat]]) {
+        combinedArray.removeAll()
+        self.combinedArray.append(arrayOne[0])
+        self.combinedArray.append(arrayTwo[0])
+        self.isLoaded = true
+    }
+
 }

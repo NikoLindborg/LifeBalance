@@ -2,7 +2,7 @@
 //  Meals+CoreDataClass.swift
 //  LifeBalance
 //
-//  Created by Niko Lindborg on 5.12.2021.
+//  Created by Niko Lindborg on 8.12.2021.
 //
 //
 

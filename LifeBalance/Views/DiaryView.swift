@@ -48,7 +48,6 @@ struct DiaryView: View {
                             
                         })
                         
-                        
                     }
                     .padding(.bottom, 46)
                     HStack{
@@ -85,10 +84,14 @@ struct DiaryView: View {
                         MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
                     }
                     .offset(y: -60)
+                    Button("save"){
+                        persistenceController.saveMeal(name: "shikkaaeanpasta", meal: obMeals.meals[0])
+                    }
                 }
             }
         }
         .onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {meals = obMeals.meals})
     }
     
     func getProgressValueToday(date: String) {

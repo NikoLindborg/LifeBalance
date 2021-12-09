@@ -22,7 +22,7 @@ struct Hints: Decodable, Identifiable, Hashable {
     }
     func hash(into hasher: inout Hasher) {
         hasher.combine(food)
-        }
+    }
 }
 
 struct Food: Decodable, Hashable{
@@ -44,13 +44,13 @@ struct parseNutrients: Decodable {
 extension Hints: Equatable {
     static func == (lhs: Hints, rhs: Hints) -> Bool {
         return
-            lhs.food == rhs.food
+        lhs.food == rhs.food
     }
 }
 
 extension Food: Equatable {
     static func == (lhs: Food, rhs: Food) -> Bool {
         return
-            lhs.foodId == rhs.foodId
+        lhs.foodId == rhs.foodId
     }
 }

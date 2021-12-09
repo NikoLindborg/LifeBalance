@@ -127,7 +127,7 @@ struct HomeView: View {
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: getProgressValueToday)
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-  
+        .onAppear(perform: {print(persistenceController.getAllSavedMeals())})
         
     }
     

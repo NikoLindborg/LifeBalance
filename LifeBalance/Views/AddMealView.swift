@@ -35,7 +35,7 @@ struct AddMealView: View {
                     }
                     Spacer()
                     VStack(){
-                        AddMealTabBar(addedFoods: $addedFoods)
+                        AddMealTabBar(addedFoods: $addedFoods, persistenceController: persistenceController)
                     }
                     VStack{
                         Spacer()

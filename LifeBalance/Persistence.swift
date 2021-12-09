@@ -153,9 +153,8 @@ struct PersistenceController {
         }
     }
     
-    func addMeal(_ mealName: String, finished: @escaping() -> Void ) {
-        let dateToCheck = itemFormatter.string(from: Date())
-        if (checkIfExists(argument: today, nil)) {
+    func addMeal(_ mealName: String, dateToCheck: String, finished: @escaping() -> Void ) {
+        if (checkIfExists(argument: dateToCheck, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = dateToCheck
             if (checkIfExists(argument: mealName, days)) {
@@ -217,8 +216,7 @@ struct PersistenceController {
         return test
     }
     
-    func addFood(_ addedFoodList: [FoodModel], _ mealName: String) {
-        let dateToCheck = itemFormatter.string(from: Date())
+    func addFood(_ addedFoodList: [FoodModel], _ mealName: String, dateToCheck: String) {
         let allDays = loadDayEntities()
         let dayEntity = allDays.filter {$0.date == dateToCheck}
         
@@ -400,15 +398,16 @@ struct PersistenceController {
     }
     
     func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
+        
         ingred.quantity = Int16(quantity)
         if (ingred.quantity <= 0){
             container.viewContext.delete(ingred)
         } else {
+            print(ingred.quantity)
             let nutrients = ingred.nutrients
             
             let nutrientsArray = nutrients?.allObjects as! [Nutrition]
             nutrientsArray.forEach{ nutrient in
-                
                 if nutrient.label == "calories" {
                     nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0
                     nutrient.unit = food.totalNutrients[0].ENERC_KCAL?.unit
@@ -570,9 +569,9 @@ struct PersistenceController {
         
         do {
             try container.viewContext.save()
-            return print("Saving new trends success")
+            return print("Saving new daily progress success")
         } catch {
-            return print("Failed to save new trends \(error)")
+            return print("Failed to save new daily progress \(error)")
         }
     }
     func getAllIngredients() -> [Ingredient] {

@@ -14,27 +14,35 @@ struct ContentView: View {
     let persistenceController = PersistenceController()
     @State var themeColor: ColorScheme
     @ObservedObject var tSettings = ObservableTrends()
+    @ObservedObject var dailyProgressSettings = ObservableDailyProgress()
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
     let obAllDays = ObservableDays()
+    let observedUpdate = ObservableUpdate()
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: persistenceController, tSettings: tSettings)
+            HomeView(persistenceController: persistenceController, tSettings: tSettings, dailyProgressSettings: dailyProgressSettings)
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
-                }
+                }      
                 .onAppear(perform: persistenceController.initializeTrends)
-                .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update()}})
-            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, allDays: obAllDays.allDays )
+                .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
+                .onAppear(perform: {print("trendit \(tSettings.trends) \(tSettings.trends.isEmpty)")})
+                .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update(); print("ajoin")}})
+                .onAppear(perform: {if $dailyProgressSettings.dailyProgress.isEmpty {dailyProgressSettings.update();
+                    print("ContentView - dailyProgressSettings updated")
+                }})
+
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, isUpdated: observedUpdate)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")
                     Text("Diary")
                 }
-            AddMealView(persistenceController: persistenceController, obMeals: obMeals)
+            AddMealView(obDays: obAllDays, persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.addMeal)
                 .tabItem() {
                     Image(systemName: "plus.circle.fill")

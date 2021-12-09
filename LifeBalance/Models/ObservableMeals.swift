@@ -16,6 +16,7 @@ class ObservableMeals: ObservableObject {
     }
     
     func update() {
+        print("OBmeals update")
         self.meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: itemFormatter.string(from: Date())))
     }
 }

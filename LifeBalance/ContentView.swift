@@ -17,6 +17,7 @@ struct ContentView: View {
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
     let obAllDays = ObservableDays()
+    let observedUpdate = ObservableUpdate()
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
@@ -28,7 +29,7 @@ struct ContentView: View {
                 }
                 .onAppear(perform: persistenceController.initializeTrends)
                 .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update()}})
-            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, allDays: obAllDays.allDays )
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, allDays: obAllDays.allDays, isUpdated: observedUpdate)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")

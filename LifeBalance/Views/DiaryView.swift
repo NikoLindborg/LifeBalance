@@ -23,6 +23,7 @@ struct DiaryView: View {
     @ObservedObject var obDays: ObservableDays
     @State var allDays: [Day]
     @State var selectedDayIndex = 0
+    @ObservedObject var isUpdated: ObservableUpdate
     
     var body: some View {
         NavigationView {
@@ -76,16 +77,25 @@ struct DiaryView: View {
                     .padding(.leading, 28)
                     ForEach(obMeals.meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
-                        NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals), label: {
+                        NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
                             MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
                             }
                         )
                     }
                     .offset(y: -60)
+                    .onChange(of: isUpdated.isUpdated, perform:  { (value) in
+                        print("changed")
+                        updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
+                    })
                 }
             }
         }
-        .onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        //.onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        /*.onChange(of: isUpdated.isUpdated) {value in
+            updateDate(date: itemFormatter.string(from: Date()))
+        }*/
+        //.onChange(of: {isUpdated.isUpdated}, perform: {updateDate(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {updateDate(date: itemFormatter.string(from: Date()))})
     }
     
     func getProgressValueToday(date: String) {
@@ -105,7 +115,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), allDays: ObservableDays().allDays )
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), allDays: ObservableDays().allDays, isUpdated: ObservableUpdate() )
     }
 }
 

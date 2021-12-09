@@ -401,14 +401,12 @@ struct PersistenceController {
     func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
         
         ingred.quantity = Int16(quantity)
-        print(ingred.quantity)
-        print(ingred.foodId)
         if (ingred.quantity <= 0){
             container.viewContext.delete(ingred)
         } else {
+            print(ingred.quantity)
             let nutrients = ingred.nutrients
             let nutrientsArray = (nutrients?.allObjects as! [Nutrition])
-            print("moi")
             nutrientsArray.forEach{ nutrient in
                 if nutrient.label == "calories" {
                     nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0

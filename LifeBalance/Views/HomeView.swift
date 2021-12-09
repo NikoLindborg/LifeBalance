@@ -34,7 +34,7 @@ struct HomeView: View {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
-                                .background(Color.purple)
+                                .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }
                     })
@@ -47,7 +47,7 @@ struct HomeView: View {
                             .bold()
                             .padding(.leading, 10)
                             .frame(width: 350, height: 100, alignment: .leading)
-                            .background(Color.green)
+                            .background(Color.LB_green)
                             .foregroundColor(.white)
                             .cornerRadius(20)
                     }
@@ -72,25 +72,25 @@ struct HomeView: View {
                     .padding(.leading, 28)
                     if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
-                            TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here", color: Color.gray)
+                            TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here")
                         } else {
                             if tSettings.trends[0].trend_iron {
-                                TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron", color: Color.gray)
+                                TrendCard(cardCaption: "Iron", cardText: 0 == 0 ? "Too low iron" : "Too much iron")
                             }
                             if tSettings.trends[0].trend_calories {
-                                TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal", color: Color.gray)
+                                TrendCard(cardCaption: "Calories", cardText: "Your calories levels are looking better than normal")
                             }
                             if tSettings.trends[0].trend_protein {
-                                TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal", color: Color.gray)
+                                TrendCard(cardCaption: "Protein", cardText: "Your protein levels are looking better than normal")
                             }
                             if tSettings.trends[0].trend_carbs {
-                                TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal", color: Color.gray)
+                                TrendCard(cardCaption: "Carbs", cardText: "Your carbs levels are looking better than normal")
                             }
                             if tSettings.trends[0].trend_sugar {
-                                TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal", color: Color.gray)
+                                TrendCard(cardCaption: "Sugar", cardText: "Your sugar levels are looking better than normal")
                             }
                             if tSettings.trends[0].trend_salt {
-                                TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal", color: Color.gray)
+                                TrendCard(cardCaption: "Salt", cardText: "Your salt levels are looking better than normal")
                             }
                         }
                     }

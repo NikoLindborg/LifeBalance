@@ -18,7 +18,7 @@ struct AddNewTab: View {
             TextField("Search for food", text: $query).disableAutocorrection(true)
                 .frame(height:30)
                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                .background(Color.white)
+                .background(Color(.systemGray6))
                 .cornerRadius(15)
             HStack{
                 Button(action: {
@@ -46,13 +46,14 @@ struct AddNewTab: View {
             }
         }
         .padding(20)
-        .background(Color(.systemGray6))
+        .background(Color.LB_whiteBlack)
         Section {
             VStack(){
                 Form{
                     List(addedFoods) {
                         FoodRow(food: $0.label, amount: $0.quantity)
                     }
+                    .background(Color.LB_whiteBlack)
                     if (addedFoods.count > 0) {
                         HStack{
                             Text("")

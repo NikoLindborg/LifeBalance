@@ -33,7 +33,6 @@ struct DiaryView: View {
                         Picker("", selection: $selectedDayIndex) {
                             ForEach(0 ..< allDays.count) { i in
                                 HStack{
-                                    
                                     if(allDays[i].date == itemFormatter.string(from: Date())){
                                         Text("\(allDays[i].date ?? "") (today)")
                                     } else{
@@ -43,7 +42,7 @@ struct DiaryView: View {
                                 }
                                 
                             }
-                        }.colorMultiply(.black)
+                        }.colorMultiply(Color.LB_text)
                         .onChange(of: selectedDayIndex, perform:  { (value) in
                             updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                         })
@@ -62,7 +61,7 @@ struct DiaryView: View {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
-                                .background(Color.purple)
+                                .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }
                     })

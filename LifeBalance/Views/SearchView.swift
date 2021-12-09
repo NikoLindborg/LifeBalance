@@ -51,7 +51,7 @@ struct SearchView: View {
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
             .foregroundColor(.white)
-            .background($quantity.wrappedValue == "" ? Color.gray : Color.blue)
+            .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_purple)
             .disabled($quantity.wrappedValue == "")
         }
         .onAppear(perform: {parser.parseFood(query)})

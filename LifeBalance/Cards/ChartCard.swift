@@ -23,7 +23,7 @@ struct ChartCard: View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.green)
+                .fill(Color.LB_dataBackground)
             VStack {
                 Picker(selection: $pickerSelection, label: Text("")) {
                     Text("Active energy").tag(0)
@@ -33,7 +33,7 @@ struct ChartCard: View {
                 .padding(.horizontal, 20)
                 
                 if (isLoaded) {
-                    HStack(spacing: 16) {
+                    HStack(spacing: 13) {
                         BarView(value: combinedArray[pickerSelection][0], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[0])
                         BarView(value: combinedArray[pickerSelection][1], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[1])
                         BarView(value: combinedArray[pickerSelection][2], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[2])

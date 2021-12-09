@@ -48,7 +48,7 @@ struct ContentView: View {
                     Text("Settings")
                 }
         }
-        
+        .accentColor(Color.LB_purple)
         .environmentObject(tabController)
         .onAppear(perform: {
             if(!PersistenceController().loadUserSettings().isEmpty){

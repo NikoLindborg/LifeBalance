@@ -14,19 +14,25 @@ struct ContentView: View {
     let persistenceController = PersistenceController()
     @State var themeColor: ColorScheme
     @ObservedObject var tSettings = ObservableTrends()
+    @ObservedObject var dailyProgressSettings = ObservableDailyProgress()
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: persistenceController, tSettings: tSettings)
+            HomeView(persistenceController: persistenceController, tSettings: tSettings, dailyProgressSettings: dailyProgressSettings)
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")
                     Text("Home")
                 }      .onAppear(perform: persistenceController.initializeTrends)
+                .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
                 .onAppear(perform: {print("trendit \(tSettings.trends) \(tSettings.trends.isEmpty)")})
                 .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update(); print("ajoin")}})
+                .onAppear(perform: {if $dailyProgressSettings.dailyProgress.isEmpty {dailyProgressSettings.update();
+                    print("ContentView - dailyProgressSettings updated")
+                }})
+                
             DiaryView(persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.diary)
                 .tabItem() {

@@ -18,10 +18,19 @@ struct HomeView: View {
     @ObservedObject var tSettings: ObservableTrends
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
-
+    @ObservedObject var dailyProgressSettings: ObservableDailyProgress
+    
     var body: some View {
         NavigationView {
             ScrollView {
+                // For some reason doesnt work inside those stacks below??
+                if(!$dailyProgressSettings.dailyProgress.isEmpty){
+                    NavigationLink(destination: DailyProgressView(dailyProgressSettings: $dailyProgressSettings.dailyProgress[0], persistenceController: persistenceController, observedDailyProgress: dailyProgressSettings)){
+                        Text("Edit")
+                            .bold()
+                            .padding(.trailing, 28)
+                    }
+                }
                 VStack {
                     HStack {
                         Text("Today")
@@ -32,7 +41,7 @@ struct HomeView: View {
                     .padding(.leading, 28)
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressValues: $dailyProgressSettings.progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(width: 350, height: 250, alignment: .leading)
                                 .background(Color.purple)
                                 .cornerRadius(20)
@@ -67,7 +76,6 @@ struct HomeView: View {
                                     .padding(.trailing, 28)
                             }
                         }
-                        
                     }
                     .padding(.leading, 28)
                     if(tSettings.trends.count != 0){
@@ -125,23 +133,15 @@ struct HomeView: View {
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
-        .onAppear(perform: getProgressValueToday)
-        .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-  
-        
+        .onAppear(perform: dailyProgressSettings.update)
+        .onAppear(perform: dailyProgressSettings.fetchList) 
     }
     
-    func getProgressValueToday() {
         // anotherDate can be used to scope around different days by variating the "value: _"
         // Insert anotherDateString to getProgressValues parameter instead of today to switch day
         // let anotherDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         // let anotherDateString = itemFormatter.string(from: anotherDate)
-        
-        // A dummy list for future reference for controlling what is shown on Daily Progress View
-        let userSetNutritionalValues = ["calories", "iron"]
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues, date: today)
-        fullProgressValues = persistenceController.getProgressValues(nil, date: today)
-    }
+
 }
 /**
  struct HomeView_Previews: PreviewProvider {

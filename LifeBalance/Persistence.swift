@@ -569,9 +569,9 @@ struct PersistenceController {
         
         do {
             try container.viewContext.save()
-            return print("Saving new trends success")
+            return print("Saving new daily progress success")
         } catch {
-            return print("Failed to save new trends \(error)")
+            return print("Failed to save new daily progress \(error)")
         }
     }
     

@@ -65,6 +65,7 @@
 		82F081FB2756087700059481 /* Nutrition+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081F32756087700059481 /* Nutrition+CoreDataClass.swift */; };
 		82F081FC2756087700059481 /* Nutrition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081F42756087700059481 /* Nutrition+CoreDataProperties.swift */; };
 		82F432BF274E38AA005CD4BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F432BE274E38AA005CD4BB /* HealthKit.framework */; };
+		9647CAB727622EDF00241B11 /* PersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9647CAB627622EDF00241B11 /* PersistenceTests.swift */; };
 		9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */; };
 		9675E1C6274A6A080013D6FB /* NutritionDatalistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */; };
 		96F87D972758EED300C5536E /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F87D962758EED300C5536E /* TabController.swift */; };
@@ -151,6 +152,7 @@
 		82F081F42756087700059481 /* Nutrition+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Nutrition+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		82F432BC274E38AA005CD4BB /* LifeBalance.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeBalance.entitlements; sourceTree = "<group>"; };
 		82F432BE274E38AA005CD4BB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		9647CAB627622EDF00241B11 /* PersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceTests.swift; sourceTree = "<group>"; };
 		9675E1C3274A66EF0013D6FB /* NutritionalDatalistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalDatalistView.swift; sourceTree = "<group>"; };
 		9675E1C5274A6A080013D6FB /* NutritionDatalistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatalistItem.swift; sourceTree = "<group>"; };
 		96F87D962758EED300C5536E /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				5F8AB70A274278E600A59F43 /* LifeBalanceTests.swift */,
+				9647CAB627622EDF00241B11 /* PersistenceTests.swift */,
 			);
 			path = LifeBalanceTests;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F8AB70B274278E600A59F43 /* LifeBalanceTests.swift in Sources */,
+				9647CAB727622EDF00241B11 /* PersistenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

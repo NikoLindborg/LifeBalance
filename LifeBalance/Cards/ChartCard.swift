@@ -57,7 +57,6 @@ struct ChartCard: View {
         combinedArray.removeAll()
         self.combinedArray.append(arrayOne[0])
         self.combinedArray.append(arrayTwo[0])
-        print(combinedArray)
         self.isLoaded = true
     }
 

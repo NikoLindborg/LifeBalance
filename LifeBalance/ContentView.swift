@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var themeColor: ColorScheme
     @ObservedObject var tSettings = ObservableTrends()
     @ObservedObject var dailyProgressSettings = ObservableDailyProgress()
+    @ObservedObject var observedActivity = ObservableActivity()
     @StateObject private var tabController = TabController()
     let obMeals = ObservableMeals()
     let obAllDays = ObservableDays()
@@ -22,7 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $tabController.activeTab) {
-            HomeView(persistenceController: persistenceController, tSettings: tSettings, dailyProgressSettings: dailyProgressSettings)
+            HomeView(persistenceController: persistenceController, tSettings: tSettings, dailyProgressSettings: dailyProgressSettings, observedActivity: observedActivity)
                 .tag(Tab.home)
                 .tabItem() {
                     Image(systemName: "heart.fill")

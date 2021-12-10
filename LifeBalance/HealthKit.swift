@@ -21,7 +21,6 @@ class HealthKit: ObservableObject {
     @Published var weekdays: Array<String> = []
     var arrayForMax: Array<Double> = []
     var arrayForMaxSteps: Array<Double> = []
-
     let healthStore = HKHealthStore()
 
     func authorizeHealthStore() {

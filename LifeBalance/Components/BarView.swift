@@ -11,14 +11,14 @@ struct BarView: View {
     var value: CGFloat
     var max: Float
     var day: String
-    
+
     var body: some View {
         VStack {
             ZStack(alignment: .bottom) {
                 Capsule().frame(width: 20, height: 200)
                     .foregroundColor(Color.LB_dataBackground)
                     .zIndex(1)
-                let percent = value / CGFloat(max)
+                let percent = value / (CGFloat(max) <= 0 ? 0.1 : CGFloat(max))
                 Capsule().frame(width: 20, height: (percent * 200) <= 20 ? 20 : (percent * 200))
                     .foregroundColor(Color.LB_dataHighlight)
                     .zIndex(2)
@@ -28,6 +28,5 @@ struct BarView: View {
                 .font(.subheadline)
         }
         .foregroundColor(.white)
-
     }
 }

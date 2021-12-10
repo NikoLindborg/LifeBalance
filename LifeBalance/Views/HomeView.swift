@@ -19,6 +19,7 @@ struct HomeView: View {
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
     @ObservedObject var dailyProgressSettings: ObservableDailyProgress
+    @ObservedObject var observedActivity: ObservableActivity
     
     var body: some View {
         NavigationView {
@@ -116,9 +117,9 @@ struct HomeView: View {
                         Spacer()
                     }
                     .padding(.leading)
-                    if (healthKit.healthData) {
+                    if ($observedActivity.healthData.wrappedValue) {
                         VStack {
-                            ChartCard(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays)
+                            ChartCard(activityData: $observedActivity.healthKitActivityArray, stepData: $observedActivity.healthKitStepsArray, maxActivity: $observedActivity.healthKitMaxActivity, maxSteps: $observedActivity.healthKitMaxSteps, weekdays: $observedActivity.weekdays, healthData: $observedActivity.healthData)
                         }
                     } else {
                         HStack{
@@ -143,6 +144,11 @@ struct HomeView: View {
         .onAppear(perform: dailyProgressSettings.fetchList)
         .onAppear(perform: {
             UITableView.appearance().backgroundColor = .clear
+        })
+        .onChange(of: healthKit.healthData, perform:  { (value) in
+            print("changed")
+            print(healthKit.stepData)
+            observedActivity.update(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays, healthData: healthKit.healthData)
         })
     }
     

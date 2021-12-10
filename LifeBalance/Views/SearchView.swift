@@ -39,7 +39,7 @@ struct SearchView: View {
             }
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50, maxHeight: 50)
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             Button(action: {
                 nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
                     addedFoods.append(FoodModel(foodId: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
@@ -48,11 +48,15 @@ struct SearchView: View {
             }) {
                 Text("Add \(label)")
                     .font(.body)
+                    .bold()
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+            .frame(maxWidth: .infinity)
+            .frame(height: 75, alignment: .leading)
             .foregroundColor(.white)
-            .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_purple)
+            .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_green)
+            .cornerRadius(20)
             .disabled($quantity.wrappedValue == "")
+            .padding()
         }
         .onAppear(perform: {parser.parseFood(query)})
     }

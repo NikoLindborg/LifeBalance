@@ -18,32 +18,28 @@ struct SavedMealsTab: View {
                     Button(action: {addSelected(meal: item)}){
                         HStack{
                             Text(item.mealName ?? "")
+                                .foregroundColor(Color.LB_text)
                             Spacer()
-                            
                             let ingr = (item.ingredients?.allObjects as! [Ingredient])
                             ForEach(ingr){ ingredient in
                                 VStack{
                                     HStack{
                                         Text("\u{2022} \(ingredient.label ?? "")" )
+                                            .foregroundColor(Color.LB_text)
                                         Spacer()
                                         Text("\(ingredient.quantity )g" )
+                                            .foregroundColor(Color.LB_text)
                                     }
                                 }
-                                
-                                
                             }
                         }
-                    }.colorMultiply(.black)
+                    }
                 }
             }
-            
-        } .listStyle(InsetGroupedListStyle())
-            .onAppear(perform: {savedMeals = persistenceController.getAllSavedMeals()})
-            .onAppear(perform: {
-                print(savedMeals[0].ingredients)
-                let ingr = savedMeals[0].ingredients?.allObjects as! [Ingredient]
-                print(String(ingr[0].label ?? ""))
-            })
+            .listRowBackground(Color(.systemGray6))
+        }
+        .listStyle(InsetGroupedListStyle())
+        .onAppear(perform: {savedMeals = persistenceController.getAllSavedMeals()})
     }
     func addSelected(meal: Saved) {
         print(meal)

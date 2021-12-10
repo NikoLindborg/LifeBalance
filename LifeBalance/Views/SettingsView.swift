@@ -97,6 +97,7 @@ struct SettingsView: View {
                         updateSettings()
                     }
                 }
+                .listRowBackground(Color(.systemGray6))
                 Section(header: Text("Your info"), footer: Text("We use this data to calculate the correct daily intakes")){
                     Picker(selection: $selectedFrameworkIndexWeight, label: Text("Weight")) {
                         ForEach(weight, id: \.self) {
@@ -141,7 +142,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
+                .listRowBackground(Color(.systemGray6))
                 Text("Required calories intake: \(testCal, specifier: "%.2f") kcal")
             }
             

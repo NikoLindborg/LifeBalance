@@ -16,10 +16,10 @@ struct BarView: View {
         VStack {
             ZStack(alignment: .bottom) {
                 Capsule().frame(width: 20, height: 200)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color.LB_dataBackground)
                     .zIndex(1)
                 let percent = value / CGFloat(max)
-                Capsule().frame(width: 20, height: (percent * 200))
+                Capsule().frame(width: 20, height: (percent * 200) <= 20 ? 20 : (percent * 200))
                     .foregroundColor(Color.LB_dataHighlight)
                     .zIndex(2)
             }

@@ -23,46 +23,49 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                // For some reason doesnt work inside those stacks below??
-                if(!$dailyProgressSettings.dailyProgress.isEmpty){
-                    NavigationLink(destination: DailyProgressView(dailyProgressSettings: $dailyProgressSettings.dailyProgress[0], persistenceController: persistenceController, observedDailyProgress: dailyProgressSettings)){
-                        Text("Edit")
-                            .bold()
-                            .padding(.trailing, 28)
-                    }
-                }
+
                 VStack {
                     HStack {
                         Text("Today")
                             .font(.largeTitle)
                             .bold()
                         Spacer()
+                        // For some reason doesnt work inside those stacks below??
+                        if(!$dailyProgressSettings.dailyProgress.isEmpty){
+                            NavigationLink(destination: DailyProgressView(dailyProgressSettings: $dailyProgressSettings.dailyProgress[0], persistenceController: persistenceController, observedDailyProgress: dailyProgressSettings)){
+                                Text("Edit")
+                                    .bold()
+                                    .padding(.trailing)
+                            }
+                        }
                     }
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $dailyProgressSettings.progressValues, color: $color, color2: $color, color3: $color, color4: $color)
-                                .frame(width: 350, height: 250, alignment: .leading)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 250)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }
+                        .padding([.trailing, .leading])
                     })
                     Button(action: {
                         tabController.open(.addMeal)
-                        
                     }) {
                         Text("Add new meal")
                             .font(.largeTitle)
                             .bold()
-                            .padding(.leading, 10)
-                            .frame(width: 350, height: 100, alignment: .leading)
-                            .background(Color.LB_green)
-                            .foregroundColor(.white)
-                            .cornerRadius(20)
+                            .padding(.leading)
+                        Spacer()
                     }
-                    
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 100)
+                    .background(Color.LB_green)
+                    .foregroundColor(.white)
+                    .cornerRadius(20)
+                    .padding([.trailing, .leading])
+
                 }
-                .offset(y: -60)
+                .offset(y: -20)
                 VStack {
                     HStack {
                         Text("Trends")
@@ -73,11 +76,11 @@ struct HomeView: View {
                             NavigationLink(destination: TrendsView(tSettings: $tSettings.trends[0], persistenceController: persistenceController)){
                                 Text("Edit")
                                     .bold()
-                                    .padding(.trailing, 28)
+                                    .padding(.trailing)
                             }
                         }
                     }
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
                             TrendCard(cardCaption: "No trends", cardText: "Go to edit and add trend cards to show here")
@@ -104,7 +107,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .offset(y: -60)
+                .offset(y: -20)
                 VStack {
                     HStack {
                         Text("Goals")
@@ -112,7 +115,7 @@ struct HomeView: View {
                             .bold()
                         Spacer()
                     }
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     if (healthKit.healthData) {
                         VStack {
                             ChartCard(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays)
@@ -127,7 +130,7 @@ struct HomeView: View {
                         .frame(width: 350, height: 100, alignment: .leading)
                     }
                 }
-                .offset(y: -60)
+                .offset(y: -20)
             }
         }
         .onAppear(perform: healthKit.authorizeHealthStore)
@@ -137,7 +140,10 @@ struct HomeView: View {
         .onAppear(perform: {print(persistenceController.getAllSavedMeals())})
         .onAppear(perform: {fullProgressValues = persistenceController.getProgressValues(nil, date: today)})
         .onAppear(perform: dailyProgressSettings.update)
-        .onAppear(perform: dailyProgressSettings.fetchList) 
+        .onAppear(perform: dailyProgressSettings.fetchList)
+        .onAppear(perform: {
+            UITableView.appearance().backgroundColor = .clear
+        })
     }
     
         // anotherDate can be used to scope around different days by variating the "value: _"

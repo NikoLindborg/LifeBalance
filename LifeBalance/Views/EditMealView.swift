@@ -17,9 +17,17 @@ struct EditMealView: View {
     @ObservedObject var obMeals: ObservableMeals
     @ObservedObject var isUpdated: ObservableUpdate
     @State var newAmount: String = ""
+    @State var saveMealName: String = ""
     @State var selectedIngredient: String = ""
     
     var body: some View {
+        HStack {
+            Text("Edit meal")
+                .font(.largeTitle)
+                .bold()
+            Spacer()
+        }
+        .padding()
         let ingredients = (meal.ingredients?.allObjects as! [Ingredient])
         if (ingredients.count > 0) {
             ForEach(0 ..< ingredients.count) {ingredient in
@@ -30,6 +38,10 @@ struct EditMealView: View {
                     if (selectedIngredient == ingredients[ingredient].label) {
                         HStack{
                             TextField("Change amount to \(ingredients[ingredient].label ?? "")", text: $newAmount)
+                                .frame(height:30)
+                                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                .background(Color(.systemGray6))
+                                .cornerRadius(15)
                             Button(action: {
                                 isUpdated.notUpdated()
                                 nutrientsParser.parseNutrients(ingredients[ingredient].foodId ?? "", Int($newAmount.wrappedValue) ?? 0, "g"){
@@ -42,12 +54,32 @@ struct EditMealView: View {
                             {
                                 Text("Change")
                             }
-                        }.padding()
+                        }
+                        .padding()
                     }
                 }
             }
+            Spacer()
+            HStack {
+                Text("Save to My Foods")
+                    .font(.largeTitle)
+                    .bold()
+                Spacer()
+            }
+            .padding()
+            HStack {
+                TextField("Meal name", text: $saveMealName)
+                    .frame(height:30)
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    .background(Color(.systemGray6))
+                    .cornerRadius(15)
+                Button("Save"){
+                    persistenceController.saveMeal(name: saveMealName, meal: meal)
+                }
+            }
+            .padding()
+            Spacer()
         }
-        
     }
 }
 

@@ -2,7 +2,7 @@
 //  Ingredient+CoreDataProperties.swift
 //  LifeBalance
 //
-//  Created by Aleksi Kosonen on 30.11.2021.
+//  Created by Niko Lindborg on 8.12.2021.
 //
 //
 
@@ -16,17 +16,36 @@ extension Ingredient {
         return NSFetchRequest<Ingredient>(entityName: "Ingredient")
     }
 
-    @NSManaged public var id: UUID?
     @NSManaged public var foodId: String?
+    @NSManaged public var identifier: UUID?
     @NSManaged public var label: String?
     @NSManaged public var quantity: Int16
-    @NSManaged public var nutrients: NSSet?
     @NSManaged public var meal: Meals?
+    @NSManaged public var nutrients: NSSet?
+    @NSManaged public var saved: Saved?
 
 }
 
 // MARK: Generated accessors for nutrients
 extension Ingredient {
+
+    @objc(insertObject:inNutrientsAtIndex:)
+    @NSManaged public func insertIntoNutrients(_ value: Nutrition, at idx: Int)
+
+    @objc(removeObjectFromNutrientsAtIndex:)
+    @NSManaged public func removeFromNutrients(at idx: Int)
+
+    @objc(insertNutrients:atIndexes:)
+    @NSManaged public func insertIntoNutrients(_ values: [Nutrition], at indexes: NSIndexSet)
+
+    @objc(removeNutrientsAtIndexes:)
+    @NSManaged public func removeFromNutrients(at indexes: NSIndexSet)
+
+    @objc(replaceObjectInNutrientsAtIndex:withObject:)
+    @NSManaged public func replaceNutrients(at idx: Int, with value: Nutrition)
+
+    @objc(replaceNutrientsAtIndexes:withNutrients:)
+    @NSManaged public func replaceNutrients(at indexes: NSIndexSet, with values: [Nutrition])
 
     @objc(addNutrientsObject:)
     @NSManaged public func addToNutrients(_ value: Nutrition)
@@ -35,10 +54,10 @@ extension Ingredient {
     @NSManaged public func removeFromNutrients(_ value: Nutrition)
 
     @objc(addNutrients:)
-    @NSManaged public func addToNutrients(_ values: NSSet)
+    @NSManaged public func addToNutrients(_ values: NSOrderedSet)
 
     @objc(removeNutrients:)
-    @NSManaged public func removeFromNutrients(_ values: NSSet)
+    @NSManaged public func removeFromNutrients(_ values: NSOrderedSet)
 
 }
 

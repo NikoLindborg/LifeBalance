@@ -1,0 +1,107 @@
+//
+//  SavedMealsTab.swift
+//  LifeBalance
+//
+//  Created by Niko Lindborg on 8.12.2021.
+//
+
+import SwiftUI
+
+struct SavedMealsTab: View {
+    @State var savedMeals: [Saved] = []
+    @Binding var addedFoods: [FoodModel]
+    let persistenceController: PersistenceController
+    var body: some View {
+        List(savedMeals){ item in
+            HStack{
+                VStack{
+                    Button(action: {addSelected(meal: item)}){
+                        HStack{
+                            Text(item.mealName ?? "")
+                            Spacer()
+                            
+                            let ingr = (item.ingredients?.allObjects as! [Ingredient])
+                            ForEach(ingr){ ingredient in
+                                VStack{
+                                    HStack{
+                                        Text("\u{2022} \(ingredient.label ?? "")" )
+                                        Spacer()
+                                        Text("\(ingredient.quantity )g" )
+                                    }
+                                }
+                                
+                                
+                            }
+                        }
+                    }.colorMultiply(.black)
+                }
+            }
+            
+        } .listStyle(InsetGroupedListStyle())
+            .onAppear(perform: {savedMeals = persistenceController.getAllSavedMeals()})
+            .onAppear(perform: {
+                print(savedMeals[0].ingredients)
+                let ingr = savedMeals[0].ingredients?.allObjects as! [Ingredient]
+                print(String(ingr[0].label ?? ""))
+            })
+    }
+    func addSelected(meal: Saved) {
+        print(meal)
+        let ingr = (meal.ingredients?.allObjects as! [Ingredient])
+        ingr.forEach{ ingredient in
+            let nutrients = (ingredient.nutrients?.allObjects as! [Nutrition])
+            addedFoods.append(FoodModel(foodId: ingredient.foodId ?? "", label: ingredient.label ?? "", quantity: Int(ingredient.quantity) , totalNutrients: parseNutrients(nutrients: nutrients)))
+        }
+    }
+    
+    func parseNutrients(nutrients: [Nutrition]) -> [totalNutrients] {
+        var total: [totalNutrients] = []
+        var enerc_kcal: ENERC_KCAL?
+        var fat: FAT?
+        var chocdf: CHOCDF?
+        var procnt: PROCNT?
+        var fibtg: FIBTG?
+        var sugar: SUGAR?
+        var na: NA?
+        var chole: CHOLE?
+        var fe: FE?
+        
+        nutrients.forEach{ nutrient in
+            if(nutrient.label == "calories"){
+                enerc_kcal = (ENERC_KCAL(label: "ENERC_KCAL", quantity: nutrient.quantity, unit: "kcal"))
+            }
+            if(nutrient.label == "fat"){
+                fat = (FAT(label: "FAT", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "carbohydrates"){
+                chocdf = (CHOCDF(label: "CHOCDF", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "protein"){
+                procnt = (PROCNT(label: "PROCNT", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "fiber"){
+                fibtg = (FIBTG(label: "FIBTG", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "sugar"){
+                sugar = (SUGAR(label: "SUGAR", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "sodium"){
+                na = (NA(label: "NA", quantity: nutrient.quantity, unit: "g"))
+            }
+            if(nutrient.label == "cholesterol"){
+                chole = (CHOLE(label: "CHOLE", quantity: nutrient.quantity, unit: "mg"))
+            }
+            if(nutrient.label == "iron"){
+                fe = (FE(label: "FE", quantity: nutrient.quantity, unit: "mg"))
+            }
+        }
+        total.append(totalNutrients(ENERC_KCAL: enerc_kcal, FAT: fat, CHOCDF: chocdf, PROCNT: procnt, FIBTG: fibtg, SUGAR: sugar, NA: na, CHOLE: chole, FE: fe))
+        return total
+    }
+}
+/**
+ struct SavedMealsTab_Previews: PreviewProvider {
+ static var previews: some View {
+ SavedMealsTab(addedFoods:, persistenceController: PersistenceController())
+ }
+ }*/

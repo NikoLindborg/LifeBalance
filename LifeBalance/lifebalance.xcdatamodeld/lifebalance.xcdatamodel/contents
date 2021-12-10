@@ -26,17 +26,18 @@
     </entity>
     <entity name="Ingredient" representedClassName="Ingredient" syncable="YES">
         <attribute name="foodId" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="identifier" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="label" optional="YES" attributeType="String"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meals" inverseName="ingredients" inverseEntity="Meals"/>
         <relationship name="nutrients" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Nutrition" inverseName="ingredient" inverseEntity="Nutrition"/>
+        <relationship name="saved" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Saved" inverseName="ingredients" inverseEntity="Saved"/>
     </entity>
     <entity name="Meals" representedClassName="Meals" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="mealType" optional="YES" attributeType="String"/>
         <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="meals" inverseEntity="Day"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="meal" inverseEntity="Ingredient"/>
-        <relationship name="saved" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Saved" inverseName="meal" inverseEntity="Saved"/>
     </entity>
     <entity name="Nutrition" representedClassName="Nutrition" syncable="YES">
         <attribute name="label" optional="YES" attributeType="String"/>
@@ -45,8 +46,9 @@
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="nutrients" inverseEntity="Ingredient"/>
     </entity>
     <entity name="Saved" representedClassName="Saved" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="mealName" optional="YES" attributeType="String"/>
-        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meals" inverseName="saved" inverseEntity="Meals"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="saved" inverseEntity="Ingredient"/>
     </entity>
     <entity name="TrendSettings" representedClassName="TrendSettings" syncable="YES">
         <attribute name="trend_calories" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -69,10 +71,10 @@
         <element name="CDReferenceValues" positionX="-45" positionY="72" width="128" height="149"/>
         <element name="DailyProgressCoreData" positionX="-45" positionY="81" width="128" height="134"/>
         <element name="Day" positionX="-63" positionY="-18" width="128" height="74"/>
-        <element name="Ingredient" positionX="-54" positionY="45" width="128" height="119"/>
+        <element name="Ingredient" positionX="-54" positionY="45" width="128" height="134"/>
         <element name="Meals" positionX="-63" positionY="45" width="128" height="89"/>
         <element name="Nutrition" positionX="-45" positionY="54" width="128" height="89"/>
-        <element name="Saved" positionX="-54" positionY="72" width="128" height="59"/>
+        <element name="Saved" positionX="-54" positionY="72" width="128" height="74"/>
         <element name="TrendSettings" positionX="-54" positionY="63" width="128" height="119"/>
         <element name="UserSettings" positionX="-63" positionY="0" width="128" height="134"/>
     </elements>

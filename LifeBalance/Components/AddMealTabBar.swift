@@ -11,6 +11,7 @@ struct AddMealTabBar: View {
     @State var selectedTab: Int = 0
     @Binding var addedFoods: [FoodModel]
     @State var query = ""
+    let persistenceController: PersistenceController
     
     var body: some View {
         VStack {
@@ -24,7 +25,7 @@ struct AddMealTabBar: View {
             case 0:
                 AddNewTab(query: $query, addedFoods: $addedFoods)
             case 1:
-                Text("My saved foods")
+                SavedMealsTab(addedFoods: $addedFoods, persistenceController: persistenceController)
             default:
                 Text("Default")
             }
@@ -35,6 +36,6 @@ struct AddMealTabBar: View {
 
 struct AddMealTabBar_Previews: PreviewProvider {
     static var previews: some View {
-        AddMealView(persistenceController: PersistenceController(), obMeals: ObservableMeals())
+        AddMealView(obDays: ObservableDays(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
     }
 }

@@ -17,7 +17,7 @@ struct NutritionDatalistItem: View {
     let unit: String
     
     var body: some View {
-        let progressPercentage = (dailyConsumptionProgress / dailyConsumptionTarget)
+        let progressPercentage = calculateProgress(prog: dailyConsumptionProgress, target: dailyConsumptionTarget)
         HStack {
             Text(nutritionName)
                 .frame(width: 200, alignment: .leading)
@@ -31,6 +31,14 @@ struct NutritionDatalistItem: View {
         .progressViewStyle(CustomProgressViewStyle())
         .padding(5)
         
+    }
+    
+    func calculateProgress(prog: Double, target: Double) -> Double {
+        if(target == 0){
+            return 1.0
+        } else{
+            return prog/target
+        }
     }
 }
 

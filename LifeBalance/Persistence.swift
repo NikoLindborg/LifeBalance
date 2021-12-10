@@ -143,7 +143,7 @@ struct PersistenceController {
     }
     
     func addDay(date: String) {
-        if (checkIfExists(argument: date, nil)) {
+        if (checkIfAvailable(argument: date, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = date
             days?.id = UUID()
@@ -158,10 +158,10 @@ struct PersistenceController {
     
     func addMeal(_ mealName: String, finished: @escaping() -> Void ) {
         let dateToCheck = itemFormatter.string(from: Date())
-        if (checkIfExists(argument: today, nil)) {
+        if (checkIfAvailable(argument: today, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = dateToCheck
-            if (checkIfExists(argument: mealName, days)) {
+            if (checkIfAvailable(argument: mealName, days)) {
                 let meal = Meals(context: container.viewContext)
                 meal.mealType = mealName
                 meal.day = days
@@ -177,7 +177,7 @@ struct PersistenceController {
         } else {
             let dayEntities = loadDayEntities()
             let dayEntity = dayEntities.filter {$0.date == dateToCheck}
-            if (checkIfExists(argument: mealName, dayEntity[0])) {
+            if (checkIfAvailable(argument: mealName, dayEntity[0])) {
                 let meal = Meals(context: container.viewContext)
                 meal.mealType = mealName
                 do {
@@ -194,7 +194,7 @@ struct PersistenceController {
         }
     }
     
-    func checkIfExists(argument: String, _ day: Day?) -> Bool {
+    func checkIfAvailable(argument: String, _ day: Day?) -> Bool {
         var test = true
         if (day == nil) {
             let allDays = loadDayEntities()

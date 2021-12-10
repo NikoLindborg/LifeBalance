@@ -52,4 +52,17 @@ class PersistenceTests: XCTestCase {
         XCTAssertEqual(userSettings[0].target, "Weigth loss")
         XCTAssertEqual(userSettings[0].age, "28")
     }
+    
+    func test_check_if_available() throws {
+        // If no dates are added and date is nil, checkIfAvailable should return true.
+        XCTAssertTrue(persistence.checkIfAvailable(argument: "01.01.2021", nil))
+        
+        // When date is added and the date is nill, it should return false.
+        persistence.addDay(date: "01.01.2021")
+        XCTAssertFalse(persistence.checkIfAvailable(argument: "01.01.2021", nil))
+        
+        // When date is added, it should not contain any meals
+        let days = persistence.loadDayEntities()
+        XCTAssertTrue(persistence.checkIfAvailable(argument: "Breakfast", days[0]))
+    }
 }

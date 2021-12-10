@@ -20,7 +20,7 @@ struct BarView: View {
                     .zIndex(1)
                 let percent = value / CGFloat(max)
                 Capsule().frame(width: 20, height: (percent * 200))
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color.LB_dataHighlight)
                     .zIndex(2)
             }
             .animation(.default)

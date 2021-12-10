@@ -10,30 +10,30 @@ import Foundation
 
 struct EditMealView: View {
     var meal: Meals
-    @State var newAmount: String = ""
     var ingredients: [Ingredient]
     let persistenceController: PersistenceController
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @EnvironmentObject var nutrientsParser: NutrientsParser
     @ObservedObject var obMeals: ObservableMeals
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @ObservedObject var isUpdated: ObservableUpdate
+    @State var newAmount: String = ""
     @State var selectedIngredient: String = ""
     
     var body: some View {
-        let ingr = (meal.ingredients?.allObjects as! [Ingredient])
-        if (ingr.count > 0) {
-            ForEach(0 ..< ingr.count) {ingredient in
-                if (ingr.indices.contains(ingredient)) {
-                    Button(action: {self.selectedIngredient = ingr[ingredient].label ?? ""}){
-                        EditItems(food: ingr[ingredient].label ?? "", amount: String(ingr[ingredient].quantity))
+        let ingredients = (meal.ingredients?.allObjects as! [Ingredient])
+        if (ingredients.count > 0) {
+            ForEach(0 ..< ingredients.count) {ingredient in
+                if (ingredients.indices.contains(ingredient)) {
+                    Button(action: {self.selectedIngredient = ingredients[ingredient].label ?? ""}){
+                        EditItems(food: ingredients[ingredient].label ?? "", amount: String(ingredients[ingredient].quantity))
                     }
-                    if (selectedIngredient == ingr[ingredient].label) {
+                    if (selectedIngredient == ingredients[ingredient].label) {
                         HStack{
-                            TextField("Change amount to \(ingr[ingredient].label ?? "")", text: $newAmount)
+                            TextField("Change amount to \(ingredients[ingredient].label ?? "")", text: $newAmount)
                             Button(action: {
                                 isUpdated.notUpdated()
-                                nutrientsParser.parseNutrients(ingr[ingredient].foodId ?? "", Int($newAmount.wrappedValue) ?? 0, "g"){
-                                    persistenceController.editFood(ingr[ingredient], Int($newAmount.wrappedValue) ?? 0, FoodModel(foodId: ingr[ingredient].foodId ?? "", label: ingr[ingredient].label ?? "", quantity: Int($newAmount.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
+                                nutrientsParser.parseNutrients(ingredients[ingredient].foodId ?? "", Int($newAmount.wrappedValue) ?? 0, "g"){
+                                    persistenceController.editFood(ingredients[ingredient], Int($newAmount.wrappedValue) ?? 0, FoodModel(foodId: ingredients[ingredient].foodId ?? "", label: ingredients[ingredient].label ?? "", quantity: Int($newAmount.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
                                     obMeals.update()
                                     isUpdated.updated()
                                 }

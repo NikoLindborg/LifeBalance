@@ -25,7 +25,7 @@ struct AddMealView: View {
     var body: some View {
         NavigationView{
             ZStack {
-                Color(.systemGray6).ignoresSafeArea()
+                Color.LB_whiteBlack.ignoresSafeArea()
                 VStack {
                     HStack(alignment: .top) {
                         Spacer()
@@ -58,7 +58,6 @@ struct AddMealView: View {
                         AddMealTabBar(addedFoods: $addedFoods, persistenceController: persistenceController)
                     }
                     VStack{
-                        Spacer()
                         VStack{
                             HStack {
                                 Text("Mealtype:")
@@ -68,7 +67,7 @@ struct AddMealView: View {
                                         Text(self.meals[$0])
                                     }
                                 }
-                                .colorMultiply(.black)
+                                .colorMultiply(Color.LB_text)
                             }
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
                             .padding([.trailing, .leading], 20)
@@ -83,7 +82,7 @@ struct AddMealView: View {
                             }
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
                             .foregroundColor(.white)
-                            .background(addedFoods.count == 0 ? Color.gray : Color.blue)
+                            .background(addedFoods.count == 0 ? Color.gray : Color.LB_purple)
                             .disabled(addedFoods.count == 0)
                         }
                     }

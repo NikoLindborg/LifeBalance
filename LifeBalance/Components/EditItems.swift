@@ -12,11 +12,12 @@ struct EditItems: View {
     let amount: String
     var body: some View {
         HStack {
-            Text("   •  \(self.food)")
-                .foregroundColor(.black)
+            Text("\(self.food)")
             Spacer()
             Text("\(self.amount)g")
-                .foregroundColor(.black)
-        }.padding()
+        }
+        .padding()
+        .foregroundColor(Color.LB_text)
+
     }
 }

@@ -20,12 +20,10 @@ struct NutritionDatalistItem: View {
         let progressPercentage = calculateProgress(prog: dailyConsumptionProgress, target: dailyConsumptionTarget)
         HStack {
             Text(nutritionName)
-                .foregroundColor(Color.black)
                 .frame(width: 200, alignment: .leading)
             VStack {
                 Text("\(String(format: "%.1f", dailyConsumptionProgress)) / \(String(format: "%.1f", dailyConsumptionTarget)) \(unit)")
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(Color.black)
                 ProgressView(value: progressPercentage)
             }
                 

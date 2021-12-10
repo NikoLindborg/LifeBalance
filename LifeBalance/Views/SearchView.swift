@@ -23,7 +23,7 @@ struct SearchView: View {
         VStack {
             Text("Results for \(query)")
                 .bold()
-                    List(parser.queryList) { item in
+            List(parser.queryList) { item in
                 Button(action: {
                     if(self.foodId == item.food.foodId){
                         self.foodId = ""
@@ -34,7 +34,7 @@ struct SearchView: View {
                     self.label = item.food.label
                 }){
                     Text("\(item.food.label) \(Int(item.food.nutrients.ENERC_KCAL)) kcal, \(Int(item.food.nutrients.PROCNT)) protein, \(Int(item.food.nutrients.CHOCDF)) Carbs, \(Int(item.food.nutrients.FAT)) Fats" )
-                        .foregroundColor(self.foodId == item.food.foodId ? Color.green : Color.black)
+                        .foregroundColor(self.foodId == item.food.foodId ? Color.green : Color.LB_text)
                 }
             }
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)

@@ -11,13 +11,15 @@ import HealthKit
 struct ChartCard: View {
     
     @State var pickerSelection = 0
-    @State var activityData: [[CGFloat]]
-    @State var stepData: [[CGFloat]]
-    @State var maxActivity: Double
-    @State var maxSteps: Double
-    @State var weekdays: Array<String>
+    @Binding var activityData: [[CGFloat]]
+    @Binding var stepData: [[CGFloat]]
+    @Binding var maxActivity: Double
+    @Binding var maxSteps: Double
+    @Binding var weekdays: Array<String>
+    @Binding var healthData: Bool
     @State var combinedArray: [[CGFloat]] = []
     @State var isLoaded: Bool = false
+    //@State var obA: ObservableActivity
     
     var body: some View {
         
@@ -32,7 +34,7 @@ struct ChartCard: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal, 20)
                 
-                if (isLoaded && (combinedArray[0].count > 0)) {
+                if (isLoaded && healthData) {
                     HStack(spacing: 13) {
                         BarView(value: combinedArray[pickerSelection][0], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[0])
                         BarView(value: combinedArray[pickerSelection][1], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[1])
@@ -48,12 +50,14 @@ struct ChartCard: View {
         }
         .padding([.trailing, .leading])
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 350, maxHeight: 350)
+        //.onAppear(perform: {obA.update()})
         .onAppear(perform: {combineArrays(arrayOne: activityData, arrayTwo: stepData)})
     }
     func combineArrays(arrayOne: [[CGFloat]], arrayTwo: [[CGFloat]]) {
         combinedArray.removeAll()
         self.combinedArray.append(arrayOne[0])
         self.combinedArray.append(arrayTwo[0])
+        print(combinedArray)
         self.isLoaded = true
     }
 

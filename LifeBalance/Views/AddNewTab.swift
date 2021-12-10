@@ -14,6 +14,7 @@ struct AddNewTab: View {
     private let speechRecognizer = SpeechRecognizer()
     
     var body: some View {
+        
         HStack {
             TextField("Search for food", text: $query).disableAutocorrection(true)
                 .frame(height:30)
@@ -47,26 +48,12 @@ struct AddNewTab: View {
         }
         .padding(20)
         .background(Color.LB_whiteBlack)
-        Section {
-            VStack(){
-                Form{
-                    List(addedFoods) {
-                        FoodRow(food: $0.label, amount: $0.quantity)
-                    }
-                    .background(Color.LB_whiteBlack)
-                    if (addedFoods.count > 0) {
-                        HStack{
-                            Text("")
-                            Spacer()
-                            Button(action: {
-                                print("This needs to be thought out")
-                            }) {
-                                Image(systemName: "heart.fill").foregroundColor(.red)
-                            }
-                        }
-                    }
-                }
-            }
+        List(addedFoods) {
+            FoodRow(food: $0.label, amount: $0.quantity)
+                .listRowBackground(Color(.systemGray6))
         }
+        .background(Color.LB_whiteBlack)
     }
+    
 }
+

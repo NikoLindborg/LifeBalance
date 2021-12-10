@@ -51,15 +51,16 @@ struct DiaryView: View {
                         Spacer()
                     }
                     .offset(y: -60)
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
-                                .frame(width: 350, height: 250, alignment: .leading)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 250)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }
+                        .padding([.trailing, .leading])
                     })
                         .offset(y: -60)
                     HStack{
@@ -69,7 +70,7 @@ struct DiaryView: View {
                         Spacer()
                     }
                     .offset(y: -60)
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     ForEach(obMeals.meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
@@ -82,9 +83,7 @@ struct DiaryView: View {
                         print("changed")
                         updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                     })
-                    Button("save"){
-                        persistenceController.saveMeal(name: "shikkaaeanpasta", meal: obMeals.meals[0])
-                    }
+                    
                 }
             }
         }

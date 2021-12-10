@@ -34,7 +34,8 @@ struct ActiveCaloriesCard: View {
             }
             .padding(10)
         }
-        .frame(width: 350, height: 175, alignment: .leading)
+        .padding([.trailing, .leading])
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 175, maxHeight: 175)
     }
 }
 

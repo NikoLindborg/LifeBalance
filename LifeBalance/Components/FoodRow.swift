@@ -16,7 +16,6 @@ struct FoodRow: View {
             Spacer()
             Text("\(String(amount)) g")
         }
-        .background(Color.LB_whiteSystemGray)
     }
 }
 

@@ -133,6 +133,9 @@ struct HomeView: View {
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
+        .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
+        .onAppear(perform: {print(persistenceController.getAllSavedMeals())})
+        .onAppear(perform: {fullProgressValues = persistenceController.getProgressValues(nil, date: today)})
         .onAppear(perform: dailyProgressSettings.update)
         .onAppear(perform: dailyProgressSettings.fetchList) 
     }

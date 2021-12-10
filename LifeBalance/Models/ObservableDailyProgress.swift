@@ -42,7 +42,7 @@ class ObservableDailyProgress: ObservableObject {
                 l.append("protein")
             }
         }
-        progressValues = persistenceController.getProgressValues(userSetNutritionalValues: l, date: today)
+        progressValues = persistenceController.getProgressValues(l, date: today)
     }
     
 }

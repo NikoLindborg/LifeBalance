@@ -19,9 +19,7 @@ struct DiaryView: View {
     @State var color3 = Color.orange
     @State var color4 = Color.red
     @State var meals: [Meals]
-    @State var date = itemFormatter.string(from: Date())
     @ObservedObject var obDays: ObservableDays
-    @State var allDays: [Day]
     @State var selectedDayIndex = 0
     @ObservedObject var isUpdated: ObservableUpdate
     
@@ -31,13 +29,13 @@ struct DiaryView: View {
                 VStack{
                     HStack{
                         Picker("", selection: $selectedDayIndex) {
-                            ForEach(0 ..< allDays.count) { i in
+                            ForEach(0 ..< obDays.allDays.count) { i in
                                 HStack{
                                     
-                                    if(allDays[i].date == itemFormatter.string(from: Date())){
-                                        Text("\(allDays[i].date ?? "") (today)")
+                                    if(obDays.allDays[i].date == itemFormatter.string(from: Date())){
+                                        Text("\(obDays.allDays[i].date ?? "") (today)")
                                     } else{
-                                        Text("\(allDays[i].date ?? "")" )
+                                        Text("\(obDays.allDays[i].date ?? "")" )
                                         
                                     }
                                 }
@@ -87,6 +85,9 @@ struct DiaryView: View {
                         print("changed")
                         updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                     })
+                    Button("save"){
+                        persistenceController.saveMeal(name: "shikkaaeanpasta", meal: obMeals.meals[0])
+                    }
                 }
             }
         }
@@ -96,6 +97,9 @@ struct DiaryView: View {
         }*/
         //.onChange(of: {isUpdated.isUpdated}, perform: {updateDate(date: itemFormatter.string(from: Date()))})
         .onAppear(perform: {updateDate(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {meals = obMeals.meals})
+        .onAppear(perform: {selectedDayIndex = 0})
     }
     
     func getProgressValueToday(date: String) {
@@ -106,7 +110,6 @@ struct DiaryView: View {
     }
     
     func updateDate(date: String) {
-        $date.wrappedValue = date
         obMeals.meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: date))
         self.meals = obMeals.meals
         getProgressValueToday(date: date)
@@ -115,7 +118,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), allDays: ObservableDays().allDays, isUpdated: ObservableUpdate() )
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
     }
 }
 

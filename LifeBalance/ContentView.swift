@@ -36,13 +36,13 @@ struct ContentView: View {
                     print("ContentView - dailyProgressSettings updated")
                 }})
 
-            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, allDays: obAllDays.allDays, isUpdated: observedUpdate)
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals,meals: obMeals.meals, obDays: obAllDays, isUpdated: observedUpdate)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")
                     Text("Diary")
                 }
-            AddMealView(persistenceController: persistenceController, obMeals: obMeals)
+            AddMealView(obDays: obAllDays, persistenceController: persistenceController, obMeals: obMeals)
                 .tag(Tab.addMeal)
                 .tabItem() {
                     Image(systemName: "plus.circle.fill")

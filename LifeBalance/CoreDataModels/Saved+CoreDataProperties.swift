@@ -2,7 +2,7 @@
 //  Saved+CoreDataProperties.swift
 //  LifeBalance
 //
-//  Created by Niko Lindborg on 5.12.2021.
+//  Created by Niko Lindborg on 8.12.2021.
 //
 //
 
@@ -17,7 +17,25 @@ extension Saved {
     }
 
     @NSManaged public var mealName: String?
-    @NSManaged public var meal: Meals?
+    @NSManaged public var id: UUID?
+    @NSManaged public var ingredients: NSSet?
+
+}
+
+// MARK: Generated accessors for ingredients
+extension Saved {
+
+    @objc(addIngredientsObject:)
+    @NSManaged public func addToIngredients(_ value: Ingredient)
+
+    @objc(removeIngredientsObject:)
+    @NSManaged public func removeFromIngredients(_ value: Ingredient)
+
+    @objc(addIngredients:)
+    @NSManaged public func addToIngredients(_ values: NSSet)
+
+    @objc(removeIngredients:)
+    @NSManaged public func removeFromIngredients(_ values: NSSet)
 
 }
 

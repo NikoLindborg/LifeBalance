@@ -22,6 +22,10 @@ class PersistenceTests: XCTestCase {
     }
     
     func test_save_user_settings() throws {
+        // Make sure user settings are empty when no setting are added
+        XCTAssertEqual(persistence.loadUserSettings(), [])
+        
+        // Add settings and make sure they are saved to context
         persistence.saveUserSettings(gender: "Male", height: "180", weight: "90", theme: false, activityLevel: "Active", target: "Weigth loss", age: "25")
         
         let userSettings = persistence.loadUserSettings()
@@ -53,6 +57,17 @@ class PersistenceTests: XCTestCase {
         XCTAssertEqual(userSettings[0].age, "28")
     }
     
+    func test_get_day() throws {
+        // If no dates are added, make sure day entities are empty
+        var day = persistence.getDay(dateToCheck: "01.01.2021")
+        XCTAssertEqual(day, nil)
+        
+        // Add a day and make sure it gets saved in context
+        persistence.addDay(date: "01.01.2021")
+        day = persistence.getDay(dateToCheck: "01.01.2021")
+        XCTAssertEqual(day?.date, "01.01.2021")
+    }
+    
     func test_check_if_available() throws {
         // If no dates are added and date is nil, checkIfAvailable should return true.
         XCTAssertTrue(persistence.checkIfAvailable(argument: "01.01.2021", nil))
@@ -61,7 +76,7 @@ class PersistenceTests: XCTestCase {
         persistence.addDay(date: "01.01.2021")
         XCTAssertFalse(persistence.checkIfAvailable(argument: "01.01.2021", nil))
         
-        // When date is added, it should not contain any meals
+        // After date is added, it should not contain any meals
         let days = persistence.loadDayEntities()
         XCTAssertTrue(persistence.checkIfAvailable(argument: "Breakfast", days[0]))
     }

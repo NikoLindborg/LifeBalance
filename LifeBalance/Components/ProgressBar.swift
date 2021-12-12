@@ -14,7 +14,7 @@ struct ProgressBar: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(lineWidth: 10.0)
+                .stroke(lineWidth: 15.0)
                 .opacity(0.3)
                 .foregroundColor(self.color)
             Circle()

@@ -353,7 +353,7 @@ struct PersistenceController {
             "protein" : Float(getRefValues()[0].ref_protein),
             "fiber" : Float(getRefValues()[0].ref_fiber),
             "fat" : Float(getRefValues()[0].ref_fat),
-            "carbs" : Float(getRefValues()[0].ref_carbohydrates),
+            "carbohydrates" : Float(getRefValues()[0].ref_carbohydrates),
             "sugar" : Float(getRefValues()[0].ref_sugar),
             
         ]
@@ -383,7 +383,7 @@ struct PersistenceController {
     func getProgressValues(_ userSetNutritionalValues: Array<String>?, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
         let userReferenceValues = getRefValuesDictionary()
-        let nutritionalValues = userSetNutritionalValues ?? ["calories", "carbs", "protein", "fat", "iron", "sugar", "sodium", "iron"]
+        let nutritionalValues = userSetNutritionalValues ?? ["calories", "carbohydrates", "protein", "fat", "iron", "sugar", "sodium", "iron"]
         nutritionalValues.forEach {userValue in
             let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
@@ -556,7 +556,7 @@ struct PersistenceController {
         }
     }
     
-    func modifyDailyProgress (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool, fat: Bool) {
+    func modifyDailyProgress (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool, fat: Bool, finished: @escaping() -> Void ) {
         let dailyProgressSettings = getDailyProgressCoreData()[0]
         
         dailyProgressSettings.daily_calories = calories
@@ -569,6 +569,7 @@ struct PersistenceController {
         
         do {
             try container.viewContext.save()
+            finished()
             return print("Saving new daily progress success")
         } catch {
             return print("Failed to save new daily progress \(error)")

@@ -17,6 +17,7 @@
 		5F374DD1275D1B2600674E26 /* DailyProgressCoreData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F374DCF275D1B2600674E26 /* DailyProgressCoreData+CoreDataClass.swift */; };
 		5F374DD2275D1B2600674E26 /* DailyProgressCoreData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F374DD0275D1B2600674E26 /* DailyProgressCoreData+CoreDataProperties.swift */; };
 		5F4B520F275E9C9C00D5DF1D /* ObservableMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B520E275E9C9C00D5DF1D /* ObservableMeals.swift */; };
+		5F63143627667070002890AD /* ObservableProgressValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F63143527667070002890AD /* ObservableProgressValues.swift */; };
 		5F89B235274C0F56001CB079 /* FoodParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F89B234274C0F56001CB079 /* FoodParser.swift */; };
 		5F89B237274C0F5F001CB079 /* NutrientsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F89B236274C0F5F001CB079 /* NutrientsParser.swift */; };
 		5F89B239274C0FBE001CB079 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F89B238274C0FBE001CB079 /* Constants.swift */; };
@@ -68,8 +69,6 @@
 		82D93AEB274BAF4D00530651 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AEA274BAF4D00530651 /* AddMealView.swift */; };
 		82DDDB862762186E00576D04 /* EditItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DDDB852762186E00576D04 /* EditItems.swift */; };
 		82DDDB882762373A00576D04 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DDDB872762373A00576D04 /* Color.swift */; };
-		82F081F72756087700059481 /* Ingredient+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081EF2756087700059481 /* Ingredient+CoreDataClass.swift */; };
-		82F081F82756087700059481 /* Ingredient+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081F02756087700059481 /* Ingredient+CoreDataProperties.swift */; };
 		82F081FB2756087700059481 /* Nutrition+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081F32756087700059481 /* Nutrition+CoreDataClass.swift */; };
 		82F081FC2756087700059481 /* Nutrition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F081F42756087700059481 /* Nutrition+CoreDataProperties.swift */; };
 		82F432BF274E38AA005CD4BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F432BE274E38AA005CD4BB /* HealthKit.framework */; };
@@ -106,6 +105,7 @@
 		5F374DCF275D1B2600674E26 /* DailyProgressCoreData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyProgressCoreData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5F374DD0275D1B2600674E26 /* DailyProgressCoreData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyProgressCoreData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5F4B520E275E9C9C00D5DF1D /* ObservableMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMeals.swift; sourceTree = "<group>"; };
+		5F63143527667070002890AD /* ObservableProgressValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableProgressValues.swift; sourceTree = "<group>"; };
 		5F89B234274C0F56001CB079 /* FoodParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodParser.swift; sourceTree = "<group>"; };
 		5F89B236274C0F5F001CB079 /* NutrientsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsParser.swift; sourceTree = "<group>"; };
 		5F89B238274C0FBE001CB079 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -334,6 +334,7 @@
 				6A4DF6622760B6040051659B /* ObservableDailyProgress.swift */,
 				5F2BBC2B2760A70900246E87 /* ObservableDays.swift */,
 				82DDDB872762373A00576D04 /* Color.swift */,
+				5F63143527667070002890AD /* ObservableProgressValues.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -577,6 +578,7 @@
 				5F178A7B275E90F60020191D /* ObservableTrends.swift in Sources */,
 				5FF12834274AA86400ACC671 /* DailyProgressCard.swift in Sources */,
 				821F910F274CD116007E4643 /* ContentView.swift in Sources */,
+				5F63143627667070002890AD /* ObservableProgressValues.swift in Sources */,
 				5F8AB7252745477900A59F43 /* DiaryView.swift in Sources */,
 				5F2BBC302760CE9C00246E87 /* Day+CoreDataProperties.swift in Sources */,
 				9675E1C4274A66EF0013D6FB /* NutritionalDatalistView.swift in Sources */,

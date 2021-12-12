@@ -14,6 +14,7 @@ struct DiaryView: View {
     @State var progressValues: Array<ProgressItem> = []
     @State var fullProgressValues: Array<ProgressItem> = []
     @ObservedObject var obMeals: ObservableMeals
+    @ObservedObject var dailyProgressSettings: ObservableDailyProgress
     @State var color = Color.green
     @State var color2 = Color.blue
     @State var color3 = Color.orange
@@ -55,7 +56,7 @@ struct DiaryView: View {
                     
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressSettings: dailyProgressSettings, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 350)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
@@ -114,7 +115,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),dailyProgressSettings: ObservableDailyProgress(), meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
     }
 }
 

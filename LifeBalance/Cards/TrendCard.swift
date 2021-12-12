@@ -10,7 +10,6 @@ import SwiftUI
 
 struct TrendCard: View {
     @State var cardCaption: String
-    @State var cardTrend: String
     @State var cardValue: Float
     @State var cardTarget: Float
     
@@ -19,7 +18,7 @@ struct TrendCard: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color.LB_background)
             HStack {
-                if(cardTrend != "nothing"){
+                if(cardCaption != "No trends"){
                 if(cardValue < cardTarget/2){
                     Image(systemName: "chevron.down.circle").foregroundColor(.red)
                 } else if (cardValue >= cardTarget/2 && cardValue < cardTarget){
@@ -36,15 +35,15 @@ struct TrendCard: View {
                         Spacer()
                     }
                     HStack {
-                        if(cardTrend != "nothing"){
+                        if(cardCaption != "No trends"){
                         if(cardValue < cardTarget/2){
-                        Text("your \(self.cardTrend) levels are not doing well, make sure to eat food that has a lot of \(self.cardTrend)")
+                            Text("your \(self.cardCaption.lowercased()) levels are not doing well, make sure to eat food that has a lot of \(self.cardCaption.lowercased())")
                         Spacer()
                         } else if (cardValue >= cardTarget/2 && cardValue < cardTarget){
-                            Text("your \(self.cardTrend) levels are above 50% of the needed consumption for the last 3 days, so you're on the right track, keep up the good work!")
+                            Text("your \(self.cardCaption.lowercased()) levels are above 50% of the needed consumption for the last 3 days, so you're on the right track, keep up the good work!")
                             Spacer()
                         } else {
-                            Text("your \(self.cardTrend) levels are doing really well for the last 3 days, you're above your target! Great job")
+                            Text("your \(self.cardCaption.lowercased()) levels are doing really well for the last 3 days, you're above your target! Great job")
                             Spacer()
                         }
                         }else {

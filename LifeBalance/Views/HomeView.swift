@@ -84,25 +84,25 @@ struct HomeView: View {
                     .padding(.leading)
                     if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
-                            TrendCard(cardCaption: "No trends", cardTrend: "nothing", cardValue: 0, cardTarget: 0)
+                            TrendCard(cardCaption: "No trends", cardValue: 0, cardTarget: 0)
                         } else {
                             if tSettings.trends[0].trend_iron {
-                                TrendCard(cardCaption: "Iron", cardTrend: "iron", cardValue: 6, cardTarget: 10)
+                                TrendCard(cardCaption: "Iron", cardValue: 6, cardTarget: 10)
                             }
                             if tSettings.trends[0].trend_calories {
-                                TrendCard(cardCaption: "Calories", cardTrend: "calories", cardValue: 1, cardTarget: 10)
+                                TrendCard(cardCaption: "Calories", cardValue: 1, cardTarget: 10)
                             }
                             if tSettings.trends[0].trend_protein {
-                                TrendCard(cardCaption: "Protein", cardTrend: "protein", cardValue: 5, cardTarget: 10)
+                                TrendCard(cardCaption: "Protein", cardValue: 5, cardTarget: 10)
                             }
                             if tSettings.trends[0].trend_carbs {
-                                TrendCard(cardCaption: "Carbs", cardTrend: "carbs", cardValue: 4, cardTarget: 2)
+                                TrendCard(cardCaption: "Carbs", cardValue: 4, cardTarget: 2)
                             }
                             if tSettings.trends[0].trend_sugar {
-                                TrendCard(cardCaption: "Sugar", cardTrend: "sugar", cardValue: 5, cardTarget: 10)
+                                TrendCard(cardCaption: "Sugar", cardValue: 5, cardTarget: 10)
                             }
                             if tSettings.trends[0].trend_salt {
-                                TrendCard(cardCaption: "Salt", cardTrend: "salt", cardValue: 11, cardTarget: 10)
+                                TrendCard(cardCaption: "Salt", cardValue: 11, cardTarget: 10)
                             }
                         }
                     }

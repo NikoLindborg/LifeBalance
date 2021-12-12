@@ -11,28 +11,27 @@ import SwiftUI
 struct TrendCard: View {
     @State var cardCaption: String
     @State var cardText: String
-    @State var color: Color
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(self.color)
+                .fill(Color.LB_background)
             VStack {
                 HStack {
                     Text(self.cardCaption)
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
+                        .font(.title)
+                        .bold()
                     Spacer()
                 }
                 HStack {
                     Text(self.cardText)
-                        .foregroundColor(.white)
                     Spacer()
                 }
             }
             .padding(10)
         }
-        .frame(width: 350, height: 125, alignment: .leading)
+        .padding([.trailing, .leading])
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 125, maxHeight: 125)
     }
     
 }

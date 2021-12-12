@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import SwiftUI
 
 struct PersistenceController {
     enum StoreType {
@@ -156,9 +157,8 @@ struct PersistenceController {
         }
     }
     
-    func addMeal(_ mealName: String, finished: @escaping() -> Void ) {
-        let dateToCheck = itemFormatter.string(from: Date())
-        if (checkIfAvailable(argument: today, nil)) {
+    func addMeal(_ mealName: String, dateToCheck: String, finished: @escaping() -> Void ) {
+        if (checkIfAvailable(argument: dateToCheck, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = dateToCheck
             if (checkIfAvailable(argument: mealName, days)) {
@@ -220,8 +220,7 @@ struct PersistenceController {
         return test
     }
     
-    func addFood(_ addedFoodList: [FoodModel], _ mealName: String) {
-        let dateToCheck = itemFormatter.string(from: Date())
+    func addFood(_ addedFoodList: [FoodModel], _ mealName: String, dateToCheck: String) {
         let allDays = loadDayEntities()
         let dayEntity = allDays.filter {$0.date == dateToCheck}
         
@@ -232,7 +231,7 @@ struct PersistenceController {
             let ingredient = Ingredient(context: container.viewContext)
             ingredient.meal = mealEntity[0]
             ingredient.foodId = food.foodId
-            ingredient.id = UUID()
+            ingredient.identifier = UUID()
             ingredient.label = food.label
             ingredient.quantity = Int16(food.quantity)
             
@@ -362,7 +361,7 @@ struct PersistenceController {
             "sugar" : Float(getRefValues()[0].ref_sugar),
             
         ]
-            
+        
         return userReferenceValues
     }
     
@@ -373,7 +372,7 @@ struct PersistenceController {
         meals.forEach {meal in
             let ingr = (meal.ingredients?.allObjects as! [Ingredient])
             ingr.forEach {ing in
-                let nutrition = ing.nutrients?.allObjects as! [Nutrition]
+                let nutrition = (ing.nutrients?.allObjects as! [Nutrition])
                 nutrition.forEach {nutr in
                     if (nutr.label == nutritionLabel) {
                         value += nutr.quantity
@@ -403,14 +402,16 @@ struct PersistenceController {
     }
     
     func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
+        
         ingred.quantity = Int16(quantity)
         if (ingred.quantity <= 0){
             container.viewContext.delete(ingred)
         } else {
+            print(ingred.quantity)
             let nutrients = ingred.nutrients
-            let nutrientsArray = (nutrients?.allObjects as! [Nutrition])
+            
+            let nutrientsArray = nutrients?.allObjects as! [Nutrition]
             nutrientsArray.forEach{ nutrient in
-                
                 if nutrient.label == "calories" {
                     nutrient.quantity = food.totalNutrients[0].ENERC_KCAL?.quantity ?? 0
                     nutrient.unit = food.totalNutrients[0].ENERC_KCAL?.unit
@@ -572,10 +573,30 @@ struct PersistenceController {
         
         do {
             try container.viewContext.save()
-            return print("Saving new trends success")
+            return print("Saving new daily progress success")
         } catch {
-            return print("Failed to save new trends \(error)")
+            return print("Failed to save new daily progress \(error)")
         }
+    }
+    func getAllIngredients() -> [Ingredient] {
+        let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
+        do {
+            return  try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
+    
+    
+    func getIngredients(meal: Meals) -> FetchedResults<Ingredient>{
+        @FetchRequest(
+            entity: Ingredient.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \Ingredient.meal, ascending: true),
+            ],
+            predicate: NSPredicate(format: "meal == %@", meal)
+        ) var fetchedIngredieents: FetchedResults<Ingredient>
+        return fetchedIngredieents
     }
     
     func getAllSavedMeals() -> [Saved]{
@@ -589,8 +610,25 @@ struct PersistenceController {
     
     func saveMeal (name: String, meal: Meals) {
         let save = Saved(context: container.viewContext)
+        let allSaved = getAllSavedMeals()
+        let sameName = allSaved.filter{$0.mealName == name}
+        if(sameName.count > 0){
+            return print("\(name) as name is already taken")
+        }
+        var ingredients = getAllIngredients()
+        print(ingredients.count)
+        let ingr = (meal.ingredients?.allObjects as! [Ingredient])
+        var ingre: [Ingredient] = []
+        ingr.forEach{ ingredient in
+            ingre = ingredients.filter  {$0.identifier == ingredient.identifier }
+            print(ingredients[0].identifier == ingredient.identifier)
+        }
+        ingredients = Array(Set(ingre))
+        ingredients.forEach {e in
+            e.saved = save
+        }
+        print(ingredients)
         save.mealName = name
-        save.meal = meal
         
         do {
             try container.viewContext.save()

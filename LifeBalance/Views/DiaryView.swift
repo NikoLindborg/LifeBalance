@@ -19,10 +19,9 @@ struct DiaryView: View {
     @State var color3 = Color.orange
     @State var color4 = Color.red
     @State var meals: [Meals]
-    @State var date = itemFormatter.string(from: Date())
     @ObservedObject var obDays: ObservableDays
-    @State var allDays: [Day]
     @State var selectedDayIndex = 0
+    @ObservedObject var isUpdated: ObservableUpdate
     
     var body: some View {
         NavigationView {
@@ -30,25 +29,19 @@ struct DiaryView: View {
                 VStack{
                     HStack{
                         Picker("", selection: $selectedDayIndex) {
-                            ForEach(0 ..< allDays.count) { i in
-                                HStack{
-                                    
-                                    if(allDays[i].date == itemFormatter.string(from: Date())){
-                                        Text("\(allDays[i].date ?? "") (today)")
+                            ForEach(0 ..< obDays.allDays.count) { i in
+                                HStack{                                
+                                    if(obDays.allDays[i].date == itemFormatter.string(from: Date())){
+                                        Text("\(obDays.allDays[i].date ?? "") (today)")
                                     } else{
-                                        Text("\(allDays[i].date ?? "")" )
-                                        
+                                        Text("\(obDays.allDays[i].date ?? "")" )
                                     }
-                                }
-                                
+                                } 
                             }
-                        }.colorMultiply(.black)
+                        }.colorMultiply(Color.LB_text)
                         .onChange(of: selectedDayIndex, perform:  { (value) in
                             updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
-                            
                         })
-                        
-                        
                     }
                     .padding(.bottom, 46)
                     HStack{
@@ -58,18 +51,16 @@ struct DiaryView: View {
                         Spacer()
                     }
                     .offset(y: -60)
-                    .padding(.leading, 28)
-                    
-                    
-                    
+                    .padding(.leading)
                     
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
-                                .frame(width: 350, height: 250, alignment: .leading)
-                                .background(Color.purple)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 250)
+                                .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }
+                        .padding([.trailing, .leading])
                     })
                         .offset(y: -60)
                     HStack{
@@ -79,16 +70,32 @@ struct DiaryView: View {
                         Spacer()
                     }
                     .offset(y: -60)
-                    .padding(.leading, 28)
+                    .padding(.leading)
                     ForEach(obMeals.meals) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
-                        MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                        NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
+                            MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                            }
+                        )
                     }
                     .offset(y: -60)
+                    .onChange(of: isUpdated.isUpdated, perform:  { (value) in
+                        print("changed")
+                        updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
+                    })
+                    
                 }
             }
         }
+        //.onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        /*.onChange(of: isUpdated.isUpdated) {value in
+            updateDate(date: itemFormatter.string(from: Date()))
+        }*/
+        //.onChange(of: {isUpdated.isUpdated}, perform: {updateDate(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {updateDate(date: itemFormatter.string(from: Date()))})
         .onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
+        .onAppear(perform: {meals = obMeals.meals})
+        .onAppear(perform: {selectedDayIndex = 0})
     }
     
     func getProgressValueToday(date: String) {
@@ -99,7 +106,6 @@ struct DiaryView: View {
     }
     
     func updateDate(date: String) {
-        $date.wrappedValue = date
         obMeals.meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: date))
         self.meals = obMeals.meals
         getProgressValueToday(date: date)
@@ -108,7 +114,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), allDays: ObservableDays().allDays )
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
     }
 }
 

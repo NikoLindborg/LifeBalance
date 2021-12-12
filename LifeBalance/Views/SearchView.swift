@@ -23,7 +23,7 @@ struct SearchView: View {
         VStack {
             Text("Results for \(query)")
                 .bold()
-                    List(parser.queryList) { item in
+            List(parser.queryList) { item in
                 Button(action: {
                     if(self.foodId == item.food.foodId){
                         self.foodId = ""
@@ -34,12 +34,12 @@ struct SearchView: View {
                     self.label = item.food.label
                 }){
                     Text("\(item.food.label) \(Int(item.food.nutrients.ENERC_KCAL)) kcal, \(Int(item.food.nutrients.PROCNT)) protein, \(Int(item.food.nutrients.CHOCDF)) Carbs, \(Int(item.food.nutrients.FAT)) Fats" )
-                        .foregroundColor(self.foodId == item.food.foodId ? Color.green : Color.black)
+                        .foregroundColor(self.foodId == item.food.foodId ? Color.green : Color.LB_text)
                 }
             }
             TextField("Choose amount", text: $quantity).disableAutocorrection(true)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50, maxHeight: 50)
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             Button(action: {
                 nutrientsParser.parseNutrients($foodId.wrappedValue, Int($quantity.wrappedValue) ?? 0, "g"){
                     addedFoods.append(FoodModel(foodId: foodId, label: label, quantity: Int($quantity.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
@@ -48,11 +48,15 @@ struct SearchView: View {
             }) {
                 Text("Add \(label)")
                     .font(.body)
+                    .bold()
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+            .frame(maxWidth: .infinity)
+            .frame(height: 75, alignment: .leading)
             .foregroundColor(.white)
-            .background($quantity.wrappedValue == "" ? Color.gray : Color.blue)
+            .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_green)
+            .cornerRadius(20)
             .disabled($quantity.wrappedValue == "")
+            .padding()
         }
         .onAppear(perform: {parser.parseFood(query)})
     }

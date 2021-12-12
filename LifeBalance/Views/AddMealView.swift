@@ -13,32 +13,51 @@ struct AddMealView: View {
     @State var selectedTab: Int = 0
     @State private var selectedMealIndex = 0
     @State var addedFoods: [FoodModel] = []
-    @State var mealEntities: [Meals] = []
+    @ObservedObject var obDays: ObservableDays
+    @State var selectedDayIndex = 0
+    @State var chosenDate =  itemFormatter.string(from: Date())
     @EnvironmentObject private var tabController: TabController
     
     var meals = ["Breakfast", "Lunch", "Dinner", "Snack"]
     let persistenceController: PersistenceController
-    let today = itemFormatter.string(from: Date())
     @ObservedObject var obMeals: ObservableMeals
     
     var body: some View {
         NavigationView{
             ZStack {
-                Color(.systemGray6).ignoresSafeArea()
+                Color.LB_whiteBlack.ignoresSafeArea()
                 VStack {
                     HStack(alignment: .top) {
                         Spacer()
                         Text("Add meal")
-                            .font(.subheadline)
+                            .font(.title)
                             .bold()
                         Spacer()
                     }
+                    HStack{
+                        Picker("", selection: $selectedDayIndex) {
+                            ForEach(0 ..< obDays.allDays.count) { i in
+                                HStack{
+                                    
+                                    if(obDays.allDays[i].date == itemFormatter.string(from: Date())){
+                                        Text("\(obDays.allDays[i].date ?? "") (today)")
+                                    } else{
+                                        Text("\(obDays.allDays[i].date ?? "")" )
+                                        
+                                    }
+                                }
+                                
+                            }
+                        }.colorMultiply(Color.LB_text)
+                        .onChange(of: selectedDayIndex, perform:  { (value) in
+                            chosenDate = obDays.allDays[selectedDayIndex].date ?? chosenDate
+                        })
+                    }
                     Spacer()
                     VStack(){
-                        AddMealTabBar(addedFoods: $addedFoods)
+                        AddMealTabBar(addedFoods: $addedFoods, persistenceController: persistenceController)
                     }
                     VStack{
-                        Spacer()
                         VStack{
                             HStack {
                                 Text("Mealtype:")
@@ -48,12 +67,12 @@ struct AddMealView: View {
                                         Text(self.meals[$0])
                                     }
                                 }
-                                .colorMultiply(.black)
+                            .colorMultiply(Color.LB_text)
                             }
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
                             .padding([.trailing, .leading], 20)
                             Button(action: {
-                                persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue]){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue])}
+                                persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate)}
                                 obMeals.update()
                                 addedFoods.removeAll()
                             }) {
@@ -61,23 +80,26 @@ struct AddMealView: View {
                                     .font(.body)
                                     .bold()
                             }
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 75, alignment: .leading)
+                            .background(addedFoods.count == 0 ? Color.gray : Color.LB_green)
                             .foregroundColor(.white)
-                            .background(addedFoods.count == 0 ? Color.gray : Color.blue)
+                            .cornerRadius(20)
                             .disabled(addedFoods.count == 0)
+                            .padding()
                         }
                     }
                 }
                 Spacer()
-            }.onAppear(perform: {
-                mealEntities = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: today))})
+            }
         }
+        .onAppear(perform: {selectedDayIndex = 0})
     }
 }
 
 struct AddMealView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMealView(persistenceController: PersistenceController(), obMeals: ObservableMeals())
+        AddMealView(obDays: ObservableDays(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
             .environmentObject(FoodParser())
             .environmentObject(NutrientsParser())
     }

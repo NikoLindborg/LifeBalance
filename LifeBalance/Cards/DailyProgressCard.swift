@@ -33,6 +33,5 @@ struct DailyProgressCard: View {
                 Spacer()
             }
         }
-        .background(Color(red:0.45, green: 0.32, blue:0.59))
     }
 }

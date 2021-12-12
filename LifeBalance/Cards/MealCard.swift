@@ -30,7 +30,8 @@ struct MealCard: View {
             }
             .padding(20)
         }
-        .frame(width: 350, height: 125, alignment: .leading)
+        .padding([.trailing, .leading])
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 125, maxHeight: 125)
     }
 
 }

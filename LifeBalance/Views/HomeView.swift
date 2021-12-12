@@ -89,7 +89,7 @@ struct HomeView: View {
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
                             DailyProgressCard(progressValues: $dailyProgressSettings.progressValues, color: $color, color2: $color, color3: $color, color4: $color)
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 250)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 350)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
                         }

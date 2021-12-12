@@ -10,16 +10,61 @@ import SwiftUI
 struct HomeView: View {
     @State var progressValues: Array<ProgressItem> = []
     @State var fullProgressValues: Array<ProgressItem> = []
+    @State var fullProgressValuesYesterday: Array<ProgressItem> = []
+    @State var fullProgressValuesdayBeforeYesterday: Array<ProgressItem> = []
     @State var color = Color.green
     @EnvironmentObject var healthKit: HealthKit
     let persistenceController: PersistenceController
     @EnvironmentObject private var tabController: TabController
+    let dayBeforeYesterday = itemFormatter.string(from: Calendar.current.date(byAdding: .day, value: -2, to: Date())!)
+    let yesterday = itemFormatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date())!)
     let today = itemFormatter.string(from: Date())
+    @State var ironConsumed: Float = 0.0
+    @State var carbsConsumed: Float = 0.0
+    @State var caloriesConsumed: Float = 0.0
+    @State var proteinConsumed: Float = 0.0
+    @State var sugarConsumed: Float = 0.0
+    @State var saltConsumed: Float = 0.0
+    @State var ironTarget: Float = 0.0
+    @State var carbsTarget: Float = 0.0
+    @State var caloriesTarget: Float = 0.0
+    @State var proteinTarget: Float = 0.0
+    @State var sugarTarget: Float = 0.0
+    @State var saltTarget: Float = 0.0
     @ObservedObject var tSettings: ObservableTrends
     @State var realData: [[CGFloat]] = [[]]
     @State var isLoaded = false
     @ObservedObject var dailyProgressSettings: ObservableDailyProgress
     @ObservedObject var observedActivity: ObservableActivity
+    
+    func calculateConsumedAndTarget(array: Array<ProgressItem>){
+        for item in array {
+            if(item.description == "iron"){
+                ironTarget += item.target
+                ironConsumed += item.consumed
+            }
+            if(item.description == "carbs"){
+                carbsTarget += item.target
+                carbsConsumed += item.consumed
+            }
+            if(item.description == "calories"){
+                caloriesTarget += item.target
+                caloriesConsumed += item.consumed
+            }
+            if(item.description == "protein"){
+                proteinTarget += item.target
+                proteinConsumed += item.consumed
+            }
+            if(item.description == "sugar"){
+                sugarTarget += item.target
+                sugarConsumed += item.consumed
+            }
+            if(item.description == "sodium"){
+                saltTarget += item.target
+                saltConsumed += item.consumed
+            }
+                }
+    }
     
     var body: some View {
         NavigationView {
@@ -87,22 +132,22 @@ struct HomeView: View {
                             TrendCard(cardCaption: "No trends", cardValue: 0, cardTarget: 0)
                         } else {
                             if tSettings.trends[0].trend_iron {
-                                TrendCard(cardCaption: "Iron", cardValue: 6, cardTarget: 10)
+                                TrendCard(cardCaption: "Iron", cardValue: ironConsumed, cardTarget: ironTarget)
                             }
                             if tSettings.trends[0].trend_calories {
-                                TrendCard(cardCaption: "Calories", cardValue: 1, cardTarget: 10)
+                                TrendCard(cardCaption: "Calories", cardValue: caloriesConsumed, cardTarget: caloriesTarget)
                             }
                             if tSettings.trends[0].trend_protein {
-                                TrendCard(cardCaption: "Protein", cardValue: 5, cardTarget: 10)
+                                TrendCard(cardCaption: "Protein", cardValue: proteinConsumed, cardTarget: proteinTarget)
                             }
                             if tSettings.trends[0].trend_carbs {
-                                TrendCard(cardCaption: "Carbs", cardValue: 4, cardTarget: 2)
+                                TrendCard(cardCaption: "Carbs", cardValue: carbsConsumed, cardTarget: carbsTarget)
                             }
                             if tSettings.trends[0].trend_sugar {
-                                TrendCard(cardCaption: "Sugar", cardValue: 5, cardTarget: 10)
+                                TrendCard(cardCaption: "Sugar", cardValue: sugarConsumed, cardTarget: sugarTarget)
                             }
                             if tSettings.trends[0].trend_salt {
-                                TrendCard(cardCaption: "Salt", cardValue: 11, cardTarget: 10)
+                                TrendCard(cardCaption: "Salt", cardValue: saltConsumed, cardTarget: saltTarget)
                             }
                         }
                     }
@@ -139,7 +184,14 @@ struct HomeView: View {
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
         .onAppear(perform: {print(persistenceController.getAllSavedMeals())})
-        .onAppear(perform: {fullProgressValues = persistenceController.getProgressValues(nil, date: today)})
+        .onAppear(perform: {
+            fullProgressValues = persistenceController.getProgressValues(nil, date: today)
+            fullProgressValuesYesterday = persistenceController.getProgressValues(nil, date: yesterday)
+            fullProgressValuesdayBeforeYesterday = persistenceController.getProgressValues(nil, date: dayBeforeYesterday)
+            calculateConsumedAndTarget(array: fullProgressValues)
+            calculateConsumedAndTarget(array: fullProgressValuesYesterday)
+            calculateConsumedAndTarget(array: fullProgressValuesdayBeforeYesterday)
+        })
         .onAppear(perform: dailyProgressSettings.update)
         .onAppear(perform: dailyProgressSettings.fetchList)
         .onAppear(perform: {

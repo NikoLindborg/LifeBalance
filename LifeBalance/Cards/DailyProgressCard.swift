@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DailyProgressCard: View {
-    @Binding var progressValues: Array<ProgressItem>
+    @ObservedObject var progressSettings: ObservableDailyProgress
     @Binding var color: Color
     @Binding var color2: Color
     @Binding var color3: Color
@@ -16,8 +16,8 @@ struct DailyProgressCard: View {
     
     var body: some View {
         VStack(){
-            if(!progressValues.isEmpty){
-                if(progressValues.count > 2){
+            if(!progressSettings.progressValues.isEmpty){
+                if(progressSettings.progressValues.count > 2){
                     HStack(){
                         Text("Daily progress")
                             .foregroundColor(.white)
@@ -36,54 +36,55 @@ struct DailyProgressCard: View {
                 }
                 
                 HStack(){
-                    if(progressValues.count > 2){
-                        if(progressValues.count == 3) {
+                    if(progressSettings.progressValues.count > 2){
+                        if(progressSettings.progressValues.count == 3) {
                             VStack{
                                 Spacer()
                                 HStack{
                                     Spacer()
                                     VStack{
-                                        if(progressValues.indices.contains(0)){
-                                        ProgressBar(progress: $progressValues[0].progress, color: self.$color2)
-                                            .frame(width: 50.0, height: 50.0)
-                                        Text("\($progressValues[0].consumed.wrappedValue, specifier: "%.0f") / \($progressValues[0].target.wrappedValue, specifier: "%.0f") \($progressValues[0].unit.wrappedValue)")
-                                            .foregroundColor(Color.white)
-                                        Text($progressValues[0].description.wrappedValue)
-                                            .foregroundColor(Color.white)
+                                        if(progressSettings.progressValues.indices.contains(0)){
+                                            ProgressBar(progress: $progressSettings.progressValues[0].progress, color: self.$color2)
+                                                .frame(width: 50.0, height: 50.0)
+                                            Text("\($progressSettings.progressValues[0].consumed.wrappedValue, specifier: "%.0f") / \($progressSettings.progressValues[0].target.wrappedValue, specifier: "%.0f") \($progressSettings.progressValues[0].unit.wrappedValue)")
+                                                .foregroundColor(Color.white)
+                                            Text($progressSettings.progressValues[0].description.wrappedValue)
+                                                .foregroundColor(Color.white)
                                         }
                                     }
                                     Spacer()
                                     VStack{
-                                        if(progressValues.indices.contains(1)){
-                                        ProgressBar(progress: $progressValues[1].progress, color: self.$color2)
-                                            .frame(width: 50.0, height: 50.0)
-                                        Text("\($progressValues[1].consumed.wrappedValue, specifier: "%.0f") / \($progressValues[1].target.wrappedValue, specifier: "%.0f") \($progressValues[1].unit.wrappedValue)")
-                                            .foregroundColor(Color.white)
-                                        Text($progressValues[1].description.wrappedValue)
-                                            .foregroundColor(Color.white)
-                                    }
+                                        if(progressSettings.progressValues.indices.contains(1)){
+                                            ProgressBar(progress: $progressSettings.progressValues[1].progress, color: self.$color2)
+                                                .frame(width: 50.0, height: 50.0)
+                                            Text("\($progressSettings.progressValues[1].consumed.wrappedValue, specifier: "%.0f") / \($progressSettings.progressValues[1].target.wrappedValue, specifier: "%.0f") \($progressSettings.progressValues[1].unit.wrappedValue)")
+                                                .foregroundColor(Color.white)
+                                            Text($progressSettings.progressValues[1].description.wrappedValue)
+                                                .foregroundColor(Color.white)
+                                        }
                                     }
                                     Spacer()
                                 }
                                 Spacer()
                                 HStack{
                                     VStack{
-                                        if(progressValues.indices.contains(2)){
-                                        ProgressBar(progress: $progressValues[2].progress, color: self.$color2)
-                                            .frame(width: 50.0, height: 50.0)
-                                        Text("\($progressValues[2].consumed.wrappedValue, specifier: "%.0f") / \($progressValues[2].target.wrappedValue, specifier: "%.0f") \($progressValues[2].unit.wrappedValue)")
-                                            .foregroundColor(Color.white)
-                                        Text($progressValues[2].description.wrappedValue)
-                                            .foregroundColor(Color.white)
-                                    }
+                                        if(progressSettings.progressValues.indices.contains(2)){
+                                            
+                                            ProgressBar(progress: $progressSettings.progressValues[2].progress, color: self.$color2)
+                                                .frame(width: 50.0, height: 50.0)
+                                            Text("\($progressSettings.progressValues[2].consumed.wrappedValue, specifier: "%.0f") / \($progressSettings.progressValues[2].target.wrappedValue, specifier: "%.0f") \($progressSettings.progressValues[2].unit.wrappedValue)")
+                                                .foregroundColor(Color.white)
+                                            Text($progressSettings.progressValues[2].description.wrappedValue)
+                                                .foregroundColor(Color.white)
+                                        }
                                     }
                                 }
                                 Spacer()
                             }.frame(height: 300)
                         }
-                        if(progressValues.count == 4){
+                        if(progressSettings.progressValues.count == 4){
                             LazyHGrid(rows: [GridItem(.flexible()),GridItem(.flexible())], alignment: .center, spacing: 80){
-                                ForEach($progressValues) {item in
+                                ForEach($progressSettings.progressValues) {item in
                                     VStack{
                                         ProgressBar(progress: item.progress, color: self.$color2)
                                             .frame(width: 50.0, height: 50.0)
@@ -99,7 +100,7 @@ struct DailyProgressCard: View {
                     }
                     else {
                         LazyHGrid(rows: [GridItem(.fixed(2))], alignment: .center){
-                            ForEach($progressValues) {item in
+                            ForEach($progressSettings.progressValues) {item in
                                 VStack{
                                     ProgressBar(progress: item.progress, color: self.$color2)
                                         .frame(width: 100.0, height: 100.0)

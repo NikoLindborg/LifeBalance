@@ -36,6 +36,6 @@ struct AddMealTabBar: View {
 
 struct AddMealTabBar_Previews: PreviewProvider {
     static var previews: some View {
-        AddMealView(obDays: ObservableDays(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
+        AddMealView(obDays: ObservableDays(), observableProgress: ObservableProgressValues(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
     }
 }

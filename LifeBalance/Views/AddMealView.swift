@@ -14,6 +14,7 @@ struct AddMealView: View {
     @State private var selectedMealIndex = 0
     @State var addedFoods: [FoodModel] = []
     @ObservedObject var obDays: ObservableDays
+    @ObservedObject var observableProgress: ObservableProgressValues
     @State var selectedDayIndex = 0
     @State var chosenDate =  itemFormatter.string(from: Date())
     @EnvironmentObject private var tabController: TabController
@@ -94,12 +95,13 @@ struct AddMealView: View {
             }
         }
         .onAppear(perform: {selectedDayIndex = 0})
+        .onDisappear(perform: {observableProgress.update()})
     }
 }
 
 struct AddMealView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMealView(obDays: ObservableDays(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
+        AddMealView(obDays: ObservableDays(), observableProgress: ObservableProgressValues(), persistenceController: PersistenceController(), obMeals: ObservableMeals())
             .environmentObject(FoodParser())
             .environmentObject(NutrientsParser())
     }

@@ -22,7 +22,10 @@ struct DailyProgressView: View {
     @State private var toggleAmount = 0
     
     func updateSettings() {
-        persistenceController.modifyDailyProgress(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: sodiumOn, iron: ironOn, fat: fatOn)
+        persistenceController.modifyDailyProgress(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: sodiumOn, iron: ironOn, fat: fatOn){
+            observedDailyProgress.fetchList()
+            
+        }
         $dailyProgressSettings.wrappedValue = persistenceController.getDailyProgressCoreData()[0]
     }
     
@@ -137,7 +140,7 @@ struct DailyProgressView: View {
             .onAppear(perform: {
                 loadSettings()
             })
-            .onDisappear(perform: observedDailyProgress.fetchList)
+            //.onDisappear(perform: observedDailyProgress.fetchList)
         }
     }
 }

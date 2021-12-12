@@ -24,7 +24,7 @@ class ObservableDailyProgress: ObservableObject {
                 l.append("fat")
             }
             if(dailyProgress[0].daily_carbs) {
-                l.append("carbs")
+                l.append("carbohydrates")
             }
             if(dailyProgress[0].daily_sodium) {
                 l.append("sodium")

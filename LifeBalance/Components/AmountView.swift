@@ -5,6 +5,10 @@
 //  Created by Aleksi Kosonen on 7.12.2021.
 //
 
+/**
+ This component is used in ChartCard.swift and it is used in charts right side to determine weeks maxium value, "halfway value" and bottom value which is 0
+ */
+
 import SwiftUI
 
 struct AmountView: View {

@@ -19,7 +19,6 @@ struct ChartCard: View {
     @Binding var healthData: Bool
     @State var combinedArray: [[CGFloat]] = []
     @State var isLoaded: Bool = false
-    //@State var obA: ObservableActivity
     
     var body: some View {
         
@@ -50,7 +49,6 @@ struct ChartCard: View {
         }
         .padding([.trailing, .leading])
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 350, maxHeight: 350)
-        //.onAppear(perform: {obA.update()})
         .onAppear(perform: {combineArrays(arrayOne: activityData, arrayTwo: stepData)})
     }
     func combineArrays(arrayOne: [[CGFloat]], arrayTwo: [[CGFloat]]) {

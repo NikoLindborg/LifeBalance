@@ -5,6 +5,10 @@
 //  Created by Aleksi Kosonen on 9.12.2021.
 //
 
+/**
+ This component is used in EditMealView, it takes food name and amount, and is used to display them in a view.
+ */
+
 import SwiftUI
 
 struct EditItems: View {

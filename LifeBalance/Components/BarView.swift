@@ -5,6 +5,10 @@
 //  Created by Aleksi Kosonen on 7.12.2021.
 //
 
+/**
+ This component is used in ChartCard.Swift and takes value and max as variables to count percentage for progress bars.
+ */
+
 import SwiftUI
 
 struct BarView: View {

@@ -5,6 +5,10 @@
 //  Created by Niko Lindborg on 28.11.2021.
 //
 
+/**
+ This component is used in AddNewTab.swift to show added food-item in list.
+ */
+
 import SwiftUI
 
 struct FoodRow: View {

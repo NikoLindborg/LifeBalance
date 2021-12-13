@@ -5,6 +5,10 @@
 //  Created by Niko Lindborg on 17.11.2021.
 //
 
+/**
+ This component is for circle progress bar and takes progress as variable to show correct value of progress
+ */
+
 import SwiftUI
 
 struct ProgressBar: View {

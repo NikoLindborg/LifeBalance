@@ -5,6 +5,10 @@
 //  Created by Aleksi Kosonen on 23.11.2021.
 //
 
+/**
+ ContentView contains the initial UI for this application. It iis used to present custom content onscreen and to pass data between views.
+ */
+
 import SwiftUI
 import CoreData
 

@@ -84,7 +84,8 @@ struct DiaryView: View {
                         print("changed")
                         updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                     })
-                    
+                    Text("Tap a meal to edit ingredient amounts or save to My Foods")
+                        .font(.footnote)
                 }
             }
         }

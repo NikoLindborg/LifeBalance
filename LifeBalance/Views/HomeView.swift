@@ -82,7 +82,7 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .padding(.leading)
+                    .padding()
                     if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
                             TrendCard(cardCaption: "No trends", observableProgress: observableProgress)
@@ -112,12 +112,12 @@ struct HomeView: View {
                 .offset(y: -20)
                 VStack {
                     HStack {
-                        Text("Goals")
+                        Text("Activity")
                             .font(.largeTitle)
                             .bold()
                         Spacer()
                     }
-                    .padding(.leading)
+                    .padding()
                     if ($observedActivity.healthData.wrappedValue) {
                         VStack {
                             ChartCard(activityData: $observedActivity.healthKitActivityArray, stepData: $observedActivity.healthKitStepsArray, maxActivity: $observedActivity.healthKitMaxActivity, maxSteps: $observedActivity.healthKitMaxSteps, weekdays: $observedActivity.weekdays, healthData: $observedActivity.healthData)

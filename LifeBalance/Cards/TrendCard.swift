@@ -38,13 +38,13 @@ struct TrendCard: View {
                     HStack {
                         if(cardCaption != "No trends"){
                             if(cardValue < cardTarget/2){
-                                Text("your \(self.cardCaption.lowercased()) levels are not doing well, make sure to eat food that has a lot of \(self.cardCaption.lowercased())")
+                                Text("Your \(self.cardCaption.lowercased()) levels are not doing well, make sure to eat food that has a lot of \(self.cardCaption.lowercased())")
                                 Spacer()
                             } else if (cardValue >= cardTarget/2 && cardValue < cardTarget){
-                                Text("your \(self.cardCaption.lowercased()) levels are above 50% of the needed consumption for the last 3 days, so you're on the right track, keep up the good work!")
+                                Text("Your \(self.cardCaption.lowercased()) levels are above 50% of the needed consumption for the last 3 days, so you're on the right track, keep up the good work!")
                                 Spacer()
                             } else {
-                                Text("your \(self.cardCaption.lowercased()) levels are doing really well for the last 3 days, you're above your target! Great job")
+                                Text("Your \(self.cardCaption.lowercased()) levels are doing really well for the last 3 days, you're above your target! Great job")
                                 Spacer()
                             }
                         }else {
@@ -53,37 +53,38 @@ struct TrendCard: View {
                         }
                     }
                 }
-                .padding(10)
-            }.padding(10)
-                .onAppear(perform: {
-                    if(cardCaption == "Iron"){
-                        cardValue = observableProgress.ironConsumed
-                        cardTarget = observableProgress.ironTarget
-                    }
-                    if(cardCaption == "Calories"){
-                        cardValue = observableProgress.caloriesConsumed
-                        cardTarget = observableProgress.caloriesTarget
-                    }
-                    if(cardCaption == "Protein"){
-                        cardValue = observableProgress.proteinConsumed
-                        cardTarget = observableProgress.proteinTarget
-                    }
-                    if(cardCaption == "Carbs"){
-                        cardValue = observableProgress.carbsConsumed
-                        cardTarget = observableProgress.carbsTarget
-                    }
-                    if(cardCaption == "Sugar"){
-                        cardValue = observableProgress.sugarConsumed
-                        cardTarget = observableProgress.sugarTarget
-                    }
-                    if(cardCaption == "Salt"){
-                        cardValue = observableProgress.saltConsumed
-                        cardTarget = observableProgress.saltTarget
-                    }
-                    
-                })
-                .padding([.trailing, .leading])
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 125, maxHeight: 125)
+                .padding([.trailing, .bottom, .top])
+                .padding(.leading, 5)
+            }
+            .padding(.leading)
+            .onAppear(perform: {
+                if(cardCaption == "Iron"){
+                    cardValue = observableProgress.ironConsumed
+                    cardTarget = observableProgress.ironTarget
+                }
+                if(cardCaption == "Calories"){
+                    cardValue = observableProgress.caloriesConsumed
+                    cardTarget = observableProgress.caloriesTarget
+                }
+                if(cardCaption == "Protein"){
+                    cardValue = observableProgress.proteinConsumed
+                    cardTarget = observableProgress.proteinTarget
+                }
+                if(cardCaption == "Carbs"){
+                    cardValue = observableProgress.carbsConsumed
+                    cardTarget = observableProgress.carbsTarget
+                }
+                if(cardCaption == "Sugar"){
+                    cardValue = observableProgress.sugarConsumed
+                    cardTarget = observableProgress.sugarTarget
+                }
+                if(cardCaption == "Salt"){
+                    cardValue = observableProgress.saltConsumed
+                    cardTarget = observableProgress.saltTarget
+                }
+            })
         }
+        .padding([.trailing, .leading])
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 150, maxHeight: 150)
     }
-    }
+}

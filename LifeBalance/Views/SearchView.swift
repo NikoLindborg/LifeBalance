@@ -49,14 +49,14 @@ struct SearchView: View {
                 Text("Add \(label)")
                     .font(.body)
                     .bold()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 75, alignment: .leading)
+                    .foregroundColor(.white)
+                    .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_green)
+                    .cornerRadius(20)
+                    .disabled($quantity.wrappedValue == "")
+                    .padding()
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 75, alignment: .leading)
-            .foregroundColor(.white)
-            .background($quantity.wrappedValue == "" ? Color.gray : Color.LB_green)
-            .cornerRadius(20)
-            .disabled($quantity.wrappedValue == "")
-            .padding()
         }
         .onAppear(perform: {parser.parseFood(query)})
     }

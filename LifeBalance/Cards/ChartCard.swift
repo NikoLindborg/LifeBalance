@@ -32,7 +32,7 @@ struct ChartCard: View {
                     Text("Step count").tag(1)
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal, 20)
+                .padding()
                 
                 if (isLoaded && healthData) {
                     HStack(spacing: 13) {

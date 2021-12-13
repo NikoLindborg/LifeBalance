@@ -60,7 +60,7 @@ struct HomeView: View {
                     .padding(.leading)
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $observableProgress.fullProgressValues), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressSettings: dailyProgressSettings, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressValues: $dailyProgressSettings.progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 350)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
@@ -157,7 +157,6 @@ struct HomeView: View {
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-        .onAppear(perform: {persistenceController.getAllSavedMeals()})
         .onAppear(perform: dailyProgressSettings.update)
         .onAppear(perform: dailyProgressSettings.fetchList)
         .onAppear(perform: {observableProgress.update()})

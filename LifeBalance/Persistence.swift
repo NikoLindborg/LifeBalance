@@ -623,9 +623,7 @@ struct PersistenceController {
         var ingre: [Ingredient] = []
         ingr.forEach{ ingredient in
             ingre += ingredients.filter {$0.identifier == ingredient.identifier }
-            print(ingredient.identifier)
         }
-        print("Ingr \(ingr)")
         ingredients = Array(Set(ingre))
         ingredients.forEach {e in
             e.saved = save

@@ -35,7 +35,7 @@ struct EditMealView: View {
         .padding()
         let ingredients = (meal.ingredients?.allObjects as! [Ingredient])
         if (ingredients.count > 0) {
-            // This causes an error but it works. Spent a solid time trying to fix this but didn't get any results.
+            // This causes a warning but it works. Spent a solid time trying to fix this but didn't get any results.
             ForEach(0 ..< ingredients.count) {ingredient in
                 if (ingredients.indices.contains(ingredient)) {
                     Button(action: {self.selectedIngredient = ingredients[ingredient].label ?? ""}){

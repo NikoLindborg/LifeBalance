@@ -71,7 +71,6 @@ struct DailyProgressView: View {
             Form{
                 Section(header: Text("Daily progress")){
                     Toggle("Iron", isOn: $ironOn).onChange(of: ironOn ){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -81,7 +80,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Calories", isOn: $caloriesOn).onChange(of: caloriesOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -91,7 +89,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Protein", isOn: $proteinOn).onChange(of: proteinOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -100,7 +97,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Carbs", isOn: $carbsOn).onChange(of: carbsOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -110,7 +106,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Sugar", isOn: $sugarOn).onChange(of: sugarOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -120,7 +115,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Salt", isOn: $sodiumOn).onChange(of: sodiumOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){
@@ -130,7 +124,6 @@ struct DailyProgressView: View {
                         loadSettings()
                     }
                     Toggle("Fat", isOn: $fatOn).onChange(of: fatOn){value in
-                        print(value)
                         if(toggleAmount < 4){
                             updateSettings()
                         }else if(toggleAmount >= 4){

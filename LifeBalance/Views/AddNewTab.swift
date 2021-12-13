@@ -30,7 +30,6 @@ struct AddNewTab: View {
                         speechRecognizer.record(to: $query)
                         isRecording = true
                     } else {
-                        print($query)
                         speechRecognizer.stopRecording()
                         isRecording = false
                     }

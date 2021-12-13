@@ -13,7 +13,7 @@
 import SwiftUI
 
 struct DailyProgressCard: View {
-    @ObservedObject var progressSettings: ObservableDailyProgress
+    @Binding var progressValues: Array<ProgressItem>
     @Binding var color: Color
     @Binding var color2: Color
     @Binding var color3: Color
@@ -21,8 +21,8 @@ struct DailyProgressCard: View {
     
     var body: some View {
         VStack(){
-            if(!progressSettings.progressValues.isEmpty){
-                if(progressSettings.progressValues.count > 2){
+            if(!progressValues.isEmpty){
+                if(progressValues.count > 2){
                     HStack(){
                         Text("Daily progress")
                             .foregroundColor(.white)
@@ -42,9 +42,9 @@ struct DailyProgressCard: View {
                 
                 HStack(){
                     //  Logic for displaying ProgressBars in a different manner on the card based on their amount. If amount is bigger than 2, the size is reduced and ProgressBars are seperated for two rows.
-                    if(progressSettings.progressValues.count > 2){
+                    if(progressValues.count > 2){
                             LazyHGrid(rows: [GridItem(.flexible()),GridItem(.flexible())], alignment: .center, spacing: 80){
-                                ForEach($progressSettings.progressValues) {item in
+                                ForEach($progressValues) {item in
                                     VStack{
                                         ProgressBar(progress: item.progress, color: self.$color2)
                                             .frame(width: 50.0, height: 50.0)
@@ -58,7 +58,7 @@ struct DailyProgressCard: View {
                     }
                     else {
                         LazyHGrid(rows: [GridItem(.fixed(2))], alignment: .center){
-                            ForEach($progressSettings.progressValues) {item in
+                            ForEach($progressValues) {item in
                                 VStack{
                                     ProgressBar(progress: item.progress, color: self.$color2)
                                         .frame(width: 100.0, height: 100.0)

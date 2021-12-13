@@ -36,14 +36,11 @@ struct ContentView: View {
                 }      
                 .onAppear(perform: persistenceController.initializeTrends)
                 .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-                .onAppear(perform: {print("trendit \(tSettings.trends) \(tSettings.trends.isEmpty)")})
-                .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update(); print("ajoin")}})
-                .onAppear(perform: {if $dailyProgressSettings.dailyProgress.isEmpty {dailyProgressSettings.update();
-                    print("ContentView - dailyProgressSettings updated")
-                }})
+                .onAppear(perform: {if $tSettings.trends.isEmpty {tSettings.update();}})
+                .onAppear(perform: {if $dailyProgressSettings.dailyProgress.isEmpty {dailyProgressSettings.update()}})
                 .onAppear(perform: {observableProgress.update()})
 
-            DiaryView(persistenceController: persistenceController, obMeals: obMeals,dailyProgressSettings: dailyProgressSettings, meals: obMeals.meals, obDays: obAllDays, isUpdated: observedUpdate)
+            DiaryView(persistenceController: persistenceController, obMeals: obMeals, meals: obMeals.meals, obDays: obAllDays, isUpdated: observedUpdate)
                 .tag(Tab.diary)
                 .tabItem() {
                     Image(systemName: "book.fill")

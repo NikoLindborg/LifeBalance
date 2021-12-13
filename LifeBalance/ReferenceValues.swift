@@ -71,23 +71,18 @@ class ReferenceValues: ObservableObject {
              bmr = ((9.99 * userWeight) + (6.25 * userHeight) - (4.92 * userAge)) - 161
             if(activity == "Sedentary") {
                 amr = (bmr * 1.2)
-                print(amr)
             }
             if(activity == "Lightly active") {
                 amr = (bmr * 1.375)
-                print(amr)
             }
             if(activity == "Moderately active") {
                 amr = (bmr * 1.55)
-                print(amr)
             }
             if(activity == "Active") {
                 amr = (bmr * 1.725)
-                print(amr)
             }
             if(activity == "Very active") {
                 amr = (bmr * 1.9)
-                print(amr)
             }
             calories = amr
             

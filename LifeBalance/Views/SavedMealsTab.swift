@@ -17,30 +17,30 @@ struct SavedMealsTab: View {
     var body: some View {
         Section {
             if (savedMeals.count > 0) {
-                List(savedMeals){ item in
-                    HStack{
+                ForEach(savedMeals, id: \.self){ item in
+                    Button(action: {addSelected(meal: item)}){
                         VStack{
-                            Button(action: {addSelected(meal: item)}){
-                                HStack{
-                                    Text(item.mealName ?? "")
+                            HStack {
+                                Spacer()
+                                Text(item.mealName ?? "")
+                                    .foregroundColor(Color.LB_text)
+                                    .bold()
+                                Spacer()
+                            }
+                            // Meals ingredients are wrapped to Ingredient object so they can be looped through.
+                            let ingr = (item.ingredients?.allObjects as! [Ingredient])
+                            ForEach(ingr){ ingredient in
+                                HStack {
+                                    Text("\u{2022} \(ingredient.label ?? "")" )
                                         .foregroundColor(Color.LB_text)
-                                    Spacer()
-                                    // Meals ingredients are wrapped to Ingredient object so they can be looped through.
-                                    let ingr = (item.ingredients?.allObjects as! [Ingredient])
-                                    ForEach(ingr){ ingredient in
-                                        VStack{
-                                            HStack{
-                                                Text("\u{2022} \(ingredient.label ?? "")" )
-                                                    .foregroundColor(Color.LB_text)
-                                                Spacer()
-                                                Text("\(ingredient.quantity )g" )
-                                                    .foregroundColor(Color.LB_text)
-                                            }
-                                        }
-                                    }
+                                    Text("\(ingredient.quantity )g" )
+                                        .foregroundColor(Color.LB_text)
                                 }
                             }
                         }
+                        .background(Color(.systemGray6))
+                        .cornerRadius(15)
+                        .padding()
                     }
                     .listRowBackground(Color(.systemGray6))
                 }

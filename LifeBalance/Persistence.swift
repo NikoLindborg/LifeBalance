@@ -622,7 +622,7 @@ struct PersistenceController {
         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
         var ingre: [Ingredient] = []
         ingr.forEach{ ingredient in
-            ingre = ingredients.filter  {$0.identifier == ingredient.identifier }
+            ingre += ingredients.filter {$0.identifier == ingredient.identifier }
         }
         ingredients = Array(Set(ingre))
         ingredients.forEach {e in

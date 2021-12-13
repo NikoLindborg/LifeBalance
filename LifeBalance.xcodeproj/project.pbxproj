@@ -63,6 +63,12 @@
 		8298D19527611F7200A06108 /* EditMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298D19427611F7200A06108 /* EditMealView.swift */; };
 		829AAD472760F23700285B1D /* AddNewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829AAD462760F23700285B1D /* AddNewTab.swift */; };
 		82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A574FC2747AABC0029B68E /* TrendCard.swift */; };
+		82C4FC012767A54E00885A90 /* home_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FBFB2767A54E00885A90 /* home_light.png */; };
+		82C4FC022767A54E00885A90 /* home_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FBFC2767A54E00885A90 /* home_dark.png */; };
+		82C4FC032767A54E00885A90 /* activity_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FBFD2767A54E00885A90 /* activity_dark.png */; };
+		82C4FC042767A54E00885A90 /* trends_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FBFE2767A54E00885A90 /* trends_dark.png */; };
+		82C4FC052767A54E00885A90 /* add_meal_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FBFF2767A54E00885A90 /* add_meal_light.png */; };
+		82C4FC062767A54E00885A90 /* diary_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 82C4FC002767A54E00885A90 /* diary_light.png */; };
 		82D93AEB274BAF4D00530651 /* AddMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D93AEA274BAF4D00530651 /* AddMealView.swift */; };
 		82DDDB862762186E00576D04 /* EditItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DDDB852762186E00576D04 /* EditItems.swift */; };
 		82DDDB882762373A00576D04 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DDDB872762373A00576D04 /* Color.swift */; };
@@ -153,6 +159,12 @@
 		8298D19427611F7200A06108 /* EditMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMealView.swift; sourceTree = "<group>"; };
 		829AAD462760F23700285B1D /* AddNewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTab.swift; sourceTree = "<group>"; };
 		82A574FC2747AABC0029B68E /* TrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCard.swift; sourceTree = "<group>"; };
+		82C4FBFB2767A54E00885A90 /* home_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_light.png; path = ../../../../../../Desktop/home_light.png; sourceTree = "<group>"; };
+		82C4FBFC2767A54E00885A90 /* home_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_dark.png; path = ../../../../../../Desktop/home_dark.png; sourceTree = "<group>"; };
+		82C4FBFD2767A54E00885A90 /* activity_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = activity_dark.png; path = ../../../../../../Desktop/activity_dark.png; sourceTree = "<group>"; };
+		82C4FBFE2767A54E00885A90 /* trends_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trends_dark.png; path = ../../../../../../Desktop/trends_dark.png; sourceTree = "<group>"; };
+		82C4FBFF2767A54E00885A90 /* add_meal_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_meal_light.png; path = ../../../../../../Desktop/add_meal_light.png; sourceTree = "<group>"; };
+		82C4FC002767A54E00885A90 /* diary_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = diary_light.png; path = ../../../../../../Desktop/diary_light.png; sourceTree = "<group>"; };
 		82D93AEA274BAF4D00530651 /* AddMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealView.swift; sourceTree = "<group>"; };
 		82DDDB852762186E00576D04 /* EditItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItems.swift; sourceTree = "<group>"; };
 		82DDDB872762373A00576D04 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -229,6 +241,7 @@
 		5F8AB6F8274278E300A59F43 /* LifeBalance */ = {
 			isa = PBXGroup;
 			children = (
+				82C4FBFA2767A53300885A90 /* ReadMeImages */,
 				96F87D952758EEBC00C5536E /* Controllers */,
 				8240118E2754F21C003CD870 /* CoreDataModels */,
 				820232B1274E5024007F386D /* Info.plist */,
@@ -369,6 +382,19 @@
 			path = Cards;
 			sourceTree = "<group>";
 		};
+		82C4FBFA2767A53300885A90 /* ReadMeImages */ = {
+			isa = PBXGroup;
+			children = (
+				82C4FBFD2767A54E00885A90 /* activity_dark.png */,
+				82C4FBFF2767A54E00885A90 /* add_meal_light.png */,
+				82C4FC002767A54E00885A90 /* diary_light.png */,
+				82C4FBFC2767A54E00885A90 /* home_dark.png */,
+				82C4FBFB2767A54E00885A90 /* home_light.png */,
+				82C4FBFE2767A54E00885A90 /* trends_dark.png */,
+			);
+			path = ReadMeImages;
+			sourceTree = "<group>";
+		};
 		82F432BD274E38AA005CD4BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,7 +519,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82C4FC012767A54E00885A90 /* home_light.png in Resources */,
+				82C4FC032767A54E00885A90 /* activity_dark.png in Resources */,
+				82C4FC062767A54E00885A90 /* diary_light.png in Resources */,
 				5F8AB701274278E600A59F43 /* Preview Assets.xcassets in Resources */,
+				82C4FC042767A54E00885A90 /* trends_dark.png in Resources */,
+				82C4FC052767A54E00885A90 /* add_meal_light.png in Resources */,
+				82C4FC022767A54E00885A90 /* home_dark.png in Resources */,
 				5F8AB6FE274278E600A59F43 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

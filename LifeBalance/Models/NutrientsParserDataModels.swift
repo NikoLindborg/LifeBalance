@@ -7,6 +7,11 @@
 //  Created by Niko Lindborg on 23.11.2021.
 //
 
+/**
+ Datamodels for NutrientsParser api calls, has multiple structs that are used for the same api calls datamodels.
+ Also contains FoodModel, which is a model class used for creating food objects, and inserting them into the core-data.
+ */
+
 import Foundation
 
 struct NutrientsModel: Decodable {

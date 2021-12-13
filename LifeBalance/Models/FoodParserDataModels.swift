@@ -3,9 +3,13 @@
 //  LifeBalance
 //
 //
-//  Datamodels for FoodParser api calls, has multiple structs that are only used in the same api calls datamodels
+//
 //  Created by Niko Lindborg on 22.11.2021.
 //
+
+/**
+ Datamodels for FoodParser api calls, has multiple structs that are only used in the same api calls datamodels
+ */
 
 import Foundation
 
@@ -43,14 +47,12 @@ struct parseNutrients: Decodable {
 }
 extension Hints: Equatable {
     static func == (lhs: Hints, rhs: Hints) -> Bool {
-        return
-        lhs.food == rhs.food
+        return lhs.food == rhs.food
     }
 }
 
 extension Food: Equatable {
     static func == (lhs: Food, rhs: Food) -> Bool {
-        return
-        lhs.foodId == rhs.foodId
+        return lhs.foodId == rhs.foodId
     }
 }

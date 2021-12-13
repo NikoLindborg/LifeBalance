@@ -5,18 +5,20 @@
 //  Created by Niko Lindborg on 22.11.2021.
 //
 
+/**
+ Class for apis foodparser endpoint. Contains http get call, json decoding and published list of found elements.
+ */
+
 import Foundation
 
 class FoodParser: ObservableObject {
     let constants = Constants()
     @Published var queryList: [Hints] =  []
-  
-
     
     func parseFood(_ query: String) {
         let fixedQuery = query.replacingOccurrences(of: " ", with: "_")
         guard let url = URL(string: "https://api.edamam.com/api/food-database/v2/parser?app_id=\(constants.app_id)&app_key=\(constants.app_key)&ingr=\(fixedQuery)&nutrition-type=cooking") else{
-                fatalError("Missing URL")
+            fatalError("Missing URL")
         }
         
         let urlRequest = URLRequest(url: url)

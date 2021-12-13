@@ -16,6 +16,18 @@ The application also carries a trend feature where specific nutrient values are 
 
 LifeBalance also supports Apple's Health Data and displays a graph of the user's active calories and step count from past 7 days from Apple Health. 
 
+## Adding a meal in light mode
+
+![home_light](https://user-images.githubusercontent.com/61407571/145851163-22266250-18e2-4842-95ee-05f6628bd5aa.png)&nbsp;&nbsp;&nbsp;&nbsp;
+![add_meal_light](https://user-images.githubusercontent.com/61407571/145851232-df4acc5d-6a10-4a94-94ba-21e7b71b949d.png)&nbsp;&nbsp;&nbsp;&nbsp;
+![diary_light](https://user-images.githubusercontent.com/61407571/145851288-71c751a7-8f0a-489f-96d3-fcdcb1e75f76.png)&nbsp;&nbsp;&nbsp;&nbsp;
+
+## HomeView in dark mode
+
+![home_dark](https://user-images.githubusercontent.com/61407571/145851583-f80decf9-60f7-4c99-8102-c2064ba929fe.png)&nbsp;&nbsp;&nbsp;&nbsp;
+![trends_dark](https://user-images.githubusercontent.com/61407571/145851575-c06dd513-1d12-47e4-b409-9c40e0c19b0a.png)&nbsp;&nbsp;&nbsp;&nbsp;
+![activity_dark](https://user-images.githubusercontent.com/61407571/145851586-ca4b7775-37fb-4dbe-9c42-4a5ace5eb83a.png)&nbsp;&nbsp;&nbsp;&nbsp;
+
 # Installation
 
 1. Make sure you have Xcode installed

@@ -4,6 +4,11 @@
 //
 //  Created by iosdev on 4.12.2021.
 //
+/*
+ A view for selecting the trends based on user wants to be displayed on the HomeView.
+ 
+ Settings are updated to CoreData via persistenceController.
+ */
 
 import SwiftUI
 
@@ -18,6 +23,7 @@ struct TrendsView: View {
     @State private var sugarOn = true
     @State private var saltOn = true
 
+    // This function saves the updated trend settings to CoreData
     func updateSettings() {
         persistenceController.modifyTrends(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: saltOn, iron: ironOn)
         loadSettings()
@@ -65,9 +71,3 @@ struct TrendsView: View {
         }
     }
 }
-/**
-struct TrendsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TrendsView(tSettings: .constant([TrendSettings]()), persistenceController: PersistenceController())
-    }
-}*/

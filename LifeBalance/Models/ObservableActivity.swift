@@ -4,6 +4,11 @@
 //
 //  Created by Aleksi Kosonen on 7.12.2021.
 //
+/*
+ Model for observing the HealthKit data on the HomeView without any
+ rendering issues. Data is fetched from HealthKit and passed as an ObservableObject, which
+ can be read on the ChartCard
+ */
 
 import Foundation
 import SwiftUI
@@ -26,6 +31,7 @@ class ObservableActivity: ObservableObject {
         self.healthData = healthKit.healthData
     }
     
+    // Via this method the data is saved to this ObservableObject in other views. 
     func update(activityData: [[CGFloat]], stepData: [[CGFloat]], maxActivity: Double, maxSteps: Double, weekdays: Array<String>, healthData: Bool) {
         print("Update")
         self.healthKitActivityArray = activityData

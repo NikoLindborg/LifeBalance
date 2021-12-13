@@ -73,6 +73,7 @@
       "size" : "40x40"
     },
     {
+      "filename" : "LiheBalance_76x76.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
@@ -88,6 +89,7 @@
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "LiheBalance_1024x1024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

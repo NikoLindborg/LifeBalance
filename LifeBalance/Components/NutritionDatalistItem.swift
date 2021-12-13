@@ -34,7 +34,7 @@ struct NutritionDatalistItem: View {
     }
     
     func calculateProgress(prog: Double, target: Double) -> Double {
-        if(target == 0){
+        if(target == 0 || prog > target){
             return 1.0
         } else{
             return prog/target

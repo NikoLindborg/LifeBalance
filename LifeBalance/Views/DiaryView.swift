@@ -4,13 +4,17 @@
 //
 //  Created by Niko Lindborg on 17.11.2021.
 //
+/*
+ Diary View carries the same Daily Progress card that is displayed on the HomeView as well as a Meals section.
+ 
+ In meals a MealCard is shown for each meal of the selected date, with the ingredients the user has added. The card works as a NavigationLink to EditView where the user can modify and save the inserted meal. 
+ */
 
 import SwiftUI
 
 struct DiaryView: View {
     
     let persistenceController: PersistenceController
-    
     @State var progressValues: Array<ProgressItem> = []
     @State var fullProgressValues: Array<ProgressItem> = []
     @ObservedObject var obMeals: ObservableMeals
@@ -40,6 +44,7 @@ struct DiaryView: View {
                                 } 
                             }
                         }.colorMultiply(Color.LB_text)
+                        // When picker value changes, the date is changed to be able to show past day's meals
                         .onChange(of: selectedDayIndex, perform:  { (value) in
                             updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                         })
@@ -72,6 +77,8 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading)
+                    // ForEach to show all meals and their ingredients in the view.
+                    // Assigned an id for the items for the ForEach to work properly, as without it they wouldn't have unique indexes.
                     ForEach(obMeals.meals, id: \.self) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
@@ -90,11 +97,6 @@ struct DiaryView: View {
                 }
             }
         }
-        //.onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
-        /*.onChange(of: isUpdated.isUpdated) {value in
-            updateDate(date: itemFormatter.string(from: Date()))
-        }*/
-        //.onChange(of: {isUpdated.isUpdated}, perform: {updateDate(date: itemFormatter.string(from: Date()))})
         .onAppear(perform: {updateDate(date: itemFormatter.string(from: Date()))})
         .onAppear(perform: {getProgressValueToday(date: itemFormatter.string(from: Date()))})
         .onAppear(perform: {meals = obMeals.meals})
@@ -109,6 +111,8 @@ struct DiaryView: View {
     }
     
     func updateDate(date: String) {
+        // This function gets all the meals for a specific date that is selected on the picker.
+        // These meals are saved to the observedObject to be able to render them properly. 
         obMeals.meals = persistenceController.loadMealEntities(persistenceController.getDay(dateToCheck: date))
         self.meals = obMeals.meals
         getProgressValueToday(date: date)
@@ -121,6 +125,7 @@ struct DiaryView_Previews: PreviewProvider {
     }
 }
 
+// Item formatter is being used to have only the date from the Date() as a string, for the app to save unique Day entities
 let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium

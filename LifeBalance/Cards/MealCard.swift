@@ -4,6 +4,10 @@
 //
 //  Created by Niko Lindborg on 21.11.2021.
 //
+/*
+ Meal Card takes and array called food as parameter and displays it's items on the card.
+ The items are Ingredient objects that the given meal has in the applications Core Data.
+ */
 
 import SwiftUI
 
@@ -23,6 +27,7 @@ struct MealCard: View {
                     Spacer()
                 }
                 VStack {
+                    // Displays the ingredients that are in realtionship with given meal. 
                     ForEach(food) {ingredient in
                         MealItems(food: ingredient.label ?? "", amount: String(ingredient.quantity))
                     }

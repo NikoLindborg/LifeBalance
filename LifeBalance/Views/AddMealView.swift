@@ -4,6 +4,9 @@
 //
 //  Created by iosdev on 21.11.2021.
 //
+/*
+ The first view for the meal adding process. This view carries the AddMealTabVar component which has the options for adding a new meal or one from saved meals.
+ */
 
 import SwiftUI
 
@@ -39,20 +42,17 @@ struct AddMealView: View {
                         Picker("", selection: $selectedDayIndex) {
                             ForEach(0 ..< obDays.allDays.count) { i in
                                 HStack{
-                                    
                                     if(obDays.allDays[i].date == itemFormatter.string(from: Date())){
                                         Text("\(obDays.allDays[i].date ?? "") (today)")
                                     } else{
                                         Text("\(obDays.allDays[i].date ?? "")" )
-                                        
                                     }
                                 }
-                                
                             }
                         }.colorMultiply(Color.LB_text)
-                        .onChange(of: selectedDayIndex, perform:  { (value) in
-                            chosenDate = obDays.allDays[selectedDayIndex].date ?? chosenDate
-                        })
+                            .onChange(of: selectedDayIndex, perform:  { (value) in
+                                chosenDate = obDays.allDays[selectedDayIndex].date ?? chosenDate
+                            })
                     }
                     Spacer()
                     VStack(){
@@ -68,12 +68,14 @@ struct AddMealView: View {
                                         Text(self.meals[$0])
                                     }
                                 }
-                            .colorMultiply(Color.LB_text)
+                                .colorMultiply(Color.LB_text)
                             }
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 75)
                             .padding([.trailing, .leading], 20)
+                            //  The meal is saved to CoreData via persistenceController for the pickers selection date. The add meal has a @escaping function as parameter, so that the addFood is being executed after the addMeal.
                             Button(action: {
                                 persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate)}
+                                // Meals are also updated to the observableObject so they are immidiately rendered properly, and after that the application navigates to DiaryView where the meals can be viewed.
                                 obMeals.update()
                                 addedFoods.removeAll()
                                 tabController.open(.diary)

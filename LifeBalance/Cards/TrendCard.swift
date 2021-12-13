@@ -4,6 +4,11 @@
 //
 //  Created by Aleksi Kosonen on 19.11.2021.
 //
+/*
+ Trend card that is displayed on HomeView.
+ 
+ The card takes caption, value, target and the observable progress object as parameters to show differenting trend data based on these values on the homepage. 
+ */
 
 
 import SwiftUI
@@ -19,6 +24,7 @@ struct TrendCard: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color.LB_background)
             HStack {
+                // Icons to display the user also visual feedback
                 if(cardCaption != "No trends"){
                     if(cardValue < cardTarget/2){
                         Image(systemName: "chevron.down.circle").foregroundColor(.red)
@@ -35,6 +41,7 @@ struct TrendCard: View {
                             .bold()
                         Spacer()
                     }
+                    //  Logic for selecting how the values are compared to target values
                     HStack {
                         if(cardCaption != "No trends"){
                             if(cardValue < cardTarget/2){

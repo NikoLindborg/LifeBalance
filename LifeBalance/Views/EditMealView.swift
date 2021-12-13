@@ -4,6 +4,11 @@
 //
 //  Created by Aleksi Kosonen on 8.12.2021.
 //
+/*
+ View for editing already entered meal entities, so that if the user has incorrectly entered too large or too little amount of a given ingredient, it can be fixed here.
+ 
+ The View also has a section for saving the selected meal to user's favorites in the CoreData.
+ */
 
 import SwiftUI
 import Foundation
@@ -30,6 +35,7 @@ struct EditMealView: View {
         .padding()
         let ingredients = (meal.ingredients?.allObjects as! [Ingredient])
         if (ingredients.count > 0) {
+            // This causes an error but it works. Spent a solid time trying to fix this but didn't get any results.
             ForEach(0 ..< ingredients.count) {ingredient in
                 if (ingredients.indices.contains(ingredient)) {
                     Button(action: {self.selectedIngredient = ingredients[ingredient].label ?? ""}){
@@ -37,6 +43,7 @@ struct EditMealView: View {
                     }
                     if (selectedIngredient == ingredients[ingredient].label) {
                         HStack{
+                            // NewAmount is being passed as the text value to get rid of all the TextFields having the same typed value.
                             TextField("Change amount to \(ingredients[ingredient].label ?? "")", text: $newAmount)
                                 .frame(height:30)
                                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
@@ -44,6 +51,7 @@ struct EditMealView: View {
                                 .cornerRadius(15)
                             Button(action: {
                                 isUpdated.notUpdated()
+                                // This parser changes the new inserted value to CoreData. If value is 0 the ingredient is deleted.
                                 nutrientsParser.parseNutrients(ingredients[ingredient].foodId ?? "", Int($newAmount.wrappedValue) ?? 0, "g"){
                                     persistenceController.editFood(ingredients[ingredient], Int($newAmount.wrappedValue) ?? 0, FoodModel(foodId: ingredients[ingredient].foodId ?? "", label: ingredients[ingredient].label ?? "", quantity: Int($newAmount.wrappedValue) ?? 0, totalNutrients: nutrientsParser.nutrientsList))
                                     obMeals.update()
@@ -83,6 +91,7 @@ struct EditMealView: View {
     }
 }
 
+// Observable update onject to have a boolean value to different views.
 class ObservableUpdate: ObservableObject {
     @Published var isUpdated: Bool
     

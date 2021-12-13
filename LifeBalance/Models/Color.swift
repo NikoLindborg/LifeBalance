@@ -4,6 +4,10 @@
 //
 //  Created by Aleksi Kosonen on 9.12.2021.
 //
+/*
+ Extension for Color, to link the asset colors to code. 
+ */
+
 import SwiftUI
 
 extension Color {

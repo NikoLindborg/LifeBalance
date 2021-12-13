@@ -4,6 +4,11 @@
 //
 //  Created by Niko Lindborg on 21.11.2021.
 //
+/*
+ Daily Progress card shows the passed progress settings and values as a observed object parameter.
+ 
+ This data includes the users selected nutrients she/he wants to be shown on the Daily Progress as well as the consumed and reference values for that specific nutrient. 
+ */
 
 import SwiftUI
 
@@ -36,6 +41,7 @@ struct DailyProgressCard: View {
                 }
                 
                 HStack(){
+                    //  Logic for displaying ProgressBars in a different manner on the card based on their amount. If amount is bigger than 2, the size is reduced and ProgressBars are seperated for two rows.
                     if(progressSettings.progressValues.count > 2){
                             LazyHGrid(rows: [GridItem(.flexible()),GridItem(.flexible())], alignment: .center, spacing: 80){
                                 ForEach($progressSettings.progressValues) {item in

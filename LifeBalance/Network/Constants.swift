@@ -5,6 +5,10 @@
 //  Created by Niko Lindborg on 22.11.2021.
 //
 
+/**
+ Class for apis app id and app key, made from dummy account with free version to make it easier for everyone involved, to test the project.
+ */
+
 import Foundation
 
 struct Constants {

@@ -5,6 +5,11 @@
 //  Created by Niko Lindborg on 5.12.2021.
 //
 
+/**
+ Class for the SpeechRecognizer, used in addMealViews speech to text
+ */
+
+
 import AVFoundation
 import Foundation
 import Speech
@@ -16,11 +21,11 @@ struct SpeechRecognizer {
         var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
         var recognitionTask: SFSpeechRecognitionTask?
         let speechRecognizer = SFSpeechRecognizer()
-
+        
         deinit {
             reset()
         }
-
+        
         func reset() {
             recognitionTask?.cancel()
             audioEngine?.stop()
@@ -29,19 +34,17 @@ struct SpeechRecognizer {
             recognitionTask = nil
         }
     }
-
+    
     private let assistant = SpeechAssist()
-
+    
     func record(to speech: Binding<String>) {
-        //relay(speech, message: "Requesting access")
         canAccess { authorized in
             guard authorized else {
                 relay(speech, message: "Access denied")
                 return
             }
-
-            //relay(speech, message: "Access granted")
-
+            
+            
             assistant.audioEngine = AVAudioEngine()
             guard let audioEngine = assistant.audioEngine else {
                 fatalError("Unable to create audio engine")
@@ -51,21 +54,18 @@ struct SpeechRecognizer {
                 fatalError("Unable to create request")
             }
             recognitionRequest.shouldReportPartialResults = true
-
+            
             do {
-                //relay(speech, message: "Booting audio subsystem")
-
+                
                 let audioSession = AVAudioSession.sharedInstance()
                 try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
                 try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
                 let inputNode = audioEngine.inputNode
-                //relay(speech, message: "Found input node")
-
+                
                 let recordingFormat = inputNode.outputFormat(forBus: 0)
                 inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
                     recognitionRequest.append(buffer)
                 }
-                //relay(speech, message: "Preparing audio engine")
                 audioEngine.prepare()
                 try audioEngine.start()
                 assistant.recognitionTask = assistant.speechRecognizer?.recognitionTask(with: recognitionRequest) { (result, error) in
@@ -74,7 +74,7 @@ struct SpeechRecognizer {
                         relay(speech, message: result.bestTranscription.formattedString)
                         isFinal = result.isFinal
                     }
-
+                    
                     if error != nil || isFinal {
                         audioEngine.stop()
                         inputNode.removeTap(onBus: 0)

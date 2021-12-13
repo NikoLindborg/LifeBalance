@@ -4,6 +4,11 @@
 //
 //  Created by iosdev on 8.12.2021.
 //
+
+/**
+ Observable class made for DailyProgress, made so views properly react to "state" change
+ */
+
 import Foundation
 
 class ObservableDailyProgress: ObservableObject {

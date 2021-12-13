@@ -5,13 +5,17 @@
 //  Created by Aleksi Kosonen on 23.11.2021.
 //
 
+/**
+ PersistenceController, where we contained all the core-data integration code, and logic.
+ */
+
 import CoreData
 import SwiftUI
 
 struct PersistenceController {
     enum StoreType {
-            case inMemory, persisted
-        }
+        case inMemory, persisted
+    }
     
     static let shared = PersistenceController()
     static var preview: PersistenceController = {
@@ -20,16 +24,16 @@ struct PersistenceController {
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
         return result
     }()
     
+    
     let container: NSPersistentContainer
     let today = itemFormatter.string(from: Date())
+    
     
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "lifebalance")
@@ -38,21 +42,11 @@ struct PersistenceController {
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
     }
+    
     
     func loadUserSettings() -> [UserSettings] {
         let fetchRequest: NSFetchRequest<UserSettings> = UserSettings.fetchRequest()
@@ -63,6 +57,7 @@ struct PersistenceController {
             return []
         }
     }
+    
     
     func saveUserSettings(gender: String, height: String, weight: String, theme: Bool, activityLevel: String, target: String, age: String) {
         let userSettings = UserSettings(context: container.viewContext)
@@ -79,6 +74,7 @@ struct PersistenceController {
             return print("Failed to save gender \(error)")
         }
     }
+    
     
     func updateUserSettings(userSettings: [UserSettings], gender: String, height: String, weight: String, target: String, activitylevel: String, age: String, theme: Bool) {
         if(!userSettings.isEmpty ) {
@@ -109,6 +105,7 @@ struct PersistenceController {
         }
     }
     
+    
     func loadDayEntities() -> [Day] {
         let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
         do {
@@ -118,6 +115,7 @@ struct PersistenceController {
         }
     }
     
+    
     func loadIngredientEntities() -> [Ingredient] {
         let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
         do{
@@ -126,6 +124,7 @@ struct PersistenceController {
             return []
         }
     }
+    
     
     func loadMealEntities(_ day: Day?) -> [Meals] {
         let fetchRequest: NSFetchRequest<Meals> = Meals.fetchRequest()
@@ -143,6 +142,7 @@ struct PersistenceController {
         }
     }
     
+    
     func addDay(date: String) {
         if (checkIfAvailable(argument: date, nil)) {
             let days: Day? = Day(context: container.viewContext)
@@ -157,10 +157,14 @@ struct PersistenceController {
         }
     }
     
+    
+    //contains finished function parameter, to for syncing up code properly when this function is run
     func addMeal(_ mealName: String, dateToCheck: String, finished: @escaping() -> Void ) {
+        //here we check if the day entity already exists, if not, we create it here.
         if (checkIfAvailable(argument: dateToCheck, nil)) {
             let days: Day? = Day(context: container.viewContext)
             days?.date = dateToCheck
+            //here we check if the meal entity already exists, if not, we create it here
             if (checkIfAvailable(argument: mealName, days)) {
                 let meal = Meals(context: container.viewContext)
                 meal.mealType = mealName
@@ -194,6 +198,8 @@ struct PersistenceController {
         }
     }
     
+    
+    // used for making sure we dont create duplicate days and meals
     func checkIfAvailable(argument: String, _ day: Day?) -> Bool {
         var test = true
         if (day == nil) {
@@ -219,6 +225,7 @@ struct PersistenceController {
         
         return test
     }
+    
     
     func addFood(_ addedFoodList: [FoodModel], _ mealName: String, dateToCheck: String) {
         let allDays = loadDayEntities()
@@ -301,11 +308,13 @@ struct PersistenceController {
         }
     }
     
+    
     func getDay(dateToCheck: String) -> Day? {
         let allDays = loadDayEntities()
         let dayEntity = allDays.filter {$0.date == dateToCheck}
         return dayEntity.count > 0 ? dayEntity[0]: nil
     }
+    
     
     func createRefValuesEntity() {
         let refValuesEntity = getRefValues()
@@ -321,6 +330,7 @@ struct PersistenceController {
             }
         }
     }
+    
     
     func addRefValues(refCalories: Double, refIron: Double, refFat: Double, refCarbohydrates: Double, refProtein: Double, refFiber: Double, refSugar: Double, refSodium: Double) {
         let refValues = getRefValues()
@@ -349,6 +359,8 @@ struct PersistenceController {
         }
     }
     
+    
+    //dictionary made so it is in sync with what is saved in food entities labels
     func getRefValuesDictionary() -> Dictionary<String, Float> {
         let userReferenceValues: Dictionary<String, Float> = [
             "calories" : Float(getRefValues()[0].ref_calories),
@@ -365,10 +377,12 @@ struct PersistenceController {
         return userReferenceValues
     }
     
+    
     func getConsumedMealNutrients(nutritionLabel: String, date: String) -> (value: Float?, unit: String?) {
         let meals = loadMealEntities(getDay(dateToCheck: date))
         var value: Float = 0
         var unit: String = ""
+        
         meals.forEach {meal in
             let ingr = (meal.ingredients?.allObjects as! [Ingredient])
             ingr.forEach {ing in
@@ -384,10 +398,12 @@ struct PersistenceController {
         return (value, unit)
     }
     
+    
     func getProgressValues(_ userSetNutritionalValues: Array<String>?, date: String) -> Array<ProgressItem> {
         var progressArray: Array<ProgressItem> = []
         let userReferenceValues = getRefValuesDictionary()
         let nutritionalValues = userSetNutritionalValues ?? ["calories", "carbohydrates", "protein", "fat", "iron", "sugar", "sodium", "iron"]
+        
         nutritionalValues.forEach {userValue in
             let consumedNutrient = getConsumedMealNutrients(nutritionLabel: userValue, date: date)
             let userReferenceForValue = userReferenceValues[userValue] ?? 0.0
@@ -397,9 +413,11 @@ struct PersistenceController {
         return progressArray
     }
     
+    
     func getSpecificMeal(mealType: String, meals: [Meals]) -> Meals{
         return meals.filter{$0.mealType == mealType}[0]
     }
+    
     
     func editFood(_ ingred: Ingredient,_ quantity: Int, _ food: FoodModel) {
         
@@ -466,6 +484,7 @@ struct PersistenceController {
         }
     }
     
+    
     func getTrendSettings () -> [TrendSettings] {
         let fetchRequest: NSFetchRequest<TrendSettings> = TrendSettings.fetchRequest()
         
@@ -475,6 +494,7 @@ struct PersistenceController {
             return []
         }
     }
+    
     
     func initializeTrends() {
         if(getTrendSettings().count != 0){
@@ -497,17 +517,6 @@ struct PersistenceController {
         }
     }
     
-    func getTrendValuesDictionary() -> Dictionary<String, Bool> {
-        let userTrendValues: Dictionary<String, Bool> = [
-            "calories" : getTrendSettings()[0].trend_calories,
-            "carbs" : getTrendSettings()[0].trend_carbs,
-            "protein" : getTrendSettings()[0].trend_protein,
-            "sugar" : getTrendSettings()[0].trend_sugar,
-            "salt" : getTrendSettings()[0].trend_salt,
-            "iron" : getTrendSettings()[0].trend_iron
-        ]
-        return userTrendValues
-    }
     
     func modifyTrends (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool) {
         let trends = getTrendSettings()[0]
@@ -527,6 +536,7 @@ struct PersistenceController {
         }
     }
     
+    
     func getDailyProgressCoreData () -> [DailyProgressCoreData] {
         let fetchRequest: NSFetchRequest<DailyProgressCoreData> = DailyProgressCoreData.fetchRequest()
         
@@ -537,8 +547,8 @@ struct PersistenceController {
         }
     }
     
+    
     func initializeDailyProgressCoreData() {
-        
         if (getDailyProgressCoreData().count != 0){
             return
         }
@@ -560,6 +570,7 @@ struct PersistenceController {
         }
     }
     
+    
     func modifyDailyProgress (calories: Bool, carbs: Bool, protein: Bool, sugar: Bool, salt: Bool, iron: Bool, fat: Bool, finished: @escaping() -> Void ) {
         let dailyProgressSettings = getDailyProgressCoreData()[0]
         
@@ -579,6 +590,8 @@ struct PersistenceController {
             return print("Failed to save new daily progress \(error)")
         }
     }
+    
+    
     func getAllIngredients() -> [Ingredient] {
         let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
         do {
@@ -589,17 +602,6 @@ struct PersistenceController {
     }
     
     
-    func getIngredients(meal: Meals) -> FetchedResults<Ingredient>{
-        @FetchRequest(
-            entity: Ingredient.entity(),
-            sortDescriptors: [
-                NSSortDescriptor(keyPath: \Ingredient.meal, ascending: true),
-            ],
-            predicate: NSPredicate(format: "meal == %@", meal)
-        ) var fetchedIngredieents: FetchedResults<Ingredient>
-        return fetchedIngredieents
-    }
-    
     func getAllSavedMeals() -> [Saved]{
         let fetchRequest: NSFetchRequest<Saved> = Saved.fetchRequest()
         do {
@@ -608,6 +610,7 @@ struct PersistenceController {
             return []
         }
     }
+    
     
     func saveMeal (name: String, meal: Meals) {
         let save = Saved(context: container.viewContext)

@@ -5,6 +5,10 @@
 //  Created by Niko Lindborg on 12.12.2021.
 //
 
+/**
+ Observable class made for ProgressItem, made so views properly react to "state" change.
+ */
+
 import Foundation
 
 class ObservableProgressValues: ObservableObject {

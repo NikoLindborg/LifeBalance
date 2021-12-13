@@ -4,6 +4,13 @@
 //
 //  Created by iosdev on 21.11.2021.
 //
+/*
+ In settings view the user enters hers/his info in order for the app to function correctly.
+ 
+ The values entered in this view are used to calculate the reference values for the user and saved to CoreData so they don't need to be calculated more than once.
+ 
+ Also the theme for this application can be set here.
+ */
 
 import SwiftUI
 
@@ -36,6 +43,7 @@ struct SettingsView: View {
     @State private var lightMode = true
     @Binding var themeColor: ColorScheme
         
+    // This function saves the inserted values to CoreData via persistenceController
     func updateSettings() {
         if(!isSaved){
             persistenceController.saveUserSettings(gender: selectedFrameworkIndexGender, height: selectedFrameworkIndexHeight, weight: selectedFrameworkIndexWeight, theme: lightMode,
@@ -50,10 +58,9 @@ struct SettingsView: View {
     }
     
     func loadSettings() {
+        // User settinga are loaded via persistenceController
         uSettings = persistenceController.loadUserSettings()
-        //can remove later
         cdRefValues = persistenceController.getRefValues()
-        //
         if(!uSettings.isEmpty){
             isSaved = true
             if(selectedFrameworkIndexWeight == "") {
@@ -77,12 +84,9 @@ struct SettingsView: View {
             lightMode = uSettings[0].theme
             referenceValues.getReferenceValues(height: uSettings[0].height ?? "", weight: uSettings[0].weight ?? "", age: uSettings[0].age ?? "", gender: uSettings[0].gender ?? "", activity: uSettings[0].activityLevel ?? "",target: uSettings[0].target ?? "")
             
-            //can remove later
             if(!cdRefValues.isEmpty){
                 testCal = cdRefValues[0].ref_calories
             }
-            //
-            
         }else {
             lightMode = themeColor == .light ? true : false
         }
@@ -148,6 +152,7 @@ struct SettingsView: View {
             
             .navigationTitle("Settings")
             .onAppear(perform: {
+                // Settings are loaded onAppear from CoreData
                 loadSettings()
             })
         }
@@ -156,7 +161,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        
         SettingsView(persistenceController: PersistenceController(), themeColor: .constant(.dark))
     }
 }

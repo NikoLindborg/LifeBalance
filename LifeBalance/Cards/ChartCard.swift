@@ -4,12 +4,16 @@
 //
 //  Created by Aleksi Kosonen on 3.12.2021.
 //
+/*
+ ChartCard displays a chart on the HomeView that is built from Apple's HealthKit data that the user has in Apple Health.
+ 
+ The application fetches step and active energy data from HealthKit and displays them in a BarView that is built for this chart.
+ */
 
 import SwiftUI
 import HealthKit
 
 struct ChartCard: View {
-    
     @State var pickerSelection = 0
     @Binding var activityData: [[CGFloat]]
     @Binding var stepData: [[CGFloat]]
@@ -33,6 +37,9 @@ struct ChartCard: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
+                // This could have been done in a loop to reduce lines of code, but it broke the Animation of the graph
+                // This way the pickerselection sets which data is read from the combined array as well as wether it compares it to the maximum activity or steps.
+                // Arrays are combined when this Card is loaded. 
                 if (isLoaded && healthData) {
                     HStack(spacing: 13) {
                         BarView(value: combinedArray[pickerSelection][0], max: pickerSelection == 0 ? Float(maxActivity) : Float(maxSteps), day: weekdays[0])

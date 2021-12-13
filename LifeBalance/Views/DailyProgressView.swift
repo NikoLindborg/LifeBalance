@@ -4,6 +4,11 @@
 //
 //  Created by iosdev on 8.12.2021.
 //
+/*
+ A view for selecting the Daily Progress values the user wants to be displayed on the HomeView and Diary View.
+ 
+ Selections are updated to CoreData via persistenceController. The view also limits the amount to four values.
+ */
 
 import SwiftUI
 
@@ -21,10 +26,10 @@ struct DailyProgressView: View {
     @State private var fatOn = true
     @State private var toggleAmount = 0
     
+    // This function saves the modified daily progress values values to CoreData
     func updateSettings() {
         persistenceController.modifyDailyProgress(calories: caloriesOn, carbs: carbsOn, protein: proteinOn, sugar: sugarOn, salt: sodiumOn, iron: ironOn, fat: fatOn){
             observedDailyProgress.fetchList()
-            
         }
         $dailyProgressSettings.wrappedValue = persistenceController.getDailyProgressCoreData()[0]
     }
@@ -140,13 +145,6 @@ struct DailyProgressView: View {
             .onAppear(perform: {
                 loadSettings()
             })
-            //.onDisappear(perform: observedDailyProgress.fetchList)
         }
     }
 }
-    /*
-    struct DailyProgressView_Previews: PreviewProvider {
-        static var previews: some View {
-            DailyProgressView(dailyProgressSettings: .constant(DailyProgressCoreData()), persistenceController: PersistenceController())
-        }
-    }*/

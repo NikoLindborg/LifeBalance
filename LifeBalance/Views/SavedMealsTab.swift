@@ -4,6 +4,9 @@
 //
 //  Created by Niko Lindborg on 8.12.2021.
 //
+/*
+ TabView for displaying the user's saved meals from the CoreData that can be quickly added.
+ */
 
 import SwiftUI
 
@@ -22,6 +25,7 @@ struct SavedMealsTab: View {
                                     Text(item.mealName ?? "")
                                         .foregroundColor(Color.LB_text)
                                     Spacer()
+                                    // Meals ingredients are wrapped to Ingredient object so they can be looped through.
                                     let ingr = (item.ingredients?.allObjects as! [Ingredient])
                                     ForEach(ingr){ ingredient in
                                         VStack{
@@ -50,6 +54,7 @@ struct SavedMealsTab: View {
         .listStyle(InsetGroupedListStyle())
         .onAppear(perform: {savedMeals = persistenceController.getAllSavedMeals()})
     }
+    
     func addSelected(meal: Saved) {
         print(meal)
         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
@@ -59,6 +64,7 @@ struct SavedMealsTab: View {
         }
     }
     
+    // Function to parse nutrient data from saved meal
     func parseNutrients(nutrients: [Nutrition]) -> [totalNutrients] {
         var total: [totalNutrients] = []
         var enerc_kcal: ENERC_KCAL?
@@ -104,9 +110,3 @@ struct SavedMealsTab: View {
         return total
     }
 }
-/**
- struct SavedMealsTab_Previews: PreviewProvider {
- static var previews: some View {
- SavedMealsTab(addedFoods:, persistenceController: PersistenceController())
- }
- }*/

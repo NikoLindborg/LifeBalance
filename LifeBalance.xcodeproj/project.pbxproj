@@ -51,11 +51,9 @@
 		6A65AFA2275F984C00CA5A74 /* CDReferenceValues+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A65AFA0275F984C00CA5A74 /* CDReferenceValues+CoreDataClass.swift */; };
 		6A65AFA3275F984C00CA5A74 /* CDReferenceValues+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A65AFA1275F984C00CA5A74 /* CDReferenceValues+CoreDataProperties.swift */; };
 		6AF84FF1275B8B39009F8C5D /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF84FF0275B8B39009F8C5D /* TrendsView.swift */; };
-		8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A77A2747C68500710D57 /* GoalsCard.swift */; };
 		821F910F274CD116007E4643 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F910E274CD116007E4643 /* ContentView.swift */; };
 		821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 821F912F274CD8F8007E4643 /* lifebalance.xcdatamodeld */; };
 		821F9133274CD922007E4643 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821F9132274CD922007E4643 /* Persistence.swift */; };
-		8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */; };
 		8245863E2757AE06001E1F59 /* ProgressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245863D2757AE06001E1F59 /* ProgressItem.swift */; };
 		825D28E0275A460E0071444C /* ChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825D28DF275A460E0071444C /* ChartCard.swift */; };
 		8271031E275F40A9008C535F /* ObservableActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271031D275F40A9008C535F /* ObservableActivity.swift */; };
@@ -143,11 +141,9 @@
 		6A65AFA1275F984C00CA5A74 /* CDReferenceValues+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDReferenceValues+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6AF84FF0275B8B39009F8C5D /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		820232B1274E5024007F386D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8218A77A2747C68500710D57 /* GoalsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsCard.swift; sourceTree = "<group>"; };
 		821F910E274CD116007E4643 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		821F9130274CD8F8007E4643 /* lifebalance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lifebalance.xcdatamodel; sourceTree = "<group>"; };
 		821F9132274CD922007E4643 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCaloriesCard.swift; sourceTree = "<group>"; };
 		8245863D2757AE06001E1F59 /* ProgressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressItem.swift; sourceTree = "<group>"; };
 		825D28DF275A460E0071444C /* ChartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCard.swift; sourceTree = "<group>"; };
 		8271031D275F40A9008C535F /* ObservableActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableActivity.swift; sourceTree = "<group>"; };
@@ -366,10 +362,8 @@
 			isa = PBXGroup;
 			children = (
 				82A574FC2747AABC0029B68E /* TrendCard.swift */,
-				8218A77A2747C68500710D57 /* GoalsCard.swift */,
 				5FF12833274AA86400ACC671 /* DailyProgressCard.swift */,
 				5FF12835274AABE900ACC671 /* MealCard.swift */,
-				8224100C27510A57006D4D6F /* ActiveCaloriesCard.swift */,
 				825D28DF275A460E0071444C /* ChartCard.swift */,
 			);
 			path = Cards;
@@ -563,7 +557,6 @@
 				6A65AFA2275F984C00CA5A74 /* CDReferenceValues+CoreDataClass.swift in Sources */,
 				82A574FD2747AABC0029B68E /* TrendCard.swift in Sources */,
 				821F9131274CD8F8007E4643 /* lifebalance.xcdatamodeld in Sources */,
-				8224100D27510A57006D4D6F /* ActiveCaloriesCard.swift in Sources */,
 				5F374DD1275D1B2600674E26 /* DailyProgressCoreData+CoreDataClass.swift in Sources */,
 				5FA8B172274D0CE00029A1F9 /* SearchView.swift in Sources */,
 				829AAD472760F23700285B1D /* AddNewTab.swift in Sources */,
@@ -574,7 +567,6 @@
 				5FF12838274AAFA900ACC671 /* MealItems.swift in Sources */,
 				5FC8B15A2761265D006C7749 /* Saved+CoreDataProperties.swift in Sources */,
 				6AF84FF1275B8B39009F8C5D /* TrendsView.swift in Sources */,
-				8218A77B2747C68600710D57 /* GoalsCard.swift in Sources */,
 				5F178A7B275E90F60020191D /* ObservableTrends.swift in Sources */,
 				5FF12834274AA86400ACC671 /* DailyProgressCard.swift in Sources */,
 				821F910F274CD116007E4643 /* ContentView.swift in Sources */,

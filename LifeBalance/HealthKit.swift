@@ -4,6 +4,11 @@
 //
 //  Created by Aleksi Kosonen on 24.11.2021.
 //
+/*
+ In this class the authorization to gain access to user's Healt Data is asked.
+ 
+ If the access is granted, the app fetches last entered active energy (if a user has for example entered a workout), and a collection of last weeks steps and active calories.
+ */
 
 import Foundation
 import HealthKit
@@ -28,6 +33,7 @@ class HealthKit: ObservableObject {
             let read = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!, HKObjectType.quantityType(forIdentifier: .stepCount)!])
             let share = Set([HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!])
 
+            // Authorization requested for specific identifiers
             healthStore.requestAuthorization(toShare: share, read: read) { success, error in
                 if (success) {
                     print("permission granted")
@@ -39,6 +45,7 @@ class HealthKit: ObservableObject {
         }
     }
     
+    // This is not used in the applications current version anymore, but can be incorporated in later versions for acheiving last entered data
     func getActiveCalories() {
         guard let sampleType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
             return
@@ -75,14 +82,17 @@ class HealthKit: ObservableObject {
         healthStore.execute(query)
     }
     
+    //  Function for receiving a collection of last seven days active valories.
     func getActiveCaloriesForLastWeek() {
         guard let objectType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
             fatalError("Unable to fetch active energy")
         }
 
+        // Interval for the query, on which the data is fetched for
         var interval = DateComponents()
         interval.hour = 24
         
+        // Current and anchor dates for the query
         let calendar = Calendar.current
         let anchorDate = calendar.date(bySettingHour: 2, minute: 0, second: 0, of: Date()) ?? Date()
         let startDate = calendar.date(byAdding: .day, value: -6, to: Date()) ?? Date()
@@ -95,11 +105,14 @@ class HealthKit: ObservableObject {
                   anchorDate: anchorDate,
                   intervalComponents: interval)
         
+    
+        // Query where the result and possible errors are handled.
         query.initialResultsHandler = {query, results, error in
             DispatchQueue.main.async {
                 results?.enumerateStatistics(from: startDate,
                                              to: Date(), with: { (result, stop) in
                     self.dataArray.append(DataArrayItem(data: result.sumQuantity()?.doubleValue(for: unit) ?? 0))
+                    // Maximum value of the query for displaying the max value in the ChartCatd
                     self.arrayForMax.append(result.sumQuantity()?.doubleValue(for: unit) ?? 0)
                     self.maxActivity = self.arrayForMax.max() ?? 0.0
                     if (self.maxActivity > 0.0) {
@@ -117,6 +130,7 @@ class HealthKit: ObservableObject {
         healthStore.execute(query)
     }
     
+    //  Function for receiving a collection of last seven days step counts.
     func getStepCount() {
         guard let objectType = HKObjectType.quantityType(forIdentifier: .stepCount) else {
             fatalError("Unable to fetch stepcount")
@@ -159,6 +173,7 @@ class HealthKit: ObservableObject {
     }
 }
 
+// DataArray item for having an UUID for items to loop through
 struct DataArrayItem: Identifiable {
     var id = UUID()
     var data: Double

@@ -4,6 +4,9 @@
 //
 //  Created by Aleksi Kosonen on 1.12.2021.
 //
+/*
+Model for passing progress values as an array, to pass data more clearly and avoid non specific indexing
+ */
 
 import SwiftUI
 

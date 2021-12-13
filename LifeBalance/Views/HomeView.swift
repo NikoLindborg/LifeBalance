@@ -4,6 +4,11 @@
 //
 //  Created by Niko Lindborg on 15.11.2021.
 //
+/*
+ HomeView displays various data to the user, such as Daily Progress, Trends and Activity.
+ 
+ Some of the data is passed to other views as binding values for other views to display them.
+ */
 
 import SwiftUI
 
@@ -22,21 +27,22 @@ struct HomeView: View {
     @ObservedObject var dailyProgressSettings: ObservableDailyProgress
     @ObservedObject var observedActivity: ObservableActivity
     @State var showAlert = !UserDefaults.standard.bool(forKey: "FirstStart")
-  
+    
     var body: some View {
         NavigationView {
             ScrollView {
+                // Alert for when the app is first launched to inform the user to enter hers/his information.
                 Text("")
-                .alert(isPresented: $showAlert, content: {
-                    Alert(title: Text("Hello LifeBalancer"),
-                          message: Text("In order to use the nutrient tracking properly, please enter your details in Settings"),
-                          dismissButton: Alert.Button.default(
-                            Text("Ok"), action: {
-                                UserDefaults.standard.set(true, forKey: "FirstStart")
-                          }
+                    .alert(isPresented: $showAlert, content: {
+                        Alert(title: Text("Hello LifeBalancer"),
+                              message: Text("In order to use the nutrient tracking properly, please enter your details in Settings"),
+                              dismissButton: Alert.Button.default(
+                                Text("Ok"), action: {
+                                    UserDefaults.standard.set(true, forKey: "FirstStart")
+                                }
+                              )
                         )
-                    )
-                })
+                    })
                 VStack {
                     HStack {
                         Text("Today")
@@ -75,7 +81,6 @@ struct HomeView: View {
                     .foregroundColor(.white)
                     .cornerRadius(20)
                     .padding([.trailing, .leading])
-                    
                 }
                 .offset(y: -20)
                 VStack {
@@ -93,6 +98,7 @@ struct HomeView: View {
                         }
                     }
                     .padding()
+                    // Logic for showing the selected trends
                     if(tSettings.trends.count != 0){
                         if(!tSettings.trends[0].trend_iron && !tSettings.trends[0].trend_calories && !tSettings.trends[0].trend_protein && !tSettings.trends[0].trend_carbs && !tSettings.trends[0].trend_sugar && !tSettings.trends[0].trend_salt){
                             TrendCard(cardCaption: "No trends", observableProgress: observableProgress)
@@ -117,7 +123,6 @@ struct HomeView: View {
                             }
                         }
                     }
-                    
                 }
                 .offset(y: -20)
                 VStack {
@@ -138,41 +143,30 @@ struct HomeView: View {
                             Text("No Health Data available")
                             Spacer()
                         }
-                        
                         .frame(width: 350, height: 100, alignment: .leading)
                     }
                 }
                 .offset(y: -20)
             }
         }
+        // A lot of logic is handled when the HomeView is launched, as it is the first View that the application launches.
+        // The application authorized HealthData in the homeview as well as creates reference values if they don't already exists.
+        // A day entity is also created to CoreData if it doesn't already exist so if the day has changed, last days values are not displayed.
+        // The correct settings and saved meal items are fetched from CoreData, and the needed observable object are updated
         .onAppear(perform: healthKit.authorizeHealthStore)
         .onAppear(perform: persistenceController.createRefValuesEntity)
         .onAppear(perform: {persistenceController.addDay(date: today)})
         .onAppear(perform: persistenceController.initializeDailyProgressCoreData)
-        .onAppear(perform: {print(persistenceController.getAllSavedMeals())})
+        .onAppear(perform: {persistenceController.getAllSavedMeals()})
         .onAppear(perform: dailyProgressSettings.update)
         .onAppear(perform: dailyProgressSettings.fetchList)
-        .onAppear(perform: {
-            UITableView.appearance().backgroundColor = .clear
-        })
         .onAppear(perform: {observableProgress.update()})
-        .onChange(of: healthKit.healthData, perform:  { (value) in
-            print(healthKit.stepData)
+        
+        // Here the applications background is set to clear instead of systemGray6 to provide a white background.
+        .onAppear(perform: {UITableView.appearance().backgroundColor = .clear})
+        // If HealthData is authorized, the fetched values are passed to the Observavle observedActivity object.
+        .onChange(of: healthKit.healthData, perform: {(value) in
             observedActivity.update(activityData: healthKit.activityData, stepData: healthKit.stepData, maxActivity: healthKit.maxActivity, maxSteps: healthKit.maxSteps, weekdays: healthKit.weekdays, healthData: healthKit.healthData)
         })
     }
-    
-    // anotherDate can be used to scope around different days by variating the "value: _"
-    // Insert anotherDateString to getProgressValues parameter instead of today to switch day
-    // let anotherDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-    // let anotherDateString = itemFormatter.string(from: anotherDate)
-    
 }
-/**
- struct HomeView_Previews: PreviewProvider {
- static var previews: some View {
- HomeView(persistenceController: PersistenceController())
- .environmentObject(HealthKit())
- }
- }
- */

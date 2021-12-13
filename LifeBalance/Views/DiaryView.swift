@@ -72,7 +72,7 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .padding(.leading)
-                    ForEach(obMeals.meals) {meal in
+                    ForEach(obMeals.meals, id: \.self) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
                             MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
@@ -86,6 +86,7 @@ struct DiaryView: View {
                     })
                     Text("Tap a meal to edit ingredient amounts or save to My Foods")
                         .font(.footnote)
+                        .padding(.bottom)
                 }
             }
         }

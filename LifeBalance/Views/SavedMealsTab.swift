@@ -12,31 +12,40 @@ struct SavedMealsTab: View {
     @Binding var addedFoods: [FoodModel]
     let persistenceController: PersistenceController
     var body: some View {
-        List(savedMeals){ item in
-            HStack{
-                VStack{
-                    Button(action: {addSelected(meal: item)}){
-                        HStack{
-                            Text(item.mealName ?? "")
-                                .foregroundColor(Color.LB_text)
-                            Spacer()
-                            let ingr = (item.ingredients?.allObjects as! [Ingredient])
-                            ForEach(ingr){ ingredient in
-                                VStack{
-                                    HStack{
-                                        Text("\u{2022} \(ingredient.label ?? "")" )
-                                            .foregroundColor(Color.LB_text)
-                                        Spacer()
-                                        Text("\(ingredient.quantity )g" )
-                                            .foregroundColor(Color.LB_text)
+        Section {
+            if (savedMeals.count > 0) {
+                List(savedMeals){ item in
+                    HStack{
+                        VStack{
+                            Button(action: {addSelected(meal: item)}){
+                                HStack{
+                                    Text(item.mealName ?? "")
+                                        .foregroundColor(Color.LB_text)
+                                    Spacer()
+                                    let ingr = (item.ingredients?.allObjects as! [Ingredient])
+                                    ForEach(ingr){ ingredient in
+                                        VStack{
+                                            HStack{
+                                                Text("\u{2022} \(ingredient.label ?? "")" )
+                                                    .foregroundColor(Color.LB_text)
+                                                Spacer()
+                                                Text("\(ingredient.quantity )g" )
+                                                    .foregroundColor(Color.LB_text)
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    .listRowBackground(Color(.systemGray6))
                 }
+            } else {
+                Spacer()
+                Text("No saved meals yet. You can save a added meal in Diary")
+                    .font(.footnote)
+                Spacer()
             }
-            .listRowBackground(Color(.systemGray6))
         }
         .listStyle(InsetGroupedListStyle())
         .onAppear(perform: {savedMeals = persistenceController.getAllSavedMeals()})

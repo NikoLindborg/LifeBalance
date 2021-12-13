@@ -21,12 +21,22 @@ struct HomeView: View {
     @State var isLoaded = false
     @ObservedObject var dailyProgressSettings: ObservableDailyProgress
     @ObservedObject var observedActivity: ObservableActivity
-    
+    @State var showAlert = !UserDefaults.standard.bool(forKey: "FirstStart")
   
     var body: some View {
         NavigationView {
             ScrollView {
-                
+                Text("")
+                .alert(isPresented: $showAlert, content: {
+                    Alert(title: Text("Hello LifeBalancer"),
+                          message: Text("In order to use the nutrient tracking properly, please enter your details in Settings"),
+                          dismissButton: Alert.Button.default(
+                            Text("Ok"), action: {
+                                UserDefaults.standard.set(true, forKey: "FirstStart")
+                          }
+                        )
+                    )
+                })
                 VStack {
                     HStack {
                         Text("Today")

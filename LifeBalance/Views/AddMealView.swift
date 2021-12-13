@@ -76,18 +76,19 @@ struct AddMealView: View {
                                 persistenceController.addMeal(meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate){persistenceController.addFood(addedFoods, meals[$selectedMealIndex.wrappedValue], dateToCheck: chosenDate)}
                                 obMeals.update()
                                 addedFoods.removeAll()
+                                tabController.open(.diary)
                             }) {
                                 Text("Add \(meals[$selectedMealIndex.wrappedValue])")
                                     .font(.body)
                                     .bold()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 75, alignment: .leading)
+                                    .background(addedFoods.count == 0 ? Color.gray : Color.LB_green)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(20)
+                                    .disabled(addedFoods.count == 0)
+                                    .padding()
                             }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 75, alignment: .leading)
-                            .background(addedFoods.count == 0 ? Color.gray : Color.LB_green)
-                            .foregroundColor(.white)
-                            .cornerRadius(20)
-                            .disabled(addedFoods.count == 0)
-                            .padding()
                         }
                     }
                 }

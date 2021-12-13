@@ -88,7 +88,6 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .onChange(of: isUpdated.isUpdated, perform:  { (value) in
-                        print("changed")
                         updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                     })
                     Text("Tap a meal to edit ingredient amounts or save to My Foods")

@@ -620,17 +620,18 @@ struct PersistenceController {
             return print("\(name) as name is already taken")
         }
         var ingredients = getAllIngredients()
-        print(ingredients.count)
         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
         var ingre: [Ingredient] = []
         ingr.forEach{ ingredient in
-            ingre = ingredients.filter  {$0.identifier == ingredient.identifier }
-            print(ingredients[0].identifier == ingredient.identifier)
+            ingre += ingredients.filter {$0.identifier == ingredient.identifier }
+            print(ingredient.identifier)
         }
+        print("Ingr \(ingr)")
         ingredients = Array(Set(ingre))
         ingredients.forEach {e in
             e.saved = save
         }
+        print("Amount of ingredients to save \(ingredients.count)")
         print(ingredients)
         save.mealName = name
         

@@ -56,7 +56,6 @@ struct SavedMealsTab: View {
     }
     
     func addSelected(meal: Saved) {
-        print(meal)
         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
         ingr.forEach{ ingredient in
             let nutrients = (ingredient.nutrients?.allObjects as! [Nutrition])

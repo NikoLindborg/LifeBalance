@@ -33,7 +33,6 @@ class ObservableActivity: ObservableObject {
     
     // Via this method the data is saved to this ObservableObject in other views. 
     func update(activityData: [[CGFloat]], stepData: [[CGFloat]], maxActivity: Double, maxSteps: Double, weekdays: Array<String>, healthData: Bool) {
-        print("Update")
         self.healthKitActivityArray = activityData
         self.healthKitStepsArray = stepData
         self.healthKitMaxActivity = maxActivity

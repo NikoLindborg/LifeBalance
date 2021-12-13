@@ -319,7 +319,7 @@ struct PersistenceController {
     func createRefValuesEntity() {
         let refValuesEntity = getRefValues()
         if (refValuesEntity.count > 0) {
-            print("RefValues already exists")
+            return print("RefValues already exists")
         } else {
             _ = CDReferenceValues(context: container.viewContext)
             do {
@@ -425,7 +425,6 @@ struct PersistenceController {
         if (ingred.quantity <= 0){
             container.viewContext.delete(ingred)
         } else {
-            print(ingred.quantity)
             let nutrients = ingred.nutrients
             
             let nutrientsArray = nutrients?.allObjects as! [Nutrition]
@@ -620,18 +619,15 @@ struct PersistenceController {
             return print("\(name) as name is already taken")
         }
         var ingredients = getAllIngredients()
-        print(ingredients.count)
         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
         var ingre: [Ingredient] = []
         ingr.forEach{ ingredient in
             ingre = ingredients.filter  {$0.identifier == ingredient.identifier }
-            print(ingredients[0].identifier == ingredient.identifier)
         }
         ingredients = Array(Set(ingre))
         ingredients.forEach {e in
             e.saved = save
         }
-        print(ingredients)
         save.mealName = name
         
         do {

@@ -18,7 +18,6 @@ struct DiaryView: View {
     @State var progressValues: Array<ProgressItem> = []
     @State var fullProgressValues: Array<ProgressItem> = []
     @ObservedObject var obMeals: ObservableMeals
-    @ObservedObject var dailyProgressSettings: ObservableDailyProgress
     @State var color = Color.green
     @State var color2 = Color.blue
     @State var color3 = Color.orange
@@ -61,7 +60,7 @@ struct DiaryView: View {
                     
                     NavigationLink(destination: NutritionalDatalistView(progressItems: $fullProgressValues), label: {
                         VStack(alignment: .leading){
-                            DailyProgressCard(progressSettings: dailyProgressSettings, color: $color, color2: $color, color3: $color, color4: $color)
+                            DailyProgressCard(progressValues: $progressValues, color: $color, color2: $color, color3: $color, color4: $color)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 250, maxHeight: 350)
                                 .background(Color.LB_purple)
                                 .cornerRadius(20)
@@ -88,7 +87,6 @@ struct DiaryView: View {
                     }
                     .offset(y: -60)
                     .onChange(of: isUpdated.isUpdated, perform:  { (value) in
-                        print("changed")
                         updateDate(date: obDays.allDays[selectedDayIndex].date ?? "")
                     })
                     Text("Tap a meal to edit ingredient amounts or save to My Foods")
@@ -105,7 +103,7 @@ struct DiaryView: View {
     
     func getProgressValueToday(date: String) {
         // A dummy list for future reference for controlling what is shown on Daily Progress View
-        let userSetNutritionalValues = ["calories", "carbs", "protein", "fat"]
+        let userSetNutritionalValues = ["calories", "carbohydrates", "protein", "fat"]
         progressValues = persistenceController.getProgressValues(userSetNutritionalValues, date: date)
         fullProgressValues = persistenceController.getProgressValues(nil, date: date)
     }
@@ -121,7 +119,7 @@ struct DiaryView: View {
 
 struct DiaryView_Previews: PreviewProvider {
     static var previews: some View {
-        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(),dailyProgressSettings: ObservableDailyProgress(), meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
+        DiaryView(persistenceController: PersistenceController(), obMeals: ObservableMeals(), meals: ObservableMeals().meals, obDays: ObservableDays(), isUpdated: ObservableUpdate() )
     }
 }
 

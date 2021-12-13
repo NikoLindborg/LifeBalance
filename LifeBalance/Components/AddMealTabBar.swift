@@ -5,6 +5,10 @@
 //  Created by Niko Lindborg on 23.11.2021.
 //
 
+/**
+ Tab bar to AddMealView, has tab for adding new food and one for already saved foods
+ */
+
 import SwiftUI
 
 struct AddMealTabBar: View {

@@ -5,6 +5,11 @@
 //  Created by iosdev on 26.11.2021.
 //
 
+/**
+ This file is used to calculate users daily micro and macro nutrient values based on intaked values
+ Values are only indicative recommendations 
+ */
+
 import SwiftUI
 
 class ReferenceValues: ObservableObject {

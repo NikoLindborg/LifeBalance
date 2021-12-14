@@ -92,6 +92,6 @@ struct TrendCard: View {
             })
         }
         .padding([.trailing, .leading])
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 150, maxHeight: 150)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 150, maxHeight: 250)
     }
 }

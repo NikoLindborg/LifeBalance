@@ -81,7 +81,7 @@ struct DiaryView: View {
                     ForEach(obMeals.meals, id: \.self) {meal in
                         let ingr = (meal.ingredients?.allObjects as! [Ingredient])
                         NavigationLink(destination: EditMealView(meal: meal, ingredients: ingr, persistenceController: persistenceController, obMeals: obMeals, isUpdated: isUpdated), label: {
-                            MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.green)
+                            MealCard(meal: meal.mealType ?? "", food: ingr, backgroundColor: Color.LB_green)
                             }
                         )
                     }
